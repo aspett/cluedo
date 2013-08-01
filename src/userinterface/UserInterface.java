@@ -6,6 +6,7 @@ import main.Tile;
 
 import board.Board;
 import board.Player;
+import board.tiles.Tile;
 import board.tiles.Room;
 
 public interface UserInterface {

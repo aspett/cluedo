@@ -5,7 +5,7 @@ import board.tiles.*;
 public class Player {
 	private String character;
 	private int playerNumber;
-	private TileI currentTile;
+	private Tile currentTile;
 	private static Player currentPlayer;
 	public String getName(){
 		return this.character;
@@ -20,11 +20,11 @@ public class Player {
 		return String.format("%s", character);
 	}
 	
-	public void setTile(TileI tile) {
+	public void setTile(Tile tile) {
 		this.currentTile = tile;
 	}
 	
-	public TileI getTile() {
+	public Tile getTile() {
 		return this.currentTile;
 	}
 	

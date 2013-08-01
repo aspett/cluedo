@@ -44,6 +44,7 @@ public class Cluedo {
 		//		ui.draw();
 		int currentPlayerID = randPlayer;
 		Player currentPlayer = startingPlayer;
+
 		while(state != State.GAME_END) {
 			if(state == State.PLAYER_NEW_TURN) {
 				Player.setCurrentPlayer(currentPlayer);
