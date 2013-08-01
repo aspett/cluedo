@@ -11,6 +11,6 @@ import board.tiles.Room;
 public interface UserInterface {
 	public List<Player> initPlayers();
 	public void draw();
-	public void promptAccusation(Player currentPlayer, Room currentTile);
+	public CardTuple promptAccusation(Player currentPlayer, Room currentTile);
 	public Tile promptMove(Player currentPlayer);
 }
