@@ -43,8 +43,8 @@ public class Cluedo {
 
 		solution = new CardTuple(characterSolution, roomSolution, weaponSolution);
 
-		//TODO make a new random solution
-		//solution = new CardTuple();
+		System.out.printf("Solution: %s\n", solution.toString());
+
 	}
 
 	public static void main (String[] args) {
