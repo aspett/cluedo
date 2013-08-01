@@ -42,13 +42,28 @@ public class Cluedo {
 
 		//Testing the board drawing
 		//		ui.draw();
-
+		int currentPlayerID = randPlayer;
+		Player currentPlayer = startingPlayer;
 		while(state != State.GAME_END) {
 			if(state == State.PLAYER_NEW_TURN) {
+				Player.setCurrentPlayer(currentPlayer);
 				int moves = dice.roll();
 				while(moves>0){
 					//keep getting moves
+					Tile move = ui.promptMove(currentPlayer);
+					if(move == null) { //Stay where you are
+						moves = 0;
+						break;
+					}
+					currentPlayer.setTile(move);
+					moves--;
 				}
+				Tile currentTile = currentPlayer.getTile();
+				if(currentTile instanceof Room) {
+					CardTuple accusation = ui.promptAccusation(currentPlayer, (Room)currentTile);
+				}
+				
+				
 			}
 		}
 
