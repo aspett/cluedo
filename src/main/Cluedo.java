@@ -12,10 +12,6 @@ import java.math.*;
 public class Cluedo {
 	private final CardTuple solution;
 
-	public static void main (String[] args) {
-		Cluedo game = new Cluedo();
-	}
-
 	public Cluedo() {
 		Board b = new Board();
 		List<Player> players = b.getPlayers();
@@ -49,6 +45,10 @@ public class Cluedo {
 
 		//TODO make a new random solution
 		//solution = new CardTuple();
+	}
+
+	public static void main (String[] args) {
+		Cluedo game = new Cluedo();
 	}
 
 	private static int rand(int min, int max) {
