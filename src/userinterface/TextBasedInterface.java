@@ -14,15 +14,17 @@ public class TextBasedInterface implements UserInterface {
 	public TextBasedInterface(Board b){
 		this.b=b;
 	}
-	/*
+
 	public void draw(Board b){
-		for(TileI t:b.boardTiles){
-			if(t instanceof IntrigueTile)System.out.print("?");
-			else if(t instanceof Room)System.out.print("E");
-			else if(t instanceof StartTile)System.out.print("S");
-			else if(t instanceof RegularTile)System.out.print(" ");
+		for(TileI[] tArray:b.getBoardTiles()){
+			for(TileI t:tArray){
+				if(t instanceof IntrigueTile)System.out.print("?");
+				else if(t instanceof Room)System.out.print("E");
+				else if(t instanceof StartTile)System.out.print("S");
+				else if(t instanceof RegularTile)System.out.print(" ");
+			}
 		}
-	}*/
+	}
 
 	public List<Player> initPlayers(){
 		Scanner scan = new Scanner(System.in);

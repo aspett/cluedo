@@ -18,6 +18,7 @@ public class Room implements TileI {
 	public String getName() {
 		return name;
 	}
+	
 
 	public static enum RoomEnum {
 		SPA,

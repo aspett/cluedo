@@ -1,11 +1,21 @@
 package board.tiles;
 
 public class ImpassableTile implements TileI{
-
+	private boolean isWall;
+	
+	
+	public ImpassableTile(boolean value){
+		isWall=value;
+	}
+	
 	@Override
 	public boolean isPassable() {
 		return false;
 	}
+	public boolean isWall(){
+		return isWall;
+	}
+	
 
 	@Override
 	public void onEnter() {

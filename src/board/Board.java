@@ -1,12 +1,14 @@
 package board;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 import board.tiles.*;
 
 public class Board {
 	//TODO build board
-	//private final TileI[][] boardTiles;
+	private TileI[][] boardTiles;
 
 	private List<Room> rooms = new ArrayList<Room>();
 	private List<Player> availablePlayers = new ArrayList<Player>();
@@ -19,7 +21,72 @@ public class Board {
 		this.initializePlayers();
 		this.initializeWeapons();
 		this.initializeRooms();
+		this.createBoard();
 		playerCount=0;
+
+
+	}
+
+	private void createBoard() {
+		Scanner scan;
+		try {
+			scan = new Scanner(new File("boardinput"));
+			int rows=scan.nextInt();
+			int cols=scan.nextInt();
+			scan.nextLine();
+			setBoardTiles(new TileI[rows][cols]);
+			for(int i=0;i<rows;i++){
+				String line=scan.nextLine();
+				for(int j=0;j<cols;j++){
+					char c=line.charAt(j);
+					switch(c){
+					case ' ':ImpassableTile gap = new ImpassableTile(false);
+							getBoardTiles()[i][j] = gap;
+							break;
+
+					case '#':ImpassableTile wall = new ImpassableTile(true);
+							getBoardTiles()[i][j] = wall;
+							break;
+					case 'P':StartTile start = new StartTile();
+							getBoardTiles()[i][j] = start;
+							break;
+					case '?':IntrigueTile intrigue = new IntrigueTile();
+							getBoardTiles()[i][j] = intrigue;
+							break;
+					case '.':RegularTile reg = new RegularTile();
+							getBoardTiles()[i][j] = reg;
+							break;
+					default: int roomNum=c-48;
+							switch(roomNum){
+							case 0:getBoardTiles()[i][j]=rooms.get(0);
+									break;
+							case 1:getBoardTiles()[i][j]=rooms.get(1);
+									break;
+							case 2:getBoardTiles()[i][j]=rooms.get(2);
+									break;
+							case 3:getBoardTiles()[i][j]=rooms.get(3);
+									break;
+							case 4:getBoardTiles()[i][j]=rooms.get(4);
+									break;
+							case 5:getBoardTiles()[i][j]=rooms.get(5);
+									break;
+							case 6:getBoardTiles()[i][j]=rooms.get(6);
+									break;
+							case 7:getBoardTiles()[i][j]=rooms.get(7);
+									break;
+							case 8:getBoardTiles()[i][j]=rooms.get(8);
+									break;
+							case 9:getBoardTiles()[i][j]=rooms.get(9);
+									break;
+							}
+
+					}
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
 
 	}
 
@@ -39,9 +106,9 @@ public class Board {
 		for(int i=0; i<rooms.size();i++){
 			rooms.get(i).addWeapon(weapons.get(i));
 		}
-		
+
 		rooms.add(new Room("Pool Room"));//Pool Room added last as it can not hold a weapon
-		
+
 	}
 	public void initializePlayers() {
 		availablePlayers.add(new Player("Kasandra Scarlett"));
@@ -79,5 +146,13 @@ public class Board {
 	}
 	public void setPlayerCount(int c){
 		playerCount=c;
+	}
+
+	public TileI[][] getBoardTiles() {
+		return boardTiles;
+	}
+
+	public void setBoardTiles(TileI[][] boardTiles) {
+		this.boardTiles = boardTiles;
 	}
 }
