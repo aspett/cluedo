@@ -17,13 +17,16 @@ public class Cluedo {
 	private Board b = new Board();
 	private UserInterface ui;
 	private State state;
+	private Dice dice;
 
 	private static enum State {
-		PLAYER_NEW_TURN
+		PLAYER_NEW_TURN,
+		GAME_END
 	}
 
 	public Cluedo() {
 		ui = new TextBasedInterface(b);
+		dice = new Dice();
 		List<Card> deck = initializeCardsSolution();
 		//List<Player> players = b.getPlayers();
 
@@ -36,8 +39,13 @@ public class Cluedo {
 
 		int randPlayer = Cluedo.rand(0, players.size());
 		Player startingPlayer = b.getPlayers().get(randPlayer);
+		System.out.printf("Start player = %d/%s\n", randPlayer, startingPlayer);
 
-
+		while(state != State.GAME_END) {
+			if(state == State.PLAYER_NEW_TURN) {
+				int moves = dice.roll();
+			}
+		}
 
 
 
