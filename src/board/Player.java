@@ -3,13 +3,15 @@ package board;
 public class Player {
 	public String name;
 	public int playerNumber;
-	
-	public Player(String n){
-		this.name=n;
-	}
-	
+
 	public String getName(){
 		return this.name;
 	}
-	
+
+	public Player(String c){
+		if(this.character == null || this.character.length() < 1) throw new IllegalArgumentException("Player needs a name");
+		this.character=c;
+	}
+
+
 }

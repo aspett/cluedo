@@ -7,6 +7,8 @@ public class CharacterCard extends Card {
 	
 	public CharacterCard(Player c){
 		character=c;
+		this.setName(c.getName());
+		
 	}
 	
 }
