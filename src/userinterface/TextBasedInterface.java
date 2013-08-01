@@ -31,7 +31,7 @@ public class TextBasedInterface implements UserInterface {
 		int playerCount = scan.nextInt();
 		List<Player> actualPlayers = new ArrayList<Player>();
 		for(int i=0;i<playerCount;i++){
-			System.out.printf("Player %i, Select a character.");
+			System.out.printf("Player %d, Select a character.",i);
 			List<Player> availablePlayers=b.getAvailablePlayers();
 			for(int j=0;j<availablePlayers.size();j++){
 				System.out.printf("%i, %s",j,availablePlayers.get(j));

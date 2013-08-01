@@ -29,7 +29,7 @@ public class Cluedo {
 
 		//Get players
 		//TODO do this once we get matt's interface changes
-		//List<Player> players = ui.initPlayers();
+		List<Player> players = ui.initPlayers();
 
 		//Choose a random player to start!
 
