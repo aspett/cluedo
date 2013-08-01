@@ -34,4 +34,8 @@ public final class CardTuple {
 	public void setWeapon(WeaponCard weapon) {
 		this.weapon = weapon;
 	}
+
+	public String toString() {
+		return String.format("[Character: %s, Weapon: %s, Room:%s]", player, room, weapon);
+	}
 }
