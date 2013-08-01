@@ -51,6 +51,24 @@ public class Cluedo {
 	 */
 	private List<Card> initializeCardsSolution() {
 		List<Player> players = b.getAvailablePlayers();
+		List<Card> deck = initializeCardsSolution();
+
+
+		System.out.println(deck);
+		System.out.println(deck.size());
+		Collections.shuffle(deck);
+	}
+
+	public static void main (String[] args) {
+		Cluedo game = new Cluedo();
+	}
+
+	/**
+	 * Makes a random solution, and returns a list of the remaining cards in the deck.
+	 * @return remaining cards in deck after solution is taken out
+	 */
+	private List<Card> initializeCardsSolution() {
+		List<Player> players = b.getPlayers();
 		List<Weapon> weapons = b.getWeapons();
 		List<Room> rooms = b.getRooms();
 
@@ -83,18 +101,19 @@ public class Cluedo {
 		deck.addAll(cc);
 		deck.addAll(rc);
 		deck.addAll(wc);
+		System.out.println(deck);
+		System.out.println(deck.size());
+		Collections.shuffle(deck);
+		System.out.println(deck);
 
-		return deck;
+		
+	}
+	
+
+	public static void main (String[] args) {
+		Cluedo game = new Cluedo();
 	}
 
-	//UTILITY METHODS
-
-	/**
-	 * Generates a random integer between min and max, not including max.
-	 * @param min Minimum number
-	 * @param max maximum number
-	 * @return a random integer
-	 */
 	private static int rand(int min, int max) {
 		int diff = max-min;
 		return (int)((Math.random()*diff)+min);
