@@ -7,30 +7,23 @@ import board.tiles.*;
 import cards.*;
 import java.math.*;
 
+import userinterface.TextBasedInterface;
+import userinterface.UserInterface;
+
 
 
 public class Cluedo {
-	private CardTuple solution;
-	private Board b = new Board();
+	
+	private final CardTuple solution;
+	UserInterface ui;
+	Board b;
 
 	public Cluedo() {
-		List<Card> deck = initializeCardsSolution();
-
-
-		System.out.println(deck);
-		System.out.println(deck.size());
-		Collections.shuffle(deck);
-	}
-
-	public static void main (String[] args) {
-		Cluedo game = new Cluedo();
-	}
-
-	/**
-	 * Makes a random solution, and returns a list of the remaining cards in the deck.
-	 * @return remaining cards in deck after solution is taken out
-	 */
-	private List<Card> initializeCardsSolution() {
+		
+		b = new Board();
+		ui=new TextBasedInterface(b);
+		ui.initPlayers();
+		
 		List<Player> players = b.getPlayers();
 		List<Weapon> weapons = b.getWeapons();
 		List<Room> rooms = b.getRooms();
@@ -64,18 +57,19 @@ public class Cluedo {
 		deck.addAll(cc);
 		deck.addAll(rc);
 		deck.addAll(wc);
+		System.out.println(deck);
+		System.out.println(deck.size());
+		Collections.shuffle(deck);
+		System.out.println(deck);
 
-		return deck;
+		
+	}
+	
+
+	public static void main (String[] args) {
+		Cluedo game = new Cluedo();
 	}
 
-	//UTILITY METHODS
-
-	/**
-	 * Generates a random integer between min and max, not including max.
-	 * @param min Minimum number
-	 * @param max maximum number
-	 * @return a random integer
-	 */
 	private static int rand(int min, int max) {
 		int diff = max-min;
 		return (int)((Math.random()*diff)+min);

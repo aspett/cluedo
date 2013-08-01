@@ -1,8 +1,10 @@
 package userinterface;
 
+import java.util.List;
 import java.util.Scanner;
 
 import board.Board;
+import board.Player;
 import board.tiles.*;
 //TODO Update class diagram for the interface to hold the board
 public class TextBasedInterface implements UserInterface {
@@ -21,9 +23,15 @@ public class TextBasedInterface implements UserInterface {
 		}
 	}*/
 	
-	public void scanInput(){
+	public List<Player> initPlayers(){
 		Scanner scan = new Scanner(System.in);
-		b.setPlayerCount(scan.nextInt());
-		
+		System.out.println("How many players?");
+		//TODO add error support on scanning
+		int playerCount = scan.nextInt();
+		for(int i=0;i<playerCount;i++){
+			
+		}
+		scan.close();
+		return null;
 	}
 }
