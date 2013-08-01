@@ -28,7 +28,9 @@ public class TextBasedInterface implements UserInterface {
 		System.out.println("How many players?");
 		//TODO add error support on scanning
 		int playerCount = scan.nextInt();
+		
 		for(int i=0;i<playerCount;i++){
+			System.out.printf("Player %i, Select a character.");
 			
 		}
 		scan.close();
