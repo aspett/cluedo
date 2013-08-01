@@ -13,17 +13,40 @@ import userinterface.UserInterface;
 
 
 public class Cluedo {
-	
-	private final CardTuple solution;
-	UserInterface ui;
-	Board b;
+	private CardTuple solution;
+	private Board b = new Board();
+	private UserInterface ui;
+	private State state;
+
+	private static enum State {
+
+	}
 
 	public Cluedo() {
-		
-		b = new Board();
-		ui=new TextBasedInterface(b);
-		ui.initPlayers();
-		
+		ui = new TextBasedInterface(b);
+		List<Card> deck = initializeCardsSolution();
+		//List<Player> players = b.getPlayers();
+
+		//Get players
+		//TODO do this once we get matt's interface changes
+		//List<Player> players = ui.initPlayers();
+
+		//Choose a random player to start!
+
+
+
+
+		System.out.println(deck);
+		System.out.println(deck.size());
+		Collections.shuffle(deck);
+	}
+
+
+	/**
+	 * Makes a random solution, and returns a list of the remaining cards in the deck.
+	 * @return remaining cards in deck after solution is taken out
+	 */
+	private List<Card> initializeCardsSolution() {
 		List<Player> players = b.getPlayers();
 		List<Weapon> weapons = b.getWeapons();
 		List<Room> rooms = b.getRooms();
@@ -57,14 +80,10 @@ public class Cluedo {
 		deck.addAll(cc);
 		deck.addAll(rc);
 		deck.addAll(wc);
-		System.out.println(deck);
-		System.out.println(deck.size());
 		Collections.shuffle(deck);
-		System.out.println(deck);
-
-		
+		return deck;
 	}
-	
+
 
 	public static void main (String[] args) {
 		Cluedo game = new Cluedo();
