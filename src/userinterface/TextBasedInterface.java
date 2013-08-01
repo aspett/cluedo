@@ -18,11 +18,18 @@ public class TextBasedInterface implements UserInterface {
 	public void draw(Board b){
 		for(TileI[] tArray:b.getBoardTiles()){
 			for(TileI t:tArray){
-				if(t instanceof IntrigueTile)System.out.print("?");
-				else if(t instanceof Room)System.out.print("E");
-				else if(t instanceof StartTile)System.out.print("S");
-				else if(t instanceof RegularTile)System.out.print(" ");
+				if(t instanceof IntrigueTile)System.out.print("? ");
+				else if(t instanceof Room)System.out.print("E ");
+				else if(t instanceof StartTile)System.out.print("S ");
+				else if(t instanceof RegularTile)System.out.print(". ");
+				else if(t instanceof ImpassableTile){
+					ImpassableTile iT=(ImpassableTile)t;
+					if(iT.isWall())System.out.print("# ");
+					else System.out.print("  ");
+					
+				}
 			}
+			System.out.println();
 		}
 	}
 

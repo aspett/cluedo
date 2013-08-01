@@ -41,13 +41,16 @@ public class Cluedo {
 		Player startingPlayer = b.getPlayers().get(randPlayer);
 		System.out.printf("Start player = %d/%s\n", randPlayer, startingPlayer);
 
+		//Testing the board drawing
+		//		ui.draw(b);
+
 		while(state != State.GAME_END) {
 			if(state == State.PLAYER_NEW_TURN) {
 				int moves = dice.roll();
 			}
 		}
 
-
+		
 
 		System.out.println(deck);
 		System.out.println(deck.size());
