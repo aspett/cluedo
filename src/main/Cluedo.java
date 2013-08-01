@@ -41,7 +41,7 @@ public class Cluedo {
 		System.out.printf("Start player = %d/%s\n", randPlayer, startingPlayer);
 
 		//Testing the board drawing
-		//		ui.draw();
+				ui.draw();
 
 		while(state != State.GAME_END) {
 			if(state == State.PLAYER_NEW_TURN) {

@@ -1,7 +1,7 @@
 package board.tiles;
 
 
-public class IntrigueTile implements TileI {
+public class IntrigueTile extends Tile {
 
 	@Override
 	public boolean isPassable() {
@@ -13,5 +13,7 @@ public class IntrigueTile implements TileI {
 		// // TODO write onEnter method
 		
 	}
+
+	
 	
 }

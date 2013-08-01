@@ -51,4 +51,8 @@ public class TextBasedInterface implements UserInterface {
 		scan.close();
 		return actualPlayers;
 	}
+	
+	public TileI promptMove(Player p){
+		TileI tile = p.getTile();
+	}
 }

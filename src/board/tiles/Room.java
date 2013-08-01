@@ -6,7 +6,7 @@ import java.util.List;
 import board.Weapon;
 
 
-public class Room implements TileI {
+public class Room extends Tile {
 	private final String name;
 	private List<Weapon> weapons;
 
@@ -51,6 +51,8 @@ public class Room implements TileI {
 	public void onEnter() {
 		// TODO write onEnter method
 	}
+
+	
 	
 
 }

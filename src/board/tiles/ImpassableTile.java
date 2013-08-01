@@ -1,6 +1,6 @@
 package board.tiles;
 
-public class ImpassableTile implements TileI{
+public class ImpassableTile extends Tile{
 	private boolean isWall;
 	
 	
@@ -22,5 +22,6 @@ public class ImpassableTile implements TileI{
 		throw new RuntimeException("You should never be able to enter an impassable tile");
 		
 	}
+
 
 }

@@ -8,7 +8,7 @@ import board.tiles.*;
 
 public class Board {
 	//TODO build board
-	private TileI[][] boardTiles;
+	private Tile[][] boardTiles;
 
 	private List<Room> rooms = new ArrayList<Room>();
 	private List<Player> availablePlayers = new ArrayList<Player>();
@@ -34,7 +34,7 @@ public class Board {
 			int rows=scan.nextInt();
 			int cols=scan.nextInt();
 			scan.nextLine();
-			setBoardTiles(new TileI[rows][cols]);
+			setBoardTiles(new Tile[rows][cols]);
 			for(int i=0;i<rows;i++){
 				String line=scan.nextLine();
 				for(int j=0;j<cols;j++){
@@ -148,11 +148,11 @@ public class Board {
 		playerCount=c;
 	}
 
-	public TileI[][] getBoardTiles() {
+	public Tile[][] getBoardTiles() {
 		return boardTiles;
 	}
 
-	public void setBoardTiles(TileI[][] boardTiles) {
+	public void setBoardTiles(Tile[][] boardTiles) {
 		this.boardTiles = boardTiles;
 	}
 }
