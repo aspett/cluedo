@@ -89,7 +89,7 @@ public class Cluedo {
 		Cluedo game = new Cluedo();
 	}
 
-	private static int rand(int min, int max) {
+	public static int rand(int min, int max) {
 		int diff = max-min;
 		return (int)((Math.random()*diff)+min);
 	}
