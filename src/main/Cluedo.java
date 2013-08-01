@@ -41,27 +41,6 @@ public class Cluedo {
 		Collections.shuffle(deck);
 	}
 
-	public static void main (String[] args) {
-		Cluedo game = new Cluedo();
-	}
-
-	/**
-	 * Makes a random solution, and returns a list of the remaining cards in the deck.
-	 * @return remaining cards in deck after solution is taken out
-	 */
-	private List<Card> initializeCardsSolution() {
-		List<Player> players = b.getAvailablePlayers();
-		List<Card> deck = initializeCardsSolution();
-
-
-		System.out.println(deck);
-		System.out.println(deck.size());
-		Collections.shuffle(deck);
-	}
-
-	public static void main (String[] args) {
-		Cluedo game = new Cluedo();
-	}
 
 	/**
 	 * Makes a random solution, and returns a list of the remaining cards in the deck.
@@ -101,14 +80,10 @@ public class Cluedo {
 		deck.addAll(cc);
 		deck.addAll(rc);
 		deck.addAll(wc);
-		System.out.println(deck);
-		System.out.println(deck.size());
 		Collections.shuffle(deck);
-		System.out.println(deck);
-
-		
+		return deck;
 	}
-	
+
 
 	public static void main (String[] args) {
 		Cluedo game = new Cluedo();
