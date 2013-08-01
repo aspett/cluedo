@@ -36,7 +36,7 @@ public class Cluedo {
 		b.setPlayers(players);
 
 		//Choose a random player to start!
-
+		//TODO rules say scarlett is to start. Not sure if no one is her
 		int randPlayer = Cluedo.rand(0, players.size());
 		Player startingPlayer = b.getPlayers().get(randPlayer);
 		System.out.printf("Start player = %d/%s\n", randPlayer, startingPlayer);

@@ -15,9 +15,10 @@ public class Board {
 	private int playerCount;
 
 	public Board() {
-		this.initializeRooms();
+
 		this.initializePlayers();
 		this.initializeWeapons();
+		this.initializeRooms();
 		playerCount=0;
 
 	}
@@ -27,12 +28,20 @@ public class Board {
 		rooms.add(new Room("Theatre"));
 		rooms.add(new Room("Living Room"));
 		rooms.add(new Room("Observatory"));
-		rooms.add(new Room("Patio"));
-		rooms.add(new Room("Pool Room"));
+		rooms.add(new Room("Patio"));		
 		rooms.add(new Room("Hall"));
 		rooms.add(new Room("Guest House"));
 		rooms.add(new Room("Dining Room"));
 		rooms.add(new Room("Kitchen"));
+
+		//assign a weapon randomly to each room.
+		Collections.shuffle(weapons);
+		for(int i=0; i<rooms.size();i++){
+			rooms.get(i).addWeapon(weapons.get(i));
+		}
+		
+		rooms.add(new Room("Pool Room"));//Pool Room added last as it can not hold a weapon
+		
 	}
 	public void initializePlayers() {
 		availablePlayers.add(new Player("Kasandra Scarlett"));

@@ -11,5 +11,8 @@ public class Weapon {
 	public String getName(){
 		return this.weapon;
 	}
+	public String toString(){
+		return String.format("%s", weapon);
+	}
 	
 }

@@ -1,11 +1,18 @@
 package board.tiles;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import board.Weapon;
+
 
 public class Room implements TileI {
 	private final String name;
+	private List<Weapon> weapons;
 
 	public Room(String name) {
 		this.name = name;
+		weapons=new ArrayList<Weapon>();
 	}
 
 	public String getName() {
@@ -24,5 +31,15 @@ public class Room implements TileI {
 		PATIO,
 		POOL_ROOM
 	}
+
+	public void addWeapon(Weapon weapon) {
+		if(weapon==null)throw new IllegalArgumentException("Weapon can not be null");
+		weapons.add(weapon);
+		
+	}
+	public List<Weapon> getWeapons(){
+		return this.weapons;
+	}
+	
 
 }
