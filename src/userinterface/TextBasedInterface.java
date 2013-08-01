@@ -27,17 +27,19 @@ public class TextBasedInterface implements UserInterface {
 	public List<Player> initPlayers(){
 		Scanner scan = new Scanner(System.in);
 		System.out.println("How many players?");
-		//TODO add error support on scanning
+		//TODO add error support on scanning and bounds of player ammount etc
 		int playerCount = scan.nextInt();
 		List<Player> actualPlayers = new ArrayList<Player>();
 		for(int i=0;i<playerCount;i++){
-			System.out.printf("Player %d, Select a character.",i);
+			System.out.printf("Player %d, Select a character.\n",i);
 			List<Player> availablePlayers=b.getAvailablePlayers();
 			for(int j=0;j<availablePlayers.size();j++){
-				System.out.printf("%d, %s",j,availablePlayers.get(j));
+				System.out.printf("%d, %s\n",j,availablePlayers.get(j));
 			}
+			int choice = scan.nextInt();
+			actualPlayers.add(b.getAvailablePlayers().remove(choice));
 		}
 		scan.close();
-		return null;
+		return actualPlayers;
 	}
 }
