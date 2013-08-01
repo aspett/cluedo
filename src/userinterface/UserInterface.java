@@ -7,5 +7,5 @@ import board.Player;
 
 public interface UserInterface {
 	public List<Player> initPlayers();
-	public void draw(Board b);
+	public void draw();
 }

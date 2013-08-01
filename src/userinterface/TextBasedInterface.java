@@ -15,7 +15,7 @@ public class TextBasedInterface implements UserInterface {
 		this.b=b;
 	}
 
-	public void draw(Board b){
+	public void draw(){
 		for(TileI[] tArray:b.getBoardTiles()){
 			for(TileI t:tArray){
 				if(t instanceof IntrigueTile)System.out.print("? ");

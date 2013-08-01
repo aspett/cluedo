@@ -31,22 +31,24 @@ public class Cluedo {
 		//List<Player> players = b.getPlayers();
 
 		//Get players
-		//TODO do this once we get matt's interface changes
 		List<Player> players = ui.initPlayers();
 		b.setPlayers(players);
 
 		//Choose a random player to start!
-		//TODO rules say scarlett is to start. Not sure if no one is her
+		//TODO rules say scarlett is to start. Not sure what happens if no one is her
 		int randPlayer = Cluedo.rand(0, players.size());
 		Player startingPlayer = b.getPlayers().get(randPlayer);
 		System.out.printf("Start player = %d/%s\n", randPlayer, startingPlayer);
 
 		//Testing the board drawing
-		//		ui.draw(b);
+		//		ui.draw();
 
 		while(state != State.GAME_END) {
 			if(state == State.PLAYER_NEW_TURN) {
 				int moves = dice.roll();
+				while(moves>0){
+					//keep getting moves
+				}
 			}
 		}
 
