@@ -43,8 +43,13 @@ public class Cluedo {
 
 		solution = new CardTuple(characterSolution, roomSolution, weaponSolution);
 
-		System.out.printf("Solution: %s\n", solution.toString());
-
+		List<Card> deck = new ArrayList<Card>();
+		deck.addAll(cc);
+		deck.addAll(rc);
+		deck.addAll(wc);
+		System.out.println(deck);
+		System.out.println(deck.size());
+		Collections.shuffle(deck);
 	}
 
 	public static void main (String[] args) {

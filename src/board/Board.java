@@ -37,7 +37,7 @@ public class Board {
 		players.add(new Player("Diane White"));
 		players.add(new Player("Jacob Green"));
 		players.add(new Player("Eleanor Peacock"));
-		players.add(new Player("Victor Plun"));
+		players.add(new Player("Victor Plum"));
 	}
 	public void initializeWeapons() {
 		weapons.add(new Weapon("Rope"));
