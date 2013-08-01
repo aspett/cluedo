@@ -1,10 +1,9 @@
 package userinterface;
 
 import java.util.List;
+import cards.CardTuple;
 
-import main.Tile;
 
-import board.Board;
 import board.Player;
 import board.tiles.Tile;
 import board.tiles.Room;
