@@ -35,12 +35,12 @@ public class Board {
 		rooms.add(new Room("Kitchen"));
 	}
 	public void initializePlayers() {
-		players.add(new Player("Kasandra Scarlett"));
-		players.add(new Player("Jack Mustard"));
-		players.add(new Player("Diane White"));
-		players.add(new Player("Jacob Green"));
-		players.add(new Player("Eleanor Peacock"));
-		players.add(new Player("Victor Plum"));
+		availablePlayers.add(new Player("Kasandra Scarlett"));
+		availablePlayers.add(new Player("Jack Mustard"));
+		availablePlayers.add(new Player("Diane White"));
+		availablePlayers.add(new Player("Jacob Green"));
+		availablePlayers.add(new Player("Eleanor Peacock"));
+		availablePlayers.add(new Player("Victor Plum"));
 	}
 	public void initializeWeapons() {
 		weapons.add(new Weapon("Rope"));
@@ -58,6 +58,9 @@ public class Board {
 	}
 	public List<Player> getPlayers() {
 		return players;
+	}
+	public void setPlayers(List<Player> players) {
+		this.players = players;
 	}
 	public List<Weapon> getWeapons() {
 		return weapons;

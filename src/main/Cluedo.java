@@ -19,7 +19,7 @@ public class Cluedo {
 	private State state;
 
 	private static enum State {
-
+		PLAYER_NEW_TURN
 	}
 
 	public Cluedo() {
@@ -30,8 +30,13 @@ public class Cluedo {
 		//Get players
 		//TODO do this once we get matt's interface changes
 		List<Player> players = ui.initPlayers();
+		b.setPlayers(players);
 
 		//Choose a random player to start!
+
+		int randPlayer = Cluedo.rand(0, players.size());
+		Player startingPlayer = b.getPlayers().get(randPlayer);
+
 
 
 
