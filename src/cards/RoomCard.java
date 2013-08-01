@@ -1,6 +1,6 @@
 package cards;
 
-import board.Room;
+import board.tiles.Room;
 
 public class RoomCard extends Card {
 	

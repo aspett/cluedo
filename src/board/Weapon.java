@@ -1,20 +1,10 @@
 package board;
 
 public class Weapon {
-	private Weapon.Weapons weapon;
+	private String weapon;
 	
-	public static enum Weapons{
-		CANDLE,
-		KNIFE,
-		PISTOL,
-		BAT,
-		DUMBBELL,
-		TROPHY,
-		POISON,
-		AXE		
-	}
 	
-	public Weapon(Weapon.Weapons w){
+	public Weapon(String w){
 		weapon=w;
 	}
 	

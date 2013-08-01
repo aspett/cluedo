@@ -11,9 +11,9 @@ public class BoardTests {
 	@Test
 	public void checkRoomNames() {
 		Board b = new Board();
-		for(Room r : b.rooms) {
-			System.out.println(r.getName());
-		}
+		//for(Room r : b.rooms) {
+			//System.out.println(r.getName());
+		//}
 	}
 
 }

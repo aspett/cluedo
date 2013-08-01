@@ -4,8 +4,6 @@ package cards;
 public abstract class Card {
 	private String name;
 
-
-
 	public void setName(String n){
 		this.name=n;
 	}
