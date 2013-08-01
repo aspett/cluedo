@@ -40,6 +40,16 @@ public class Room implements TileI {
 	public List<Weapon> getWeapons(){
 		return this.weapons;
 	}
+
+	@Override
+	public boolean isPassable() {
+		return true;
+	}
+
+	@Override
+	public void onEnter() {
+		// TODO write onEnter method
+	}
 	
 
 }
