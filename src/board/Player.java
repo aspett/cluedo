@@ -1,14 +1,15 @@
 package board;
 
 public class Player {
-	public String character;
+	public String name;
 	public int playerNumber;
 	
-	public Player(String c){
-		this.character=c;
+	public Player(String n){
+		this.name=n;
 	}
 	
-	public void draw(){
-		System.out.println(playerNumber);
+	public String getName(){
+		return this.name;
 	}
+	
 }
