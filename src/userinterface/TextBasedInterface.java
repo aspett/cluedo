@@ -1,5 +1,6 @@
 package userinterface;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,10 +29,13 @@ public class TextBasedInterface implements UserInterface {
 		System.out.println("How many players?");
 		//TODO add error support on scanning
 		int playerCount = scan.nextInt();
-		
+		List<Player> actualPlayers = new ArrayList<Player>();
 		for(int i=0;i<playerCount;i++){
 			System.out.printf("Player %i, Select a character.");
-			
+			List<Player> availablePlayers=b.getAvailablePlayers();
+			for(int j=0;j<availablePlayers.size();j++){
+				System.out.printf("%i, %s",j,availablePlayers.get(j));
+			}
 		}
 		scan.close();
 		return null;
