@@ -9,6 +9,7 @@ public class Board {
 	//private final TileI[][] boardTiles;
 
 	private List<Room> rooms = new ArrayList<Room>();
+	private List<Player> availablePlayers = new ArrayList<Player>();
 	private List<Player> players = new ArrayList<Player>();
 	private List<Weapon> weapons = new ArrayList<Weapon>();
 	private int playerCount;
@@ -51,6 +52,9 @@ public class Board {
 		weapons.add(new Weapon("Trophy"));
 		weapons.add(new Weapon("Poison"));
 		weapons.add(new Weapon("Axe"));
+	}
+	public List<Player> getAvailablePlayers() {
+		return availablePlayers;
 	}
 	public List<Player> getPlayers() {
 		return players;
