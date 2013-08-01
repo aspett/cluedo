@@ -7,14 +7,33 @@ import board.tiles.*;
 import cards.*;
 import java.math.*;
 
+import userinterface.TextBasedInterface;
+import userinterface.UserInterface;
+
 
 
 public class Cluedo {
 	private CardTuple solution;
 	private Board b = new Board();
+	private UserInterface ui;
+	private State state;
+
+	private static enum State {
+
+	}
 
 	public Cluedo() {
+		ui = new TextBasedInterface(b);
 		List<Card> deck = initializeCardsSolution();
+		//List<Player> players = b.getPlayers();
+
+		//Get players
+		//TODO do this once we get matt's interface changes
+		//List<Player> players = ui.initPlayers();
+
+		//Choose a random player to start!
+
+
 
 
 		System.out.println(deck);
@@ -31,7 +50,7 @@ public class Cluedo {
 	 * @return remaining cards in deck after solution is taken out
 	 */
 	private List<Card> initializeCardsSolution() {
-		List<Player> players = b.getPlayers();
+		List<Player> players = b.getAvailablePlayers();
 		List<Weapon> weapons = b.getWeapons();
 		List<Room> rooms = b.getRooms();
 
