@@ -53,13 +53,8 @@ public class Cluedo {
 		Collections.shuffle(deck);
 		System.out.println(deck);
 
-		
 	}
-	
-	public void scanInput(){
-		Scanner scan = new Scanner(System.in);
-		
-		
+
 	}
 
 	public static void main (String[] args) {

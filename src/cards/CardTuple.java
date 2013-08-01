@@ -36,6 +36,6 @@ public final class CardTuple {
 	}
 
 	public String toString() {
-		return String.format("[Character: %s, Weapon: %s, Room:%s]", player, room, weapon);
+		return String.format("[Character: %s, Weapon: %s, Room: %s]", player, weapon, room);
 	}
 }
