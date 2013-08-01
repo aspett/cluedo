@@ -11,11 +11,13 @@ public class Board {
 	private List<Room> rooms = new ArrayList<Room>();
 	private List<Player> players = new ArrayList<Player>();
 	private List<Weapon> weapons = new ArrayList<Weapon>();
+	private int playerCount;
 
 	public Board() {
 		this.initializeRooms();
 		this.initializePlayers();
 		this.initializeWeapons();
+		playerCount=0;
 
 	}
 
@@ -58,5 +60,8 @@ public class Board {
 	}
 	public List<Room> getRooms() {
 		return rooms;
+	}
+	public void setPlayerCount(int c){
+		playerCount=c;
 	}
 }

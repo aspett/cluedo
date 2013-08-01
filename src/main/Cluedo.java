@@ -10,6 +10,7 @@ import java.math.*;
 
 
 public class Cluedo {
+	
 	private final CardTuple solution;
 
 	public Cluedo() {
@@ -50,8 +51,15 @@ public class Cluedo {
 		System.out.println(deck);
 		System.out.println(deck.size());
 		Collections.shuffle(deck);
-		//TODO make a new random solution
-		//solution = new CardTuple();
+		System.out.println(deck);
+
+		
+	}
+	
+	public void scanInput(){
+		Scanner scan = new Scanner(System.in);
+		
+		
 	}
 
 	public static void main (String[] args) {
