@@ -13,5 +13,9 @@ public class Player {
 		this.character=c;
 	}
 
+	public String toString() {
+		return String.format("%s", character);
+	}
+
 
 }

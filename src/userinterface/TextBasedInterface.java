@@ -10,7 +10,7 @@ import board.tiles.*;
 //TODO Update class diagram for the interface to hold the board
 public class TextBasedInterface implements UserInterface {
 	private Board b;
-	
+
 	public TextBasedInterface(Board b){
 		this.b=b;
 	}
@@ -23,7 +23,7 @@ public class TextBasedInterface implements UserInterface {
 			else if(t instanceof RegularTile)System.out.print(" ");
 		}
 	}*/
-	
+
 	public List<Player> initPlayers(){
 		Scanner scan = new Scanner(System.in);
 		System.out.println("How many players?");
@@ -34,7 +34,7 @@ public class TextBasedInterface implements UserInterface {
 			System.out.printf("Player %d, Select a character.",i);
 			List<Player> availablePlayers=b.getAvailablePlayers();
 			for(int j=0;j<availablePlayers.size();j++){
-				System.out.printf("%i, %s",j,availablePlayers.get(j));
+				System.out.printf("%d, %s",j,availablePlayers.get(j));
 			}
 		}
 		scan.close();

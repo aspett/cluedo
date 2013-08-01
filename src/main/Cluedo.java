@@ -52,7 +52,7 @@ public class Cluedo {
 	 * @return remaining cards in deck after solution is taken out
 	 */
 	private List<Card> initializeCardsSolution() {
-		List<Player> players = b.getPlayers();
+		List<Player> players = b.getAvailablePlayers();
 		List<Weapon> weapons = b.getWeapons();
 		List<Room> rooms = b.getRooms();
 
