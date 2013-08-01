@@ -1,5 +1,5 @@
 package cards;
 
-public class WeaponCard implements CardI {
+public class WeaponCard extends Card{
 
 }

@@ -1,5 +1,5 @@
 package cards;
 
-public class RoomCard implements CardI {
+public class RoomCard extends Card {
 
 }
