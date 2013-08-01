@@ -20,6 +20,14 @@ public class Player {
 		return String.format("%s", character);
 	}
 	
+	public void setTile(TileI tile) {
+		this.currentTile = tile;
+	}
+	
+	public TileI getTile() {
+		return this.currentTile;
+	}
+	
 	public static void setCurrentPlayer(Player p ) {
 		currentPlayer = p;
 	}
