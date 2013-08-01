@@ -9,5 +9,9 @@ public class RoomCard extends Card {
 	public RoomCard(Room r){
 		room=r;
 	}
+	
+	public String toString(){
+		return room.getName();
+	}
 
 }

@@ -10,4 +10,7 @@ public class WeaponCard extends Card{
 		this.weapon=w;
 	}
 
+	public String toString(){
+		return weapon.getName();
+	}
 }

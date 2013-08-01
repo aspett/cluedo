@@ -8,4 +8,8 @@ public class Weapon {
 		weapon=w;
 	}
 	
+	public String getName(){
+		return this.weapon;
+	}
+	
 }
