@@ -43,6 +43,13 @@ public class Cluedo {
 
 		solution = new CardTuple(characterSolution, roomSolution, weaponSolution);
 
+		List<Card> deck = new ArrayList<Card>();
+		deck.addAll(cc);
+		deck.addAll(rc);
+		deck.addAll(wc);
+		System.out.println(deck);
+		System.out.println(deck.size());
+		Collections.shuffle(deck);
 		//TODO make a new random solution
 		//solution = new CardTuple();
 	}
