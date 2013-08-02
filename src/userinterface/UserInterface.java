@@ -17,11 +17,11 @@ public interface UserInterface {
 	/**
 	 * Tell the interface to prompt the user whether they want to make a guess.
 	 * @param currentPlayer Current player
-	 * @param currentTile The room that they're in.
+	 * @param currentRoom The room that they're in.
 	 * @param isGuessOrAccusation TRUE IF GUESS, FALSE IF ACCUSATION
 	 * @return
 	 */
-	public CardTuple promptGuess(Player currentPlayer, Room currentTile, boolean isGuessOrAccusation);
+	public CardTuple promptGuess(Player currentPlayer, Room currentRoom, boolean isGuessOrAccusation);
 	/**
 	 * Ask the interface to get the tile of the next move (1 movement)
 	 * @param currentPlayer The player that is allowed to move
@@ -34,4 +34,16 @@ public interface UserInterface {
 	 * @param refutePlayer
 	 */
 	public void playerCanRefute(Player refutePlayer);
+	
+	/**
+	 * Tell the next player that it's their turn, and how many moves they can make.
+	 * @param currentPlayer The player
+	 */
+	public void alertPlayerTurn(Player currentPlayer);
+	
+	/**
+	 * Alert the player of the number of moves they have left.
+	 * @param moves Number of moves left.
+	 */
+	public void alertNumMoves(int moves) ;
 }

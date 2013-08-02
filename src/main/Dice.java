@@ -3,6 +3,6 @@ package main;
 
 public class Dice {
 	public int roll() {
-		return (int)(Math.random()*7);
+		return (int)(Math.random()*6+1);
 	}
 }

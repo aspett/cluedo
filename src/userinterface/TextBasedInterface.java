@@ -1,6 +1,7 @@
 package userinterface;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,6 +12,7 @@ import board.Player;
 import board.tiles.*;
 //TODO Update class diagram for the interface to hold the board
 public class TextBasedInterface implements UserInterface {
+
 	private Board b;
 	private Scanner scan;
 
@@ -20,6 +22,7 @@ public class TextBasedInterface implements UserInterface {
 	}
 
 	public void draw(){
+		System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n");
 		for(Tile[] tArray:b.getBoardTiles()){
 			for(Tile t:tArray){
 				boolean drawTile = true;
@@ -33,7 +36,9 @@ public class TextBasedInterface implements UserInterface {
 				}
 				if(!drawTile) continue;
 				if(t instanceof IntrigueTile)System.out.print("? ");
-				else if(t instanceof Room)System.out.print("E ");
+				else if(t instanceof RoomTile)System.out.print("E ");
+				//TODO *** Discuss whether we want to draw start tiles
+				//else if(t instanceof StartTile)System.out.print("S ");
 				else if(t instanceof StartTile)System.out.print(". ");
 				else if(t instanceof RegularTile)System.out.print(". ");
 				else if(t instanceof ImpassableTile){
@@ -50,7 +55,7 @@ public class TextBasedInterface implements UserInterface {
 	public List<Player> initPlayers(){
 		//Scanner scan = new Scanner(System.in);
 		System.out.println("How many players?");
-		//TODO add error support on scanning and bounds of player ammount etc
+		//TODO ***** !!!! add error support on scanning and bounds of player ammount etc
 		int playerCount = scan.nextInt();
 		List<Player> actualPlayers = new ArrayList<Player>();
 		for(int i=0;i<playerCount;i++){
@@ -68,7 +73,7 @@ public class TextBasedInterface implements UserInterface {
 
 	public Tile promptMove(Player p){
 		Tile tile = p.getTile();
-		//all addjacent tiles
+		//all adjacent tiles
 		List<Tile> adjacentTiles = b.getAdjacentTiles(tile);
 		//possible tiles to move to
 		List<Tile> availableTiles = new ArrayList<Tile>();
@@ -81,24 +86,24 @@ public class TextBasedInterface implements UserInterface {
 		System.out.println("Where would you like to move?");
 		for(int i=0;i<availableTiles.size();i++){
 			if(availableTiles.get(i).getY()>tile.getY()){
-				System.out.printf("(%d) Move Down?",i);
+				System.out.printf("(%d) Move Down?\n",i);
 			}else if(availableTiles.get(i).getY()<tile.getY()){
-				System.out.printf("(%d) Move Up?",i);
+				System.out.printf("(%d) Move Up?\n",i);
 			}else if(availableTiles.get(i).getX()>tile.getX()){
-				System.out.printf("(%d) Move Right?",i);
+				System.out.printf("(%d) Move Right?\n",i);
 			}else if(availableTiles.get(i).getX()<tile.getX()){
-				System.out.printf("(%d) Move Left?",i);
+				System.out.printf("(%d) Move Left?\n",i);
 			}
 		}
 
-		System.out.printf("(%d) Stay Put?",availableTiles.size());
+		System.out.printf("(%d) Stay Put?\n",availableTiles.size());
 
 		//Scanner scan = new Scanner(System.in);
 		scan.nextLine();
 		//TODO fix for error checking		
 		int choice = scan.nextInt();
 		while(choice<0 && choice>availableTiles.size()){
-			System.out.println("Please make a valid choice..");
+			System.out.println("Please make a valid choice..\n");
 			choice = scan.nextInt();
 		}
 		if(choice<availableTiles.size()){//they want to move
@@ -112,9 +117,24 @@ public class TextBasedInterface implements UserInterface {
 	}
 
 	@Override
-	public CardTuple promptGuess(Player currentPlayer, Room currentTile,
+	public CardTuple promptGuess(Player currentPlayer, Room currentRoom,
 			boolean isGuessOrAccusation) {
-		// TODO Auto-generated method stub
+		
+		System.out.printf("You are in the %s\nDo you wish to make %s %s?\n", currentRoom.getName(), isGuessOrAccusation?"a":"an", isGuessOrAccusation?"guess":"accusation");
+		System.out.printf("0) Yes\n1) No\n> ");
+		int answer;
+		while(true) {
+			answer = scan.nextInt();
+			if(answer != 0 && answer != 1) continue;
+			break;
+		}
+		if(answer == 0) { //They want to make a guess/accusation
+			if(isGuessOrAccusation) { // Make a guess.
+				//TODO Give them their options
+				
+			}
+		}
+		else { return null; }
 		return null;
 	}
 
@@ -122,5 +142,16 @@ public class TextBasedInterface implements UserInterface {
 	public void playerCanRefute(Player refutePlayer) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void alertPlayerTurn(Player currentPlayer) {
+		System.out.printf("%s, it's your turn!\n", currentPlayer.getName());
+		
+	}
+
+	@Override
+	public void alertNumMoves(int moves) {
+		System.out.printf("You have %d moves left\n", moves);		
 	}
 }
