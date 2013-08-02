@@ -9,9 +9,23 @@ import board.tiles.Tile;
 import board.tiles.Room;
 
 public interface UserInterface {
+	/**
+	 * Sets up players.
+	 */
 	public List<Player> initPlayers();
 	public void draw();
-	public CardTuple promptAccusation(Player currentPlayer, Room currentTile);
+	/**
+	 * Tell the interface to prompt the user whether they want to make a guess.
+	 * @param currentPlayer Current player
+	 * @param currentTile The room that they're in.
+	 * @return
+	 */
+	public CardTuple promptGuess(Player currentPlayer, Room currentTile);
+	/**
+	 * Ask the interface to get the tile of the next move (1 movement)
+	 * @param currentPlayer The player that is allowed to move
+	 * @return The tile the player moved to, or null if the player does not move.
+	 */
 	public Tile promptMove(Player currentPlayer);
 	/**
 	 * Tell the current player that refutePlayer can refute the accusation that they made.
