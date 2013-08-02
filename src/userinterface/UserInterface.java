@@ -13,5 +13,9 @@ public interface UserInterface {
 	public void draw();
 	public CardTuple promptAccusation(Player currentPlayer, Room currentTile);
 	public Tile promptMove(Player currentPlayer);
+	/**
+	 * Tell the current player that refutePlayer can refute the accusation that they made.
+	 * @param refutePlayer
+	 */
 	public void playerCanRefute(Player refutePlayer);
 }
