@@ -10,7 +10,7 @@ import main.CluedoException;
 
 import board.Weapon;
 
-
+//TODO update class diagram to incorporate new Room - RoomTile relationship
 public class Room {
 	private final String name;
 	private List<Weapon> weapons;

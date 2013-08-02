@@ -24,4 +24,8 @@ public class RoomTile extends Tile {
 		return this.room;
 	}
 
+	@Override
+	public int maxOccupants() {
+		return 6;
+	}
 }
