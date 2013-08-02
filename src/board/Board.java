@@ -7,7 +7,6 @@ import java.util.*;
 import board.tiles.*;
 
 public class Board {
-	//TODO build board
 	private Tile[][] boardTiles;
 
 	private List<Room> rooms = new ArrayList<Room>();

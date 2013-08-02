@@ -61,36 +61,40 @@ public class Cluedo {
 		state = State.PLAYER_NEW_TURN;
 		while(state != State.GAME_END) {
 			if(state == State.PLAYER_NEW_TURN) {
-				ui.draw();
 				int moves = dice.roll();
 				while(moves>0){
 					//keep getting moves
 					//TODO remove this vvvv
-					System.out.printf("You have %d moves, %s\n", moves, currentPlayer.getName());
+					ui.draw();
+					ui.alertPlayerTurn(currentPlayer);
+					ui.alertNumMoves(moves);
 					Tile move = ui.promptMove(currentPlayer);
+					
 					if(move == null) { //Stay where you are
 						moves = 0;
 						break;
 					}
+					
 					currentPlayer.setTile(move);
 					
 					moves--;
-					ui.draw();
 					if(move instanceof Room) {
+						moves = 0;
 						break;
 					}
 				}
+				ui.draw();
 				Tile currentTile = currentPlayer.getTile();
 				if(currentTile instanceof Room) {
 					Room room = (Room)currentTile;
 					boolean isGuessOrAccusation = !room.getName().equalsIgnoreCase("Pool room"); //True for guess. False for accusation
 					CardTuple accusation = ui.promptGuess(currentPlayer, (Room)currentTile, isGuessOrAccusation);
-					if(isGuessOrAccusation) { //Making a guess
+					if(isGuessOrAccusation && accusation != null) { //Making a guess
 						Player refutePlayer = null;
 						for(Player p : b.getPlayers()) {
-							if(p.hasCard(accusation.getPlayer()) 
+							if(!p.equals(currentPlayer) && (p.hasCard(accusation.getPlayer()) 
 									|| p.hasCard(accusation.getRoom())
-									|| p.hasCard(accusation.getWeapon())) { 
+									|| p.hasCard(accusation.getWeapon()))) { 
 								refutePlayer = p; 
 								break; 
 							}

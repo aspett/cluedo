@@ -34,4 +34,16 @@ public interface UserInterface {
 	 * @param refutePlayer
 	 */
 	public void playerCanRefute(Player refutePlayer);
+	
+	/**
+	 * Tell the next player that it's their turn, and how many moves they can make.
+	 * @param currentPlayer The player
+	 */
+	public void alertPlayerTurn(Player currentPlayer);
+	
+	/**
+	 * Alert the player of the number of moves they have left.
+	 * @param moves Number of moves left.
+	 */
+	public void alertNumMoves(int moves) ;
 }
