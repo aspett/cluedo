@@ -10,8 +10,6 @@ import java.math.*;
 import userinterface.TextBasedInterface;
 import userinterface.UserInterface;
 
-//TODO make sure someone can't be murdered in the pool room!
-
 public class Cluedo {
 	private CardTuple solution;
 	private Board b = new Board();
@@ -146,7 +144,14 @@ public class Cluedo {
 		WeaponCard weaponSolution = wc.remove(rand);
 
 		rand = Cluedo.rand(0, rc.size());
-		RoomCard roomSolution = rc.remove(rand);
+		
+		//can't be murdered in the pool room so we need to check if the card is not the pool room before removing it
+		RoomCard roomSolution = rc.get(rand);
+		while(roomSolution.toString().equals("Pool Room")){
+			rand = Cluedo.rand(0, rc.size());
+			roomSolution = rc.get(rand);
+		}
+		rc.remove(rand);
 
 		rand = Cluedo.rand(0, cc.size());
 		CharacterCard characterSolution = cc.remove(rand);
