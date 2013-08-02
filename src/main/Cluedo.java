@@ -72,9 +72,7 @@ public class Cluedo {
 							break; 
 						}
 					}
-					if(refutePlayer != null) {
-						ui.playerCanRefute(refutePlayer);
-					}
+					ui.playerCanRefute(null);
 				}
 				
 				
