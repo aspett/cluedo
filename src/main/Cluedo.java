@@ -61,18 +61,24 @@ public class Cluedo {
 		state = State.PLAYER_NEW_TURN;
 		while(state != State.GAME_END) {
 			if(state == State.PLAYER_NEW_TURN) {
-				
+				ui.draw();
 				int moves = dice.roll();
 				while(moves>0){
 					//keep getting moves
+					//TODO remove this vvvv
+					System.out.printf("You have %d moves, %s\n", moves, currentPlayer.getName());
 					Tile move = ui.promptMove(currentPlayer);
 					if(move == null) { //Stay where you are
 						moves = 0;
 						break;
 					}
 					currentPlayer.setTile(move);
+					
 					moves--;
 					ui.draw();
+					if(move instanceof Room) {
+						break;
+					}
 				}
 				Tile currentTile = currentPlayer.getTile();
 				if(currentTile instanceof Room) {

@@ -12,9 +12,11 @@ import board.tiles.*;
 //TODO Update class diagram for the interface to hold the board
 public class TextBasedInterface implements UserInterface {
 	private Board b;
+	private Scanner scan;
 
 	public TextBasedInterface(Board b){
 		this.b=b;
+		scan = new Scanner(System.in);
 	}
 
 	public void draw(){
@@ -24,7 +26,9 @@ public class TextBasedInterface implements UserInterface {
 				for(Player p : b.getPlayers()) {
 					if(p.getTile().equals(t)) {
 						drawTile = false;
-						System.out.println("p ");
+						if(Player.getCurrentPlayer().equals(p))
+							System.out.print("P ");
+						else System.out.print("p ");
 					}
 				}
 				if(!drawTile) continue;
@@ -44,7 +48,7 @@ public class TextBasedInterface implements UserInterface {
 	}
 
 	public List<Player> initPlayers(){
-		Scanner scan = new Scanner(System.in);
+		//Scanner scan = new Scanner(System.in);
 		System.out.println("How many players?");
 		//TODO add error support on scanning and bounds of player ammount etc
 		int playerCount = scan.nextInt();
@@ -58,7 +62,7 @@ public class TextBasedInterface implements UserInterface {
 			int choice = scan.nextInt();
 			actualPlayers.add(b.getAvailablePlayers().remove(choice));
 		}
-		scan.close();
+		//scan.close();
 		return actualPlayers;
 	}
 
@@ -77,9 +81,9 @@ public class TextBasedInterface implements UserInterface {
 		System.out.println("Where would you like to move?");
 		for(int i=0;i<availableTiles.size();i++){
 			if(availableTiles.get(i).getY()>tile.getY()){
-				System.out.printf("(%d) Move Up?",i);
-			}else if(availableTiles.get(i).getY()<tile.getY()){
 				System.out.printf("(%d) Move Down?",i);
+			}else if(availableTiles.get(i).getY()<tile.getY()){
+				System.out.printf("(%d) Move Up?",i);
 			}else if(availableTiles.get(i).getX()>tile.getX()){
 				System.out.printf("(%d) Move Right?",i);
 			}else if(availableTiles.get(i).getX()<tile.getX()){
@@ -89,8 +93,8 @@ public class TextBasedInterface implements UserInterface {
 
 		System.out.printf("(%d) Stay Put?",availableTiles.size());
 
-		Scanner scan = new Scanner(System.in);
-
+		//Scanner scan = new Scanner(System.in);
+		scan.nextLine();
 		//TODO fix for error checking		
 		int choice = scan.nextInt();
 		while(choice<0 && choice>availableTiles.size()){
@@ -98,11 +102,11 @@ public class TextBasedInterface implements UserInterface {
 			choice = scan.nextInt();
 		}
 		if(choice<availableTiles.size()){//they want to move
-			scan.close();
+			//scan.close();
 			return availableTiles.get(choice);
 		}
 
-		scan.close();
+		//scan.close();
 		return null;
 
 	}
