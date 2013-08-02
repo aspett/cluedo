@@ -64,7 +64,6 @@ public class Cluedo {
 				int moves = dice.roll();
 				while(moves>0){
 					//keep getting moves
-					//TODO remove this vvvv
 					ui.draw();
 					ui.alertPlayerTurn(currentPlayer);
 					ui.alertNumMoves(moves);
