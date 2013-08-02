@@ -167,6 +167,16 @@ public class Board {
 		return adjacentTiles;
 	}
 	
+	public List<Tile> getAvailableTiles(Tile tile) {
+		List<Tile> availableTiles = new ArrayList<Tile>();
+		for(Tile t : getAdjacentTiles(tile)){
+			if(t.isPassable()){
+					if(t.currentOccupants(this) < t.maxOccupants()) availableTiles.add(t);
+			}
+		}
+		return availableTiles;
+	}
+	
 	public List<Player> getAvailablePlayers() {
 		return availablePlayers;
 	}

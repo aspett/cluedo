@@ -10,7 +10,7 @@ import java.math.*;
 import userinterface.TextBasedInterface;
 import userinterface.UserInterface;
 
-
+//TODO make sure someone can't be murdered in the pool room!
 
 public class Cluedo {
 	private CardTuple solution;
@@ -64,7 +64,6 @@ public class Cluedo {
 				int moves = dice.roll();
 				while(moves>0){
 					//keep getting moves
-					//TODO remove this vvvv
 					ui.draw();
 					ui.alertPlayerTurn(currentPlayer);
 					ui.alertNumMoves(moves);

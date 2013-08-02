@@ -76,15 +76,8 @@ public class TextBasedInterface implements UserInterface {
 		
 		//TODO move some of this logic to the board.
 		Tile tile = p.getTile();
-		//all adjacent tiles
-		List<Tile> adjacentTiles = b.getAdjacentTiles(tile);
-		//possible tiles to move to
-		List<Tile> availableTiles = new ArrayList<Tile>();
-		for(Tile t : adjacentTiles){
-			if(t.isPassable()){
-					if(t.currentOccupants(b) < t.maxOccupants()) availableTiles.add(t);
-			}
-		}
+		//All tiles that are free from the current tile.
+		List<Tile> availableTiles = b.getAvailableTiles(tile);
 
 		System.out.println("Where would you like to move?");
 		for(int i=0;i<availableTiles.size();i++){
@@ -97,7 +90,8 @@ public class TextBasedInterface implements UserInterface {
 			}else if(availableTiles.get(i).getX()<tile.getX()){
 				System.out.printf("(%d) Move Left?",i);
 			}
-			System.out.printf(" (%d occupants)\n", availableTiles.get(i).currentOccupants(b));
+			//TODO remove: debug message: System.out.printf(" (%d occupants)\n", availableTiles.get(i).currentOccupants(b));
+			System.out.print("\n");
 		}
 
 		System.out.printf("(%d) Stay Put?\n",availableTiles.size());
