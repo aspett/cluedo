@@ -34,6 +34,18 @@ public class Cluedo {
 		//Get players
 		List<Player> players = ui.initPlayers();
 		b.setPlayers(players);
+		
+		//Give players their start positions
+		System.out.println(b.getBoardTiles().length);
+		System.out.println(b.getBoardTiles()[0].length);
+		for(Player p : players) {
+			if(p.getName().equals("Eleanor Peacock")) p.setTile(b.getBoardTiles()[1][7]);
+			if(p.getName().equals("Kasandra Scarlett")) p.setTile(b.getBoardTiles()[28][19]);
+			if(p.getName().equals("Jack Mustard")) p.setTile(b.getBoardTiles()[28][8]);
+			if(p.getName().equals("Diane White")) p.setTile(b.getBoardTiles()[19][1]);
+			if(p.getName().equals("Jacob Green")) p.setTile(b.getBoardTiles()[10][1]);
+			if(p.getName().equals("Victor Plum")) p.setTile(b.getBoardTiles()[1][21]);
+		}
 
 		//Choose a random player to start!
 		//TODO rules say scarlett is to start. Not sure what happens if no one is her
@@ -46,7 +58,7 @@ public class Cluedo {
 		int currentPlayerID = randPlayer;
 		Player currentPlayer = startingPlayer;
 		Player.setCurrentPlayer(currentPlayer);
-
+		state = State.PLAYER_NEW_TURN;
 		while(state != State.GAME_END) {
 			if(state == State.PLAYER_NEW_TURN) {
 				

@@ -165,10 +165,10 @@ public class Board {
 		int y = tile.getY();
 		
 		List<Tile>adjacentTiles = new ArrayList<Tile>();
-		adjacentTiles.add(boardTiles[x+1][y]);
-		adjacentTiles.add(boardTiles[x-1][y]);
-		adjacentTiles.add(boardTiles[x][y-1]);
-		adjacentTiles.add(boardTiles[x][y+1]);
+		adjacentTiles.add(boardTiles[y+1][x]);
+		adjacentTiles.add(boardTiles[y-1][x]);
+		adjacentTiles.add(boardTiles[y][x-1]);
+		adjacentTiles.add(boardTiles[y][x+1]);
 		return adjacentTiles;
 	}
 	

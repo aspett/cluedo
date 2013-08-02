@@ -20,6 +20,14 @@ public class TextBasedInterface implements UserInterface {
 	public void draw(){
 		for(Tile[] tArray:b.getBoardTiles()){
 			for(Tile t:tArray){
+				boolean drawTile = true;
+				for(Player p : b.getPlayers()) {
+					if(p.getTile().equals(t)) {
+						drawTile = false;
+						System.out.println("p ");
+					}
+				}
+				if(!drawTile) continue;
 				if(t instanceof IntrigueTile)System.out.print("? ");
 				else if(t instanceof Room)System.out.print("E ");
 				else if(t instanceof StartTile)System.out.print("S ");
