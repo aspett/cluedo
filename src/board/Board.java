@@ -41,42 +41,72 @@ public class Board {
 					char c=line.charAt(j);
 					switch(c){
 					case ' ':ImpassableTile gap = new ImpassableTile(false);
+							gap.setX(j);
+							gap.setY(i);
 							getBoardTiles()[i][j] = gap;
 							break;
 
 					case '#':ImpassableTile wall = new ImpassableTile(true);
+							wall.setX(j);
+							wall.setY(i);
 							getBoardTiles()[i][j] = wall;
 							break;
 					case 'P':StartTile start = new StartTile();
+							start.setX(j);
+							start.setY(i);
 							getBoardTiles()[i][j] = start;
 							break;
 					case '?':IntrigueTile intrigue = new IntrigueTile();
+							intrigue.setX(j);
+							intrigue.setY(i);
 							getBoardTiles()[i][j] = intrigue;
 							break;
 					case '.':RegularTile reg = new RegularTile();
+							reg.setX(j);
+							reg.setY(i);
 							getBoardTiles()[i][j] = reg;
 							break;
 					default: int roomNum=c-48;
 							switch(roomNum){
 							case 0:getBoardTiles()[i][j]=rooms.get(0);
+									rooms.get(0).setX(j);
+									rooms.get(0).setY(i);
 									break;
 							case 1:getBoardTiles()[i][j]=rooms.get(1);
+									rooms.get(1).setX(j);
+									rooms.get(1).setY(i);
 									break;
 							case 2:getBoardTiles()[i][j]=rooms.get(2);
+									rooms.get(2).setX(j);
+									rooms.get(2).setY(i);
 									break;
 							case 3:getBoardTiles()[i][j]=rooms.get(3);
+									rooms.get(3).setX(j);
+									rooms.get(3).setY(i);
 									break;
 							case 4:getBoardTiles()[i][j]=rooms.get(4);
+									rooms.get(4).setX(j);
+									rooms.get(4).setY(i);
 									break;
 							case 5:getBoardTiles()[i][j]=rooms.get(5);
+									rooms.get(5).setX(j);
+									rooms.get(5).setY(i);
 									break;
 							case 6:getBoardTiles()[i][j]=rooms.get(6);
+									rooms.get(6).setX(j);
+									rooms.get(6).setY(i);
 									break;
 							case 7:getBoardTiles()[i][j]=rooms.get(7);
+									rooms.get(7).setX(j);
+									rooms.get(7).setY(i);
 									break;
 							case 8:getBoardTiles()[i][j]=rooms.get(8);
+									rooms.get(8).setX(j);
+									rooms.get(8).setY(i);
 									break;
 							case 9:getBoardTiles()[i][j]=rooms.get(9);
+									rooms.get(9).setX(j);
+									rooms.get(9).setY(i);
 									break;
 							}
 
@@ -129,6 +159,19 @@ public class Board {
 		weapons.add(new Weapon("Poison"));
 		weapons.add(new Weapon("Axe"));
 	}
+	
+	public List<Tile> getAdjacentTiles(Tile tile){
+		int x = tile.getX();
+		int y = tile.getY();
+		
+		List<Tile>adjacentTiles = new ArrayList<Tile>();
+		adjacentTiles.add(boardTiles[x+1][y]);
+		adjacentTiles.add(boardTiles[x-1][y]);
+		adjacentTiles.add(boardTiles[x][y-1]);
+		adjacentTiles.add(boardTiles[x][y+1]);
+		return adjacentTiles;
+	}
+	
 	public List<Player> getAvailablePlayers() {
 		return availablePlayers;
 	}

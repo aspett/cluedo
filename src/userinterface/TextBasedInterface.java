@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import cards.CardTuple;
+
 import board.Board;
 import board.Player;
 import board.tiles.*;
@@ -16,8 +18,8 @@ public class TextBasedInterface implements UserInterface {
 	}
 
 	public void draw(){
-		for(TileI[] tArray:b.getBoardTiles()){
-			for(TileI t:tArray){
+		for(Tile[] tArray:b.getBoardTiles()){
+			for(Tile t:tArray){
 				if(t instanceof IntrigueTile)System.out.print("? ");
 				else if(t instanceof Room)System.out.print("E ");
 				else if(t instanceof StartTile)System.out.print("S ");
@@ -26,7 +28,7 @@ public class TextBasedInterface implements UserInterface {
 					ImpassableTile iT=(ImpassableTile)t;
 					if(iT.isWall())System.out.print("# ");
 					else System.out.print("  ");
-					
+
 				}
 			}
 			System.out.println();
@@ -51,8 +53,62 @@ public class TextBasedInterface implements UserInterface {
 		scan.close();
 		return actualPlayers;
 	}
-	
-	public TileI promptMove(Player p){
-		TileI tile = p.getTile();
+
+	public Tile promptMove(Player p){
+		Tile tile = p.getTile();
+		//all addjacent tiles
+		List<Tile> adjacentTiles = b.getAdjacentTiles(tile);
+		//possible tiles to move to
+		List<Tile> availableTiles = new ArrayList<Tile>();
+		for(Tile t : adjacentTiles){
+			if(t.isPassable()){
+				availableTiles.add(t);
+			}
+		}
+
+		System.out.println("Where would you like to move?");
+		for(int i=0;i<availableTiles.size();i++){
+			if(availableTiles.get(i).getY()>tile.getY()){
+				System.out.printf("(%d) Move Up?",i);
+			}else if(availableTiles.get(i).getY()<tile.getY()){
+				System.out.printf("(%d) Move Down?",i);
+			}else if(availableTiles.get(i).getX()>tile.getX()){
+				System.out.printf("(%d) Move Right?",i);
+			}else if(availableTiles.get(i).getX()<tile.getX()){
+				System.out.printf("(%d) Move Left?",i);
+			}
+		}
+
+		System.out.printf("(%d) Stay Put?",availableTiles.size());
+
+		Scanner scan = new Scanner(System.in);
+
+		//TODO fix for error checking		
+		int choice = scan.nextInt();
+		while(choice<0 && choice>availableTiles.size()){
+			System.out.println("Please make a valid choice..");
+			choice = scan.nextInt();
+		}
+		if(choice<availableTiles.size()){//they want to move
+			scan.close();
+			return availableTiles.get(choice);
+		}
+
+		scan.close();
+		return null;
+
+	}
+
+	@Override
+	public CardTuple promptGuess(Player currentPlayer, Room currentTile,
+			boolean isGuessOrAccusation) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void playerCanRefute(Player refutePlayer) {
+		// TODO Auto-generated method stub
+
 	}
 }
