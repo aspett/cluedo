@@ -15,6 +15,7 @@ public interface UserInterface {
 	public Tile promptMove(Player currentPlayer);
 	/**
 	 * Tell the current player that refutePlayer can refute the accusation that they made.
+	 * If refutePlayer is null, no one can refute the claim.
 	 * @param refutePlayer
 	 */
 	public void playerCanRefute(Player refutePlayer);
