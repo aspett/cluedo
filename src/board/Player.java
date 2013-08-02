@@ -1,5 +1,9 @@
 package board;
 
+import java.util.List;
+
+import cards.Card;
+
 import board.tiles.*;
 
 public class Player {
@@ -7,6 +11,8 @@ public class Player {
 	private int playerNumber;
 	private Tile currentTile;
 	private static Player currentPlayer;
+	private List<Card> cards;
+	
 	public String getName(){
 		return this.character;
 	}
@@ -33,6 +39,14 @@ public class Player {
 	}
 	public static Player getCurrentPlayer() {
 		return currentPlayer;
+	}
+	
+	public void addCard(Card c) {
+		this.cards.add(c);
+	}
+	
+	public boolean hasCard(Card c) {
+		return this.cards.contains(c);
 	}
 	
 	

@@ -13,4 +13,5 @@ public interface UserInterface {
 	public void draw();
 	public CardTuple promptAccusation(Player currentPlayer, Room currentTile);
 	public Tile promptMove(Player currentPlayer);
+	public void playerCanRefute(Player refutePlayer);
 }

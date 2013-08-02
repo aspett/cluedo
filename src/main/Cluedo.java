@@ -28,6 +28,7 @@ public class Cluedo {
 		ui = new TextBasedInterface(b);
 		dice = new Dice();
 		List<Card> deck = initializeCardsSolution();
+		
 		//List<Player> players = b.getPlayers();
 
 		//Get players
@@ -62,6 +63,18 @@ public class Cluedo {
 				Tile currentTile = currentPlayer.getTile();
 				if(currentTile instanceof Room) {
 					CardTuple accusation = ui.promptAccusation(currentPlayer, (Room)currentTile);
+					Player refutePlayer = null;
+					for(Player p : b.getPlayers()) {
+						if(p.hasCard(accusation.getPlayer()) 
+								|| p.hasCard(accusation.getRoom())
+								|| p.hasCard(accusation.getWeapon())) { 
+							refutePlayer = p; 
+							break; 
+						}
+					}
+					if(refutePlayer != null) {
+						ui.playerCanRefute(refutePlayer);
+					}
 				}
 				
 				
@@ -114,6 +127,7 @@ public class Cluedo {
 		deck.addAll(cc);
 		deck.addAll(rc);
 		deck.addAll(wc);
+		
 		Collections.shuffle(deck);
 		return deck;
 	}
