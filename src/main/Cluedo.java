@@ -67,16 +67,21 @@ public class Cluedo {
 					Room room = (Room)currentTile;
 					boolean isGuessOrAccusation = !room.getName().equalsIgnoreCase("Pool room"); //True for guess. False for accusation
 					CardTuple accusation = ui.promptGuess(currentPlayer, (Room)currentTile, isGuessOrAccusation);
-					Player refutePlayer = null;
-					for(Player p : b.getPlayers()) {
-						if(p.hasCard(accusation.getPlayer()) 
-								|| p.hasCard(accusation.getRoom())
-								|| p.hasCard(accusation.getWeapon())) { 
-							refutePlayer = p; 
-							break; 
+					if(isGuessOrAccusation) { //Making a guess
+						Player refutePlayer = null;
+						for(Player p : b.getPlayers()) {
+							if(p.hasCard(accusation.getPlayer()) 
+									|| p.hasCard(accusation.getRoom())
+									|| p.hasCard(accusation.getWeapon())) { 
+								refutePlayer = p; 
+								break; 
+							}
 						}
+						ui.playerCanRefute(refutePlayer);
 					}
-					ui.playerCanRefute(refutePlayer);
+					else { //Making an accusation!
+						
+					}
 				}
 				//Set new player
 				currentPlayerID = (currentPlayerID + 1) % b.getPlayers().size();
