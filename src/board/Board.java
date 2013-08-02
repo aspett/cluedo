@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import userinterface.TextBasedInterface;
+
 import board.tiles.*;
 
 public class Board {
