@@ -45,10 +45,11 @@ public class Cluedo {
 		//		ui.draw();
 		int currentPlayerID = randPlayer;
 		Player currentPlayer = startingPlayer;
+		Player.setCurrentPlayer(currentPlayer);
 
 		while(state != State.GAME_END) {
 			if(state == State.PLAYER_NEW_TURN) {
-				Player.setCurrentPlayer(currentPlayer);
+				
 				int moves = dice.roll();
 				while(moves>0){
 					//keep getting moves
@@ -59,10 +60,13 @@ public class Cluedo {
 					}
 					currentPlayer.setTile(move);
 					moves--;
+					ui.draw();
 				}
 				Tile currentTile = currentPlayer.getTile();
 				if(currentTile instanceof Room) {
-					CardTuple accusation = ui.promptAccusation(currentPlayer, (Room)currentTile);
+					Room room = (Room)currentTile;
+					boolean isGuessOrAccusation = !room.getName().equalsIgnoreCase("Pool room"); //True for guess. False for accusation
+					CardTuple accusation = ui.promptGuess(currentPlayer, (Room)currentTile, isGuessOrAccusation);
 					Player refutePlayer = null;
 					for(Player p : b.getPlayers()) {
 						if(p.hasCard(accusation.getPlayer()) 
@@ -72,10 +76,12 @@ public class Cluedo {
 							break; 
 						}
 					}
-					ui.playerCanRefute(null);
+					ui.playerCanRefute(refutePlayer);
 				}
-				
-				
+				//Set new player
+				currentPlayerID = (currentPlayerID + 1) % b.getPlayers().size();
+				currentPlayer = b.getPlayers().get(currentPlayerID);
+				Player.setCurrentPlayer(currentPlayer);
 			}
 		}
 
