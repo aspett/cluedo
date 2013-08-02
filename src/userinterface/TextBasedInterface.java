@@ -34,7 +34,7 @@ public class TextBasedInterface implements UserInterface {
 				if(!drawTile) continue;
 				if(t instanceof IntrigueTile)System.out.print("? ");
 				else if(t instanceof Room)System.out.print("E ");
-				else if(t instanceof StartTile)System.out.print("S ");
+				else if(t instanceof StartTile)System.out.print(". ");
 				else if(t instanceof RegularTile)System.out.print(". ");
 				else if(t instanceof ImpassableTile){
 					ImpassableTile iT=(ImpassableTile)t;
