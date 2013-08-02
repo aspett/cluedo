@@ -1,4 +1,8 @@
 package board.tiles;
+
+import board.Board;
+import board.Player;
+
 //TODO change CD for interface to abstract
 public abstract class Tile {
 	private int x;
@@ -28,6 +32,23 @@ public abstract class Tile {
 
 	public int getY() {
 		return y;
+	}
+	
+	public int maxOccupants() {
+		return 1;
+	}
+	
+	public int currentOccupants(Board b) {
+		int r = 0;
+		for(Player p : b.getPlayers()) {
+			if(p.getTile().equals(this)) r++;
+		}
+		return r;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		return (this == o);
 	}
 	
 	
