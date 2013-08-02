@@ -10,7 +10,7 @@ import java.math.*;
 import userinterface.TextBasedInterface;
 import userinterface.UserInterface;
 
-
+//TODO make sure someone can't be murdered in the pool room!
 
 public class Cluedo {
 	private CardTuple solution;
