@@ -36,9 +36,10 @@ public class TextBasedInterface implements UserInterface {
 				}
 				if(!drawTile) continue;
 				if(t instanceof IntrigueTile)System.out.print("? ");
-				else if(t instanceof Room)System.out.print("E ");
+				else if(t instanceof RoomTile)System.out.print("E ");
 				//TODO *** Discuss whether we want to draw start tiles
 				//else if(t instanceof StartTile)System.out.print("S ");
+				else if(t instanceof StartTile)System.out.print(". ");
 				else if(t instanceof RegularTile)System.out.print(". ");
 				else if(t instanceof ImpassableTile){
 					ImpassableTile iT=(ImpassableTile)t;
@@ -116,10 +117,10 @@ public class TextBasedInterface implements UserInterface {
 	}
 
 	@Override
-	public CardTuple promptGuess(Player currentPlayer, Room currentTile,
+	public CardTuple promptGuess(Player currentPlayer, Room currentRoom,
 			boolean isGuessOrAccusation) {
 		
-		System.out.printf("Do you wish to make %s %s?\n", isGuessOrAccusation?"a":"an", isGuessOrAccusation?"guess":"accusation");
+		System.out.printf("You are in the %s\nDo you wish to make %s %s?\n", currentRoom.getName(), isGuessOrAccusation?"a":"an", isGuessOrAccusation?"guess":"accusation");
 		System.out.printf("0) Yes\n1) No\n> ");
 		int answer;
 		while(true) {

@@ -1,18 +1,25 @@
 package board.tiles;
 
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import main.CluedoException;
 
 import board.Weapon;
 
 
-public class Room extends Tile {
+public class Room {
 	private final String name;
 	private List<Weapon> weapons;
+	private Set<RoomTile> tiles;
 
 	public Room(String name) {
 		this.name = name;
 		weapons=new ArrayList<Weapon>();
+		tiles = new HashSet<RoomTile>();
 	}
 
 	public String getName() {
@@ -41,13 +48,7 @@ public class Room extends Tile {
 	public List<Weapon> getWeapons(){
 		return this.weapons;
 	}
-
-	@Override
-	public boolean isPassable() {
-		return true;
-	}
-
-	@Override
+	
 	public void onEnter() {
 		// TODO write onEnter method
 	}
@@ -82,6 +83,16 @@ public class Room extends Tile {
 			return false;
 		return true;
 	}
+	
+	public void addTile(RoomTile r) {
+		if(r == null) throw new CluedoException("A room can't have a null exit/entry");
+		this.tiles.add(r);
+	}
+
+	public boolean hasTile(RoomTile r) {
+		return (this.tiles.contains(r));
+	}
+
 	
 	
 

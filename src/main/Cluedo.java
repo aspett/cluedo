@@ -78,17 +78,17 @@ public class Cluedo {
 					currentPlayer.setTile(move);
 					
 					moves--;
-					if(move instanceof Room) {
+					if(move instanceof RoomTile) {
 						moves = 0;
 						break;
 					}
 				}
 				ui.draw();
 				Tile currentTile = currentPlayer.getTile();
-				if(currentTile instanceof Room) {
-					Room room = (Room)currentTile;
-					boolean isGuessOrAccusation = !room.getName().equalsIgnoreCase("Pool room"); //True for guess. False for accusation
-					CardTuple accusation = ui.promptGuess(currentPlayer, (Room)currentTile, isGuessOrAccusation);
+				if(currentTile instanceof RoomTile) {
+					RoomTile room = (RoomTile)currentTile;
+					boolean isGuessOrAccusation = !room.getRoom().getName().equalsIgnoreCase("Pool room"); //True for guess. False for accusation
+					CardTuple accusation = ui.promptGuess(currentPlayer, room.getRoom(), isGuessOrAccusation);
 					if(isGuessOrAccusation && accusation != null) { //Making a guess
 						Player refutePlayer = null;
 						for(Player p : b.getPlayers()) {

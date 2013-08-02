@@ -2,6 +2,8 @@ package board;
 
 import java.util.List;
 
+import main.CluedoException;
+
 import cards.Card;
 
 import board.tiles.*;
@@ -27,6 +29,7 @@ public class Player {
 	}
 	
 	public void setTile(Tile tile) {
+		if(!tile.isPassable()) throw new CluedoException("Player can not be on an impassable tile.");
 		this.currentTile = tile;
 	}
 	
@@ -42,6 +45,7 @@ public class Player {
 	}
 	
 	public void addCard(Card c) {
+		if(c == null) throw new CluedoException("Can not give a player a null card");
 		this.cards.add(c);
 	}
 	
