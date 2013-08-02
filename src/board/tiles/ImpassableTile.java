@@ -20,7 +20,11 @@ public class ImpassableTile extends Tile{
 	@Override
 	public void onEnter() {
 		throw new RuntimeException("You should never be able to enter an impassable tile");
-		
+	}
+	
+	@Override
+	public int maxOccupants() {
+		return 0;
 	}
 
 
