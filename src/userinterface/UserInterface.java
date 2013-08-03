@@ -57,5 +57,11 @@ public interface UserInterface {
 	 * return null;
 	 * @param correct true for correct accusation, false otherwise
 	 */
-	public void resolveAccusation(boolean correct) ;
+	public void resolveAccusation(boolean correct);
+	
+	/**
+	 * Say who won the game
+	 * @param player the player who won
+	 */
+	public void printWinner(Player player);
 }

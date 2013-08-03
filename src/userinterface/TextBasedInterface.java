@@ -259,12 +259,20 @@ public class TextBasedInterface implements UserInterface {
 	@Override
 	public void resolveAccusation(boolean correct) {
 		if(correct){
-			//decide what to announce
-			//debug code
-			System.out.println(correct);
+			System.out.printf("Your accusation is correct!");
 		}else{
-			System.out.printf("Your accusation was incorrect. You have been eliminated from the game\n");
+			//TODO test accusation resolution text
+			System.out.printf("Your accusation was incorrect. You have been eliminated from the game\nRemaining players:\n");
+			for(int i = 0; i < b.getPlayers().size(); i++) {
+				System.out.print(b.getPlayers().get(i));
+				if(i < b.getPlayers().size()-1) System.out.print(", ");
+			}
 		}
 		
+	}
+
+	@Override
+	public void printWinner(Player player) {
+		System.out.printf("Game over! The winner is:\n%s\n", player.getName());
 	}
 }

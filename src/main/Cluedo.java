@@ -126,13 +126,18 @@ public class Cluedo {
 					}
 					else if(!isGuessOrAccusation && accusation != null) { //Making an accusation!
 						boolean correct = checkAccusation(accusation);
-						if(correct){
-							//choose what to do if correct
-							//probably just change the game state and print the winner and solution?
-							//ui.resolveAccusation(correct);
-						}else{//accusation is wrong. the player is eliminated from the game
+						if(correct) {
+							state = State.GAME_END;
 							ui.resolveAccusation(correct);
+							ui.printWinner(currentPlayer);
+						}
+						else {//accusation is wrong. the player is eliminated from the game
 							b.getPlayers().remove(currentPlayer);
+							ui.resolveAccusation(correct);
+							if(b.getPlayers().size() < 2) { //Game is over.
+								state = State.GAME_END;
+								ui.printWinner(b.getPlayers().get(0));
+							}
 						}
 					}
 				}
