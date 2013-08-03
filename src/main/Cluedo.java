@@ -87,6 +87,8 @@ public class Cluedo {
 					Room currentRoom = ((RoomTile) currentPlayer.getTile()).getRoom();
 					currentPlayer.setDisallowedTiles(currentRoom.getTiles());
 				}
+				else
+					currentPlayer.setDisallowedTiles(null);
 				int moves = dice.roll();
 				while(moves>0){
 					//keep getting moves
