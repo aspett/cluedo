@@ -113,7 +113,7 @@ public class TextBasedInterface implements UserInterface {
 		return null;
 
 	}
-
+	
 	@Override
 	public CardTuple promptGuess(Player currentPlayer, Room currentRoom,
 			boolean isGuessOrAccusation) {
@@ -129,6 +129,7 @@ public class TextBasedInterface implements UserInterface {
 		if(answer == 0) { //They want to make a guess/accusation
 			if(isGuessOrAccusation) { // Make a guess.
 				//TODO Give them their options
+				
 				
 			}
 		}
