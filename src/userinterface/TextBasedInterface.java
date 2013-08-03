@@ -182,8 +182,8 @@ public class TextBasedInterface implements UserInterface {
 
 	@Override
 	public void playerCanRefute(Player refutePlayer) {
-		//TODO WORK OUT WHY THIS DOESNT WAIT FOR USER INPUT >:(
-		System.out.printf("%s can refute the claim.\nPress ENTER to continue.\n", refutePlayer.getName());
+		//TODO *********** WORK OUT WHY THIS DOESNT WAIT FOR USER INPUT >:(
+		System.out.printf("%s can refute the claim.\nPress any key, and hit ENTER to continue.\n", refutePlayer.getName());
 		scan.next();
 
 	}
