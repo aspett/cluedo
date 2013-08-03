@@ -2,6 +2,9 @@ package userinterface;
 
 import java.util.List;
 import cards.CardTuple;
+import cards.CharacterCard;
+import cards.RoomCard;
+import cards.WeaponCard;
 
 
 import board.Player;
@@ -19,9 +22,12 @@ public interface UserInterface {
 	 * @param currentPlayer Current player
 	 * @param currentRoom The room that they're in.
 	 * @param isGuessOrAccusation TRUE IF GUESS, FALSE IF ACCUSATION
+	 * @param characterCards A list of all character cards.
+	 * @param roomCards A list of all room cards
+	 * @param weaponCards A list of all weapon cards
 	 * @return
 	 */
-	public CardTuple promptGuess(Player currentPlayer, Room currentRoom, boolean isGuessOrAccusation);
+	public CardTuple promptGuess(Player currentPlayer, Room currentRoom, boolean isGuessOrAccusation, List<CharacterCard> characterCards, List<RoomCard> roomCards, List<WeaponCard> weaponCards);
 	/**
 	 * Ask the interface to get the tile of the next move (1 movement)
 	 * @param currentPlayer The player that is allowed to move

@@ -203,4 +203,16 @@ public class Board {
 	public void setBoardTiles(Tile[][] boardTiles) {
 		this.boardTiles = boardTiles;
 	}
+	
+	/**
+	 * Get a room by it's name
+	 * @param str Name of the room
+	 * @return Room|null
+	 */
+	public Room getRoom(String str) {
+		for(Room r : getRooms()) {
+			if(r.toString().equalsIgnoreCase(str)) return r;
+		}
+		return null;
+	}
 }

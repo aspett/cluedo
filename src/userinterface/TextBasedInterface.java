@@ -5,7 +5,12 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import main.CluedoException;
+
 import cards.CardTuple;
+import cards.CharacterCard;
+import cards.RoomCard;
+import cards.WeaponCard;
 
 import board.Board;
 import board.Player;
@@ -76,6 +81,7 @@ public class TextBasedInterface implements UserInterface {
 		
 		//TODO move some of this logic to the board.
 		Tile tile = p.getTile();
+		
 		//All tiles that are free from the current tile.
 		List<Tile> availableTiles = b.getAvailableTiles(tile);
 
@@ -100,7 +106,7 @@ public class TextBasedInterface implements UserInterface {
 		scan.nextLine();
 		//TODO fix for error checking		
 		int choice = scan.nextInt();
-		while(choice<0 && choice>availableTiles.size()){
+		while(choice<0 || choice>availableTiles.size()){
 			System.out.println("Please make a valid choice..\n");
 			choice = scan.nextInt();
 		}
@@ -116,7 +122,7 @@ public class TextBasedInterface implements UserInterface {
 
 	@Override
 	public CardTuple promptGuess(Player currentPlayer, Room currentRoom,
-			boolean isGuessOrAccusation) {
+			boolean isGuessOrAccusation, List<CharacterCard> characterCards, List<RoomCard> roomCards, List<WeaponCard> weaponCards) {
 		
 		System.out.printf("You are in the %s\nDo you wish to make %s %s?\n", currentRoom.getName(), isGuessOrAccusation?"a":"an", isGuessOrAccusation?"guess":"accusation");
 		System.out.printf("0) Yes\n1) No\n> ");
@@ -129,6 +135,44 @@ public class TextBasedInterface implements UserInterface {
 		if(answer == 0) { //They want to make a guess/accusation
 			if(isGuessOrAccusation) { // Make a guess.
 				//TODO Give them their options
+				RoomCard roomCard = null;
+				CharacterCard characterCard = null;
+				WeaponCard weaponCard = null;
+				for(RoomCard rc : roomCards) {
+					if(rc.toString().equals(currentRoom.getName())) roomCard = rc; 
+				}
+				
+				System.out.printf("Please choose a character to guess:\n");
+				for(int i = 0; i < characterCards.size(); i++) {
+					System.out.printf("%d) %s\n", i, characterCards.get(i).toString());
+				}
+				int choice = -1;
+				while(choice < 0 || choice >= characterCards.size()) {
+					System.out.printf("> ");
+					choice = scan.nextInt();
+				}
+				
+				characterCard = characterCards.get(choice);
+				
+				System.out.printf("Please choose a weapon to guess:\n");
+				for(int i = 0; i < weaponCards.size(); i++) {
+					System.out.printf("%d) %s\n", i, weaponCards.get(i).toString());
+				}
+				
+				choice = -1;
+				while(choice < 0 || choice >= weaponCards.size()) {
+					System.out.printf("> ");
+					choice = scan.nextInt();
+				}
+				
+				weaponCard = weaponCards.get(choice);
+				
+				if(roomCard == null) throw new CluedoException("Couldn't find player's current room");
+				if(characterCard == null) throw new CluedoException("Error getting character card from accusation/guess");
+				if(weaponCard == null) throw new CluedoException("Error getting weapon card from accusation/guess");
+				return new CardTuple(characterCard, roomCard, weaponCard);
+			}
+			else { //Make an ACCUSATION
 				
 			}
 		}
@@ -138,7 +182,8 @@ public class TextBasedInterface implements UserInterface {
 
 	@Override
 	public void playerCanRefute(Player refutePlayer) {
-		// TODO Auto-generated method stub
+		System.out.printf("%s can refute the claim.\nPress ENTER to continue.\n", refutePlayer.getName());
+		scan.next();
 
 	}
 

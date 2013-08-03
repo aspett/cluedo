@@ -16,6 +16,12 @@ public class Cluedo {
 	private UserInterface ui;
 	private State state;
 	private Dice dice;
+	
+	private List<Card> freeCards = new ArrayList<Card>();
+	
+	private List<CharacterCard> allCharacterCards = new ArrayList<CharacterCard>();
+	private List<RoomCard> allRoomCards = new ArrayList<RoomCard>();
+	private List<WeaponCard> allWeaponCards = new ArrayList<WeaponCard>();
 
 	private static enum State {
 		PLAYER_NEW_TURN,
@@ -32,6 +38,21 @@ public class Cluedo {
 		//Get players
 		List<Player> players = ui.initPlayers();
 		b.setPlayers(players);
+		
+		//Deal cards to players
+		int cardsEach = deck.size() / players.size();
+		for(Player p : players) {
+			for(int i = 0; i < cardsEach; i++) {
+				p.addCard(deck.remove(0));
+			}
+		}
+		
+		//Add leftover cards to a set of cards open to anyone.
+		int left = deck.size();
+		for(int i = 0; i < left; i++) {
+			freeCards.add(deck.remove(0));
+		}
+		
 		
 		//Give players their start positions
 		System.out.println(b.getBoardTiles().length);
@@ -85,10 +106,13 @@ public class Cluedo {
 				if(currentTile instanceof RoomTile) {
 					RoomTile room = (RoomTile)currentTile;
 					boolean isGuessOrAccusation = !room.getRoom().getName().equalsIgnoreCase("Pool room"); //True for guess. False for accusation
-					CardTuple accusation = ui.promptGuess(currentPlayer, room.getRoom(), isGuessOrAccusation);
+					CardTuple accusation = ui.promptGuess(currentPlayer, room.getRoom(), isGuessOrAccusation, allCharacterCards, allRoomCards, allWeaponCards);
 					if(isGuessOrAccusation && accusation != null) { //Making a guess
 						Player refutePlayer = null;
+						System.out.println(accusation);
 						for(Player p : b.getPlayers()) {
+							//TODO debug remove below
+							System.out.printf("%s has cards: %s\n", p.getName(), p.getCards());
 							if(!p.equals(currentPlayer) && (p.hasCard(accusation.getPlayer()) 
 									|| p.hasCard(accusation.getRoom())
 									|| p.hasCard(accusation.getWeapon()))) { 
@@ -126,19 +150,11 @@ public class Cluedo {
 		List<Weapon> weapons = b.getWeapons();
 		List<Room> rooms = b.getRooms();
 
-		List<CharacterCard> cc = new ArrayList<CharacterCard>();
-		List<RoomCard> rc = new ArrayList<RoomCard>();
-		List<WeaponCard> wc = new ArrayList<WeaponCard>();
-
-		for(Player p : players) {
-			cc.add(new CharacterCard(p));
-		}
-		for(Weapon w : weapons) {
-			wc.add(new WeaponCard(w));
-		}
-		for(Room r : rooms) {
-			rc.add(new RoomCard(r));
-		}
+		this.generateCards(players, weapons, rooms);
+		
+		List<CharacterCard> cc = new ArrayList<CharacterCard>(allCharacterCards);
+		List<RoomCard> rc = new ArrayList<RoomCard>(allRoomCards);
+		List<WeaponCard> wc = new ArrayList<WeaponCard>(allWeaponCards);
 
 		int rand = Cluedo.rand(0, wc.size());
 		WeaponCard weaponSolution = wc.remove(rand);
@@ -165,6 +181,20 @@ public class Cluedo {
 		
 		Collections.shuffle(deck);
 		return deck;
+	}
+
+
+	private void generateCards(List<Player> players, List<Weapon> weapons,
+			List<Room> rooms) {
+		for(Player p : players) {
+			allCharacterCards.add(new CharacterCard(p));
+		}
+		for(Weapon w : weapons) {
+			allWeaponCards.add(new WeaponCard(w));
+		}
+		for(Room r : rooms) {
+			allRoomCards.add(new RoomCard(r));
+		}
 	}
 
 
