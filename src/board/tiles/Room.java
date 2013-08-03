@@ -14,12 +14,12 @@ import board.Weapon;
 public class Room {
 	private final String name;
 	private List<Weapon> weapons;
-	private Set<RoomTile> tiles;
+	private Set<Tile> tiles;
 
 	public Room(String name) {
 		this.name = name;
 		weapons=new ArrayList<Weapon>();
-		tiles = new HashSet<RoomTile>();
+		tiles = new HashSet<Tile>();
 	}
 
 	public String getName() {
@@ -91,6 +91,10 @@ public class Room {
 
 	public boolean hasTile(RoomTile r) {
 		return (this.tiles.contains(r));
+	}
+	
+	public Set<Tile> getTiles() {
+		return this.tiles;
 	}
 
 	

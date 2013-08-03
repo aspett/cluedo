@@ -2,7 +2,9 @@ package board;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import main.CluedoException;
 
@@ -16,6 +18,8 @@ public class Player {
 	private Tile currentTile;
 	private static Player currentPlayer;
 	private List<Card> cards;
+	private Set<Tile> disallowed;
+	private boolean mustmove;
 	
 	public String getName(){
 		return this.character;
@@ -25,6 +29,8 @@ public class Player {
 		if(c == null || c.length() < 1) throw new IllegalArgumentException("Player needs a name");
 		this.character=c;
 		cards = new ArrayList<Card>();
+		disallowed = new HashSet<Tile>();
+		mustmove = false;
 	}
 
 	public String toString() {
@@ -60,6 +66,34 @@ public class Player {
 		return Collections.unmodifiableList(cards);
 	}
 	
+	public void setDisallowedTiles(Set<Tile> tiles) {
+		if(tiles == null) this.disallowed = new HashSet<Tile>();
+		else
+			this.disallowed = tiles;
+	}
+	public Set<Tile> getDisallowedTiles() {
+		return this.disallowed;
+	}
+	
+	public void addDisallowedTile(Tile t) {
+		this.disallowed.add(t);
+	}
+	
+	public boolean isTileDisallowed(Tile t) {
+		return this.disallowed.contains(t);
+	}
+	
+	public boolean mustMove() {
+		return this.mustmove;
+	}
+	
+	public void setMustMove(boolean m) {
+		this.mustmove = m;
+	}
+	
+	public boolean canStayInTile(Tile t) {
+		return !(mustmove && disallowed.contains(t));
+	}
 	
 
 

@@ -171,7 +171,10 @@ public class Board {
 		List<Tile> availableTiles = new ArrayList<Tile>();
 		for(Tile t : getAdjacentTiles(tile)){
 			if(t.isPassable()){
-					if(t.currentOccupants(this) < t.maxOccupants()) availableTiles.add(t);
+					if(t.currentOccupants(this) < t.maxOccupants()) {
+						if(!Player.getCurrentPlayer().getDisallowedTiles().contains(t))
+							availableTiles.add(t);
+					}
 			}
 		}
 		return availableTiles;

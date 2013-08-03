@@ -101,22 +101,20 @@ public class TextBasedInterface implements UserInterface {
 			System.out.print("\n");
 		}
 
-		System.out.printf("(%d) Stay Put?\n",availableTiles.size());
+		if(p.canStayInTile(tile)) System.out.printf("(%d) Stay Put?\n",availableTiles.size());
 
 		//Scanner scan = new Scanner(System.in);
 		scan.nextLine();
 		//TODO fix for error checking		
 		int choice = scan.nextInt();
-		while(choice<0 || choice>availableTiles.size()){
+		while((choice<0 || choice>availableTiles.size()) && !p.canStayInTile(tile)){
 			System.out.println("Please make a valid choice..\n");
 			choice = scan.nextInt();
 		}
-		if(choice<availableTiles.size()){//they want to move
-			//scan.close();
+		if(choice < availableTiles.size()){//they want to move
 			return availableTiles.get(choice);
 		}
-
-		//scan.close();
+		//They don't want to move
 		return null;
 
 	}

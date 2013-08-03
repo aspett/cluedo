@@ -82,6 +82,11 @@ public class Cluedo {
 		state = State.PLAYER_NEW_TURN;
 		while(state != State.GAME_END) {
 			if(state == State.PLAYER_NEW_TURN) {
+				if(currentPlayer.getTile() instanceof RoomTile) {
+					currentPlayer.setMustMove(true);
+					Room currentRoom = ((RoomTile) currentPlayer.getTile()).getRoom();
+					currentPlayer.setDisallowedTiles(currentRoom.getTiles());
+				}
 				int moves = dice.roll();
 				while(moves>0){
 					//keep getting moves
