@@ -132,7 +132,9 @@ public class TextBasedInterface implements UserInterface {
 			if(answer != 0 && answer != 1) continue;
 			break;
 		}
+		//TODO move the player and possibly weapon(not even needed I guess) to the room being used for guess
 		if(answer == 0) { //They want to make a guess/accusation
+			//TODO move the player and possibly weapon(not even needed I guess) to the room being used for guess
 			if(isGuessOrAccusation) { // Make a guess.
 				//TODO Give them their options
 				RoomCard roomCard = null;
