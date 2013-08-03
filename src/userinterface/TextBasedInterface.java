@@ -182,12 +182,65 @@ public class TextBasedInterface implements UserInterface {
 				return new CardTuple(characterCard, roomCard, weaponCard);
 			}
 			else { //Make an ACCUSATION
+				RoomCard roomCard = null;
+				CharacterCard characterCard = null;
+				WeaponCard weaponCard = null;
+				System.out.printf("Please choose a room for your accusation:\n");
+				for(int i = 0;i < roomCards.size(); i++){
+					System.out.printf("(%d) %s\n", i, roomCards.get(i).toString());
+				}
+				
+				int choice = -1;
+				while(choice < 0 || choice >= characterCards.size()) {
+					System.out.printf("> ");
+					choice = scan.nextInt();
+				}
+				
+				roomCard=roomCards.get(choice);
+				
+				System.out.printf("Please choose a character for your accusation:\n");
+				for(int i = 0; i < characterCards.size(); i++) {
+					System.out.printf("%d) %s\n", i, characterCards.get(i).toString());
+				}
+				choice = -1;
+				while(choice < 0 || choice >= characterCards.size()) {
+					System.out.printf("> ");
+					choice = scan.nextInt();
+				}
+				
+				characterCard = characterCards.get(choice);
+				
+				System.out.printf("Please choose a weapon for your accusation:\n");
+				for(int i = 0; i < weaponCards.size(); i++) {
+					System.out.printf("%d) %s\n", i, weaponCards.get(i).toString());
+				}
+				
+				choice = -1;
+				while(choice < 0 || choice >= weaponCards.size()) {
+					System.out.printf("> ");
+					choice = scan.nextInt();
+				}
+				
+				weaponCard = weaponCards.get(choice);
+				
+				if(roomCard == null) throw new CluedoException("Couldn't find player's current room");
+				if(characterCard == null) throw new CluedoException("Error getting character card from accusation/guess");
+				if(weaponCard == null) throw new CluedoException("Error getting weapon card from accusation/guess");
+				
+				//Move the player to the currentPlayers roomTile if they correspond to the character card being accused
+				Player player = characterCard.getPlayer();
+				if(b.getPlayers().contains(player)){
+					player.setTile(currentPlayer.getTile());
+				}
+				
+				return new CardTuple(characterCard, roomCard, weaponCard);
+				
 				
 				
 			}
 		}
 		else { return null; }
-		return null;
+		
 	}
 
 	@Override
