@@ -9,6 +9,7 @@ import java.math.*;
 
 import userinterface.TextBasedInterface;
 import userinterface.UserInterface;
+//TODO CORNER ROOMS HAVE SECRET PASSAGES ARRRGH lol. Must incorporate that and offer that option when moving from one
 
 public class Cluedo {
 	private CardTuple solution;
