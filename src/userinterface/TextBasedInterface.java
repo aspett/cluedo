@@ -172,6 +172,13 @@ public class TextBasedInterface implements UserInterface {
 				if(roomCard == null) throw new CluedoException("Couldn't find player's current room");
 				if(characterCard == null) throw new CluedoException("Error getting character card from accusation/guess");
 				if(weaponCard == null) throw new CluedoException("Error getting weapon card from accusation/guess");
+				
+				//Move the player to the currentPlayers roomTile if they correspond to the character card being accused
+				Player player = characterCard.getPlayer();
+				if(b.getPlayers().contains(player)){
+					player.setTile(currentPlayer.getTile());
+				}
+				
 				return new CardTuple(characterCard, roomCard, weaponCard);
 			}
 			else { //Make an ACCUSATION

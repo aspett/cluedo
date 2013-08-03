@@ -14,6 +14,10 @@ public class CharacterCard extends Card{
 	public String toString(){
 		return character.getName();
 	}
+	
+	public Player getPlayer(){
+		return character;
+	}
 
 	@Override
 	public int hashCode() {
