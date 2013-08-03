@@ -10,6 +10,7 @@ import java.math.*;
 import userinterface.TextBasedInterface;
 import userinterface.UserInterface;
 //TODO CORNER ROOMS HAVE SECRET PASSAGES ARRRGH lol. Must incorporate that and offer that option when moving from one
+//TODO when all players make wrong accusations and there are no players left we need to make sure the game ends
 
 public class Cluedo {
 	private CardTuple solution;
@@ -123,8 +124,16 @@ public class Cluedo {
 						}
 						ui.playerCanRefute(refutePlayer);
 					}
-					else { //Making an accusation!
-						
+					else if(!isGuessOrAccusation && accusation != null) { //Making an accusation!
+						boolean correct = checkAccusation(accusation);
+						if(correct){
+							//choose what to do if correct
+							//probably just change the game state and print the winner and solution?
+							//ui.resolveAccusation(correct);
+						}else{//accusation is wrong. the player is eliminated from the game
+							ui.resolveAccusation(correct);
+							b.getPlayers().remove(currentPlayer);
+						}
 					}
 				}
 				//Set new player
@@ -196,6 +205,14 @@ public class Cluedo {
 		for(Room r : rooms) {
 			allRoomCards.add(new RoomCard(r));
 		}
+	}
+	/**
+	 * A method for checking an accusation against the predetermined solution 
+	 * @param accusation the proposed accusation
+	 * @return True if the accusation is correct, false otherwise
+	 */
+	public boolean checkAccusation(CardTuple accusation){
+		return accusation.equals(solution);
 	}
 
 

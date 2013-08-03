@@ -192,7 +192,7 @@ public class TextBasedInterface implements UserInterface {
 				}
 				
 				int choice = -1;
-				while(choice < 0 || choice >= characterCards.size()) {
+				while(choice < 0 || choice >= roomCards.size()) {
 					System.out.printf("> ");
 					choice = scan.nextInt();
 				}
@@ -228,12 +228,6 @@ public class TextBasedInterface implements UserInterface {
 				if(characterCard == null) throw new CluedoException("Error getting character card from accusation/guess");
 				if(weaponCard == null) throw new CluedoException("Error getting weapon card from accusation/guess");
 				
-				//Move the player to the currentPlayers roomTile if they correspond to the character card being accused
-				Player player = characterCard.getPlayer();
-				if(b.getPlayers().contains(player)){
-					player.setTile(currentPlayer.getTile());
-				}
-				
 				return new CardTuple(characterCard, roomCard, weaponCard);
 				
 				
@@ -260,5 +254,17 @@ public class TextBasedInterface implements UserInterface {
 	@Override
 	public void alertNumMoves(int moves) {
 		System.out.printf("You have %d moves left\n", moves);		
+	}
+
+	@Override
+	public void resolveAccusation(boolean correct) {
+		if(correct){
+			//decide what to announce
+			//debug code
+			System.out.println(correct);
+		}else{
+			System.out.printf("Your accusation was incorrect. You have been eliminated from the game\n");
+		}
+		
 	}
 }

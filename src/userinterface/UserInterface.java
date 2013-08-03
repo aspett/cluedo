@@ -52,4 +52,10 @@ public interface UserInterface {
 	 * @param moves Number of moves left.
 	 */
 	public void alertNumMoves(int moves) ;
+	
+	/**
+	 * return null;
+	 * @param correct true for correct accusation, false otherwise
+	 */
+	public void resolveAccusation(boolean correct) ;
 }
