@@ -1,5 +1,7 @@
 package board;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import main.CluedoException;
@@ -22,6 +24,7 @@ public class Player {
 	public Player(String c){
 		if(c == null || c.length() < 1) throw new IllegalArgumentException("Player needs a name");
 		this.character=c;
+		cards = new ArrayList<Card>();
 	}
 
 	public String toString() {
@@ -51,6 +54,10 @@ public class Player {
 	
 	public boolean hasCard(Card c) {
 		return this.cards.contains(c);
+	}
+	
+	public List<Card> getCards() {
+		return Collections.unmodifiableList(cards);
 	}
 	
 	
