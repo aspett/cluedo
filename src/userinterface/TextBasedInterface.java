@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import main.CluedoException;
 
@@ -79,6 +80,14 @@ public class TextBasedInterface implements UserInterface {
 	}
 
 	public Tile promptMove(Player p){
+		//TODO work on logic for exiting rooms
+		/*if(p.getTile() instanceof RoomTile && !p.canStayInTile(p.getTile())) {
+			Room inRoom = ((RoomTile) p.getTile()).getRoom();
+			Set<Tile> exits = inRoom.getTiles();
+			if(exits.size() > 1) {
+				
+			}
+		}*/
 		
 		//TODO move some of this logic to the board.
 		Tile tile = p.getTile();
