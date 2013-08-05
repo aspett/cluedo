@@ -121,7 +121,7 @@ public class TextBasedInterface implements UserInterface {
 		if(choice < availableTiles.size()){//they want to move
 			return availableTiles.get(choice);
 		}
-		
+		//TODO not sure if a player should be able to make a guess straight after using passage
 		if(choice == availableTiles.size()){
 			Room room = ((RoomTile)tile).getRoom();
 			return ((CornerRoom)room).getSecretPassage();
