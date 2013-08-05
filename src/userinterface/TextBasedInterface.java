@@ -17,7 +17,7 @@ import board.Board;
 import board.Player;
 import board.tiles.*;
 //TODO Update class diagram for the interface to hold the board
-//TODO Players entering the pool room need an option to enter the pool room to view left over cards from dealing. And alos show them, unless we assume the players have looked IRL
+//TODO Players entering the pool room need an option to enter the pool room to view left over cards from dealing. And also show them, unless we assume the players have looked IRL
 public class TextBasedInterface implements UserInterface {
 
 	private Board b;
@@ -109,20 +109,36 @@ public class TextBasedInterface implements UserInterface {
 			//TODO remove: debug message: System.out.printf(" (%d occupants)\n", availableTiles.get(i).currentOccupants(b));
 			System.out.print("\n");
 		}
-
+		
+		
 		if(p.canStayInTile(tile)) System.out.printf("(%d) Stay Put?\n",availableTiles.size());
+		if(tile instanceof RoomTile){
+			Room room = ((RoomTile)tile).getRoom();
+			if(room instanceof CornerRoom)
+				System.out.printf("(%d) Take the secret passage?\n",availableTiles.size());
+		}
 
 		//Scanner scan = new Scanner(System.in);
 		scan.nextLine();
 		//TODO fix for error checking		
 		int choice = scan.nextInt();
-		while((choice<0 || choice>availableTiles.size()) && !p.canStayInTile(tile)){
+		//TODO test and/or refine the last part of the while operand
+		while((choice<0 || choice>availableTiles.size()) && (!p.canStayInTile(tile) || !(((RoomTile)p.getTile()).getRoom() instanceof CornerRoom))){
 			System.out.println("Please make a valid choice..\n");
 			choice = scan.nextInt();
 		}
 		if(choice < availableTiles.size()){//they want to move
 			return availableTiles.get(choice);
 		}
+		//TODO not sure if a player should be able to make a guess straight after using passage
+		if(choice == availableTiles.size()){
+			Room room = ((RoomTile)tile).getRoom();
+			return ((CornerRoom)room).getSecretPassage();
+		}
+			
+		
+		
+			
 		//They don't want to move
 		return null;
 
