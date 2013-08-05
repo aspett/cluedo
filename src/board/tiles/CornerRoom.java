@@ -2,13 +2,13 @@ package board.tiles;
 
 public class CornerRoom extends Room {
 
-	private Tile secretPassage;
+	private RoomTile secretPassage;
 	
 	public CornerRoom(String name) {
 		super(name);
 	}
 	
-	public void setSecretPassage(Tile tile){
+	public void setSecretPassage(RoomTile tile){
 		this.secretPassage=tile;
 	}
 	

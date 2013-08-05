@@ -100,20 +100,36 @@ public class TextBasedInterface implements UserInterface {
 			//TODO remove: debug message: System.out.printf(" (%d occupants)\n", availableTiles.get(i).currentOccupants(b));
 			System.out.print("\n");
 		}
-
+		
+		
 		if(p.canStayInTile(tile)) System.out.printf("(%d) Stay Put?\n",availableTiles.size());
+		if(tile instanceof RoomTile){
+			Room room = ((RoomTile)tile).getRoom();
+			if(room instanceof CornerRoom)
+				System.out.printf("(%d) Take the secret passage?\n",availableTiles.size());
+		}
 
 		//Scanner scan = new Scanner(System.in);
 		scan.nextLine();
 		//TODO fix for error checking		
 		int choice = scan.nextInt();
-		while((choice<0 || choice>availableTiles.size()) && !p.canStayInTile(tile)){
+		//TODO test and/or refine the last part of the while operand
+		while((choice<0 || choice>availableTiles.size()) && (!p.canStayInTile(tile) || !(((RoomTile)p.getTile()).getRoom() instanceof CornerRoom))){
 			System.out.println("Please make a valid choice..\n");
 			choice = scan.nextInt();
 		}
 		if(choice < availableTiles.size()){//they want to move
 			return availableTiles.get(choice);
 		}
+		
+		if(choice == availableTiles.size()){
+			Room room = ((RoomTile)tile).getRoom();
+			return ((CornerRoom)room).getSecretPassage();
+		}
+			
+		
+		
+			
 		//They don't want to move
 		return null;
 

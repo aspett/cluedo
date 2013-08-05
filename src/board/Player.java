@@ -20,10 +20,8 @@ public class Player {
 	private List<Card> cards;
 	private Set<Tile> disallowed;
 	private boolean mustmove;
-	
-	public String getName(){
-		return this.character;
-	}
+	private Room currentRoom;
+
 
 	public Player(String c){
 		if(c == null || c.length() < 1) throw new IllegalArgumentException("Player needs a name");
@@ -31,6 +29,11 @@ public class Player {
 		cards = new ArrayList<Card>();
 		disallowed = new HashSet<Tile>();
 		mustmove = false;
+		currentRoom=null;
+	}
+	
+	public String getName(){
+		return this.character;
 	}
 
 	public String toString() {
