@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import main.CluedoException;
+
 import userinterface.TextBasedInterface;
 
 import board.tiles.*;
@@ -42,72 +44,73 @@ public class Board {
 					char c=line.charAt(j);
 					switch(c){
 					case ' ':ImpassableTile gap = new ImpassableTile(false);
-							gap.setX(j);
-							gap.setY(i);
-							getBoardTiles()[i][j] = gap;
-							break;
+					gap.setX(j);
+					gap.setY(i);
+					getBoardTiles()[i][j] = gap;
+					break;
 
 					case '#':ImpassableTile wall = new ImpassableTile(true);
-							wall.setX(j);
-							wall.setY(i);
-							getBoardTiles()[i][j] = wall;
-							break;
+					wall.setX(j);
+					wall.setY(i);
+					getBoardTiles()[i][j] = wall;
+					break;
 					case 'P':StartTile start = new StartTile();
-							start.setX(j);
-							start.setY(i);
-							getBoardTiles()[i][j] = start;
-							break;
+					start.setX(j);
+					start.setY(i);
+					getBoardTiles()[i][j] = start;
+					break;
 					case '?':IntrigueTile intrigue = new IntrigueTile();
-							intrigue.setX(j);
-							intrigue.setY(i);
-							getBoardTiles()[i][j] = intrigue;
-							break;
+					intrigue.setX(j);
+					intrigue.setY(i);
+					getBoardTiles()[i][j] = intrigue;
+					break;
 					case '.':RegularTile reg = new RegularTile();
-							reg.setX(j);
-							reg.setY(i);
-							getBoardTiles()[i][j] = reg;
-							break;
+					reg.setX(j);
+					reg.setY(i);
+					getBoardTiles()[i][j] = reg;
+					break;
 					default: int roomNum=c-48;
-							RoomTile roomTile = new RoomTile();
-							roomTile.setX(j);
-							roomTile.setY(i);
-							getBoardTiles()[i][j] = roomTile; 
-							switch(roomNum){
-							case 0:roomTile.setRoom(rooms.get(0));
-									rooms.get(0).addTile(roomTile);
-									break;
-							case 1:roomTile.setRoom(rooms.get(1));
-									rooms.get(1).addTile(roomTile);
-									break;
-							case 2:roomTile.setRoom(rooms.get(2));
-									rooms.get(2).addTile(roomTile);
-									break;
-							case 3:roomTile.setRoom(rooms.get(3));
-									rooms.get(3).addTile(roomTile);
-									break;
-							case 4:roomTile.setRoom(rooms.get(4));
-									rooms.get(4).addTile(roomTile);
-									break;
-							case 5:roomTile.setRoom(rooms.get(5));
-									rooms.get(5).addTile(roomTile);
-									break;
-							case 6:roomTile.setRoom(rooms.get(6));
-									rooms.get(6).addTile(roomTile);
-									break;
-							case 7:roomTile.setRoom(rooms.get(7));
-									rooms.get(7).addTile(roomTile);
-									break;
-							case 8:roomTile.setRoom(rooms.get(8));
-									rooms.get(8).addTile(roomTile);
-									break;
-							case 9:roomTile.setRoom(rooms.get(9));
-									rooms.get(9).addTile(roomTile);
-									break;
-							}
+					RoomTile roomTile = new RoomTile();
+					roomTile.setX(j);
+					roomTile.setY(i);
+					getBoardTiles()[i][j] = roomTile; 
+					switch(roomNum){
+					case 0:roomTile.setRoom(rooms.get(0));
+					rooms.get(0).addTile(roomTile);
+					break;
+					case 1:roomTile.setRoom(rooms.get(1));
+					rooms.get(1).addTile(roomTile);
+					break;
+					case 2:roomTile.setRoom(rooms.get(2));
+					rooms.get(2).addTile(roomTile);
+					break;
+					case 3:roomTile.setRoom(rooms.get(3));
+					rooms.get(3).addTile(roomTile);
+					break;
+					case 4:roomTile.setRoom(rooms.get(4));
+					rooms.get(4).addTile(roomTile);
+					break;
+					case 5:roomTile.setRoom(rooms.get(5));
+					rooms.get(5).addTile(roomTile);
+					break;
+					case 6:roomTile.setRoom(rooms.get(6));
+					rooms.get(6).addTile(roomTile);
+					break;
+					case 7:roomTile.setRoom(rooms.get(7));
+					rooms.get(7).addTile(roomTile);
+					break;
+					case 8:roomTile.setRoom(rooms.get(8));
+					rooms.get(8).addTile(roomTile);
+					break;
+					case 9:roomTile.setRoom(rooms.get(9));
+					rooms.get(9).addTile(roomTile);
+					break;
+					}
 
 					}
 				}
 			}
+			initializePassages();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -115,16 +118,45 @@ public class Board {
 
 	}
 
+	private void initializePassages() {
+		//Set spa's secret passage to guest house
+		if(!(rooms.get(0) instanceof CornerRoom))throw new CluedoException("The room at index 0 should be a corner room");
+		else{
+			CornerRoom spa=(CornerRoom) rooms.get(0);
+			spa.setSecretPassage(boardTiles[28][24]);
+		}
+		//Set kitchen's secret passage to observatory
+		if(!(rooms.get(8) instanceof CornerRoom))throw new CluedoException("The room at index 8 should be a corner room");
+		else{
+			CornerRoom observatory=(CornerRoom) rooms.get(8);
+			observatory.setSecretPassage(boardTiles[1][24]);
+		}
+		//Set observatory's secret passage to kitchen
+		if(!(rooms.get(8) instanceof CornerRoom))throw new CluedoException("The room at index 8 should be a corner room");
+		else{
+			CornerRoom observatory=(CornerRoom) rooms.get(8);
+			observatory.setSecretPassage(boardTiles[28][1]);
+		}
+		//Set guest house's secret passage to spa
+		if(!(rooms.get(6) instanceof CornerRoom))throw new CluedoException("The room at index 6 should be a corner room");
+		else{
+			CornerRoom observatory=(CornerRoom) rooms.get(6);
+			observatory.setSecretPassage(boardTiles[1][1]);
+		}
+
+
+	}
+
 	public void initializeRooms() {
-		rooms.add(new Room("Spa"));
+		rooms.add(new CornerRoom("Spa"));
 		rooms.add(new Room("Theatre"));
 		rooms.add(new Room("Living Room"));
-		rooms.add(new Room("Observatory"));
+		rooms.add(new CornerRoom("Observatory"));
 		rooms.add(new Room("Patio"));		
 		rooms.add(new Room("Hall"));
-		rooms.add(new Room("Guest House"));
+		rooms.add(new CornerRoom("Guest House"));
 		rooms.add(new Room("Dining Room"));
-		rooms.add(new Room("Kitchen"));
+		rooms.add(new CornerRoom("Kitchen"));
 
 		//assign a weapon randomly to each room.
 		Collections.shuffle(weapons);
@@ -154,11 +186,11 @@ public class Board {
 		weapons.add(new Weapon("Poison"));
 		weapons.add(new Weapon("Axe"));
 	}
-	
+
 	public List<Tile> getAdjacentTiles(Tile tile){
 		int x = tile.getX();
 		int y = tile.getY();
-		
+
 		List<Tile>adjacentTiles = new ArrayList<Tile>();
 		adjacentTiles.add(boardTiles[y+1][x]);
 		adjacentTiles.add(boardTiles[y-1][x]);
@@ -166,20 +198,20 @@ public class Board {
 		adjacentTiles.add(boardTiles[y][x+1]);
 		return adjacentTiles;
 	}
-	
+
 	public List<Tile> getAvailableTiles(Tile tile) {
 		List<Tile> availableTiles = new ArrayList<Tile>();
 		for(Tile t : getAdjacentTiles(tile)){
 			if(t.isPassable()){
-					if(t.currentOccupants(this) < t.maxOccupants()) {
-						if(!Player.getCurrentPlayer().getDisallowedTiles().contains(t))
-							availableTiles.add(t);
-					}
+				if(t.currentOccupants(this) < t.maxOccupants()) {
+					if(!Player.getCurrentPlayer().getDisallowedTiles().contains(t))
+						availableTiles.add(t);
+				}
 			}
 		}
 		return availableTiles;
 	}
-	
+
 	public List<Player> getAvailablePlayers() {
 		return availablePlayers;
 	}
@@ -206,7 +238,7 @@ public class Board {
 	public void setBoardTiles(Tile[][] boardTiles) {
 		this.boardTiles = boardTiles;
 	}
-	
+
 	/**
 	 * Get a room by it's name
 	 * @param str Name of the room
