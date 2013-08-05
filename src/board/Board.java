@@ -141,7 +141,7 @@ public class Board {
 		if(!(rooms.get(6) instanceof CornerRoom))throw new CluedoException("The room at index 6 should be a corner room");
 		else{
 			CornerRoom guestHouse=(CornerRoom) rooms.get(6);
-			guestHouse.setSecretPassage((RoomTile)boardTiles[6][6]);
+			guestHouse.setSecretPassage((RoomTile)boardTiles[1][1]);
 		}
 
 
