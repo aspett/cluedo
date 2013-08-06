@@ -73,7 +73,7 @@ public class Board {
 					RoomTile roomTile = new RoomTile();
 					roomTile.setX(j);
 					roomTile.setY(i);
-					getBoardTiles()[i][j] = roomTile; 
+					getBoardTiles()[i][j] = roomTile;
 					switch(roomNum){
 					case 0:roomTile.setRoom(rooms.get(0));
 					rooms.get(0).addTile(roomTile);
@@ -128,13 +128,13 @@ public class Board {
 		//Set kitchen's secret passage to observatory
 		if(!(rooms.get(8) instanceof CornerRoom))throw new CluedoException("The room at index 8 should be a corner room");
 		else{
-			CornerRoom observatory=(CornerRoom) rooms.get(8);
-			observatory.setSecretPassage((RoomTile)boardTiles[1][24]);
+			CornerRoom kitchen=(CornerRoom) rooms.get(8);
+			kitchen.setSecretPassage((RoomTile)boardTiles[1][24]);
 		}
 		//Set observatory's secret passage to kitchen
-		if(!(rooms.get(8) instanceof CornerRoom))throw new CluedoException("The room at index 8 should be a corner room");
+		if(!(rooms.get(3) instanceof CornerRoom))throw new CluedoException("The room at index 3 should be a corner room");
 		else{
-			CornerRoom observatory=(CornerRoom) rooms.get(8);
+			CornerRoom observatory=(CornerRoom) rooms.get(3);
 			observatory.setSecretPassage((RoomTile)boardTiles[28][1]);
 		}
 		//Set guest house's secret passage to spa
@@ -152,7 +152,7 @@ public class Board {
 		rooms.add(new Room("Theatre"));
 		rooms.add(new Room("Living Room"));
 		rooms.add(new CornerRoom("Observatory"));
-		rooms.add(new Room("Patio"));		
+		rooms.add(new Room("Patio"));
 		rooms.add(new Room("Hall"));
 		rooms.add(new CornerRoom("Guest House"));
 		rooms.add(new Room("Dining Room"));

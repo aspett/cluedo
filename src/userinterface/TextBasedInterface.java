@@ -79,10 +79,10 @@ public class TextBasedInterface implements UserInterface {
 	}
 
 	public Tile promptMove(Player p){
-		
+
 		//TODO move some of this logic to the board.
 		Tile tile = p.getTile();
-		
+
 		//All tiles that are free from the current tile.
 		List<Tile> availableTiles = b.getAvailableTiles(tile);
 
@@ -100,8 +100,8 @@ public class TextBasedInterface implements UserInterface {
 			//TODO remove: debug message: System.out.printf(" (%d occupants)\n", availableTiles.get(i).currentOccupants(b));
 			System.out.print("\n");
 		}
-		
-		
+
+
 		if(p.canStayInTile(tile)) System.out.printf("(%d) Stay Put?\n",availableTiles.size());
 		if(tile instanceof RoomTile){
 			Room room = ((RoomTile)tile).getRoom();
@@ -111,7 +111,7 @@ public class TextBasedInterface implements UserInterface {
 
 		//Scanner scan = new Scanner(System.in);
 		scan.nextLine();
-		//TODO fix for error checking		
+		//TODO fix for error checking
 		int choice = scan.nextInt();
 		//TODO test and/or refine the last part of the while operand
 		while((choice<0 || choice>availableTiles.size()) && (!p.canStayInTile(tile) || !(((RoomTile)p.getTile()).getRoom() instanceof CornerRoom))){
@@ -126,19 +126,19 @@ public class TextBasedInterface implements UserInterface {
 			Room room = ((RoomTile)tile).getRoom();
 			return ((CornerRoom)room).getSecretPassage();
 		}
-			
-		
-		
-			
+
+
+
+
 		//They don't want to move
 		return null;
 
 	}
-	
+
 	@Override
 	public CardTuple promptGuess(Player currentPlayer, Room currentRoom,
 			boolean isGuessOrAccusation, List<CharacterCard> characterCards, List<RoomCard> roomCards, List<WeaponCard> weaponCards) {
-		
+
 		System.out.printf("You are in the %s\nDo you wish to make %s %s?\n", currentRoom.getName(), isGuessOrAccusation?"a":"an", isGuessOrAccusation?"guess":"accusation");
 		System.out.printf("0) Yes\n1) No\n> ");
 		int answer;
@@ -156,9 +156,9 @@ public class TextBasedInterface implements UserInterface {
 				CharacterCard characterCard = null;
 				WeaponCard weaponCard = null;
 				for(RoomCard rc : roomCards) {
-					if(rc.toString().equals(currentRoom.getName())) roomCard = rc; 
+					if(rc.toString().equals(currentRoom.getName())) roomCard = rc;
 				}
-				
+
 				System.out.printf("Please choose a character to guess:\n");
 				for(int i = 0; i < characterCards.size(); i++) {
 					System.out.printf("%d) %s\n", i, characterCards.get(i).toString());
@@ -168,32 +168,32 @@ public class TextBasedInterface implements UserInterface {
 					System.out.printf("> ");
 					choice = scan.nextInt();
 				}
-				
+
 				characterCard = characterCards.get(choice);
-				
+
 				System.out.printf("Please choose a weapon to guess:\n");
 				for(int i = 0; i < weaponCards.size(); i++) {
 					System.out.printf("%d) %s\n", i, weaponCards.get(i).toString());
 				}
-				
+
 				choice = -1;
 				while(choice < 0 || choice >= weaponCards.size()) {
 					System.out.printf("> ");
 					choice = scan.nextInt();
 				}
-				
+
 				weaponCard = weaponCards.get(choice);
-				
+
 				if(roomCard == null) throw new CluedoException("Couldn't find player's current room");
 				if(characterCard == null) throw new CluedoException("Error getting character card from accusation/guess");
 				if(weaponCard == null) throw new CluedoException("Error getting weapon card from accusation/guess");
-				
+
 				//Move the player to the currentPlayers roomTile if they correspond to the character card being accused
 				Player player = characterCard.getPlayer();
 				if(b.getPlayers().contains(player)){
 					player.setTile(currentPlayer.getTile());
 				}
-				
+
 				return new CardTuple(characterCard, roomCard, weaponCard);
 			}
 			else { //Make an ACCUSATION
@@ -204,15 +204,15 @@ public class TextBasedInterface implements UserInterface {
 				for(int i = 0;i < roomCards.size(); i++){
 					System.out.printf("(%d) %s\n", i, roomCards.get(i).toString());
 				}
-				
+
 				int choice = -1;
 				while(choice < 0 || choice >= roomCards.size()) {
 					System.out.printf("> ");
 					choice = scan.nextInt();
 				}
-				
+
 				roomCard=roomCards.get(choice);
-				
+
 				System.out.printf("Please choose a character for your accusation:\n");
 				for(int i = 0; i < characterCards.size(); i++) {
 					System.out.printf("%d) %s\n", i, characterCards.get(i).toString());
@@ -222,38 +222,39 @@ public class TextBasedInterface implements UserInterface {
 					System.out.printf("> ");
 					choice = scan.nextInt();
 				}
-				
+
 				characterCard = characterCards.get(choice);
-				
+
 				System.out.printf("Please choose a weapon for your accusation:\n");
 				for(int i = 0; i < weaponCards.size(); i++) {
 					System.out.printf("%d) %s\n", i, weaponCards.get(i).toString());
 				}
-				
+
 				choice = -1;
 				while(choice < 0 || choice >= weaponCards.size()) {
 					System.out.printf("> ");
 					choice = scan.nextInt();
 				}
-				
+
 				weaponCard = weaponCards.get(choice);
-				
+
 				if(roomCard == null) throw new CluedoException("Couldn't find player's current room");
 				if(characterCard == null) throw new CluedoException("Error getting character card from accusation/guess");
 				if(weaponCard == null) throw new CluedoException("Error getting weapon card from accusation/guess");
-				
+
 				return new CardTuple(characterCard, roomCard, weaponCard);
-				
-				
-				
+
+
+
 			}
 		}
 		else { return null; }
-		
+
 	}
 
 	@Override
 	public void playerCanRefute(Player refutePlayer) {
+		if(refutePlayer == null) { System.out.println("No one can refute the claim"); return; }
 		System.out.printf("%s can refute the claim.\nPress any key, and hit ENTER to continue.\n", refutePlayer.getName());
 		scan.next();
 
@@ -262,12 +263,12 @@ public class TextBasedInterface implements UserInterface {
 	@Override
 	public void alertPlayerTurn(Player currentPlayer) {
 		System.out.printf("%s, it's your turn!\n", currentPlayer.getName());
-		
+
 	}
 
 	@Override
 	public void alertNumMoves(int moves) {
-		System.out.printf("You have %d moves left\n", moves);		
+		System.out.printf("You have %d moves left\n", moves);
 	}
 
 	@Override
@@ -282,7 +283,7 @@ public class TextBasedInterface implements UserInterface {
 				if(i < b.getPlayers().size()-1) System.out.print(", ");
 			}
 		}
-		
+
 	}
 
 	@Override
