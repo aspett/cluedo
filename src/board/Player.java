@@ -31,7 +31,7 @@ public class Player {
 		mustmove = false;
 		currentRoom=null;
 	}
-	
+
 	public String getName(){
 		return this.character;
 	}
@@ -39,36 +39,37 @@ public class Player {
 	public String toString() {
 		return String.format("%s", character);
 	}
-	
+
 	public void setTile(Tile tile) {
 		if(!tile.isPassable()) throw new CluedoException("Player can not be on an impassable tile.");
 		this.currentTile = tile;
 	}
-	
+
 	public Tile getTile() {
 		return this.currentTile;
 	}
-	
+
 	public static void setCurrentPlayer(Player p ) {
 		currentPlayer = p;
 	}
 	public static Player getCurrentPlayer() {
 		return currentPlayer;
 	}
-	
+
 	public void addCard(Card c) {
 		if(c == null) throw new CluedoException("Can not give a player a null card");
 		this.cards.add(c);
+		Collections.sort(this.cards);
 	}
-	
+
 	public boolean hasCard(Card c) {
 		return this.cards.contains(c);
 	}
-	
+
 	public List<Card> getCards() {
 		return Collections.unmodifiableList(cards);
 	}
-	
+
 	public void setDisallowedTiles(Set<Tile> tiles) {
 		if(tiles == null) this.disallowed = new HashSet<Tile>();
 		else
@@ -77,27 +78,27 @@ public class Player {
 	public Set<Tile> getDisallowedTiles() {
 		return this.disallowed;
 	}
-	
+
 	public void addDisallowedTile(Tile t) {
 		this.disallowed.add(t);
 	}
-	
+
 	public boolean isTileDisallowed(Tile t) {
 		return this.disallowed.contains(t);
 	}
-	
+
 	public boolean mustMove() {
 		return this.mustmove;
 	}
-	
+
 	public void setMustMove(boolean m) {
 		this.mustmove = m;
 	}
-	
+
 	public boolean canStayInTile(Tile t) {
 		return !(mustmove && disallowed.contains(t));
 	}
-	
+
 
 
 }

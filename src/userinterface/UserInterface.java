@@ -71,4 +71,10 @@ public interface UserInterface {
 	 * @return Those choice that was chosen.
 	 */
 	public int offerChoices(List<String> choices);
+
+	/**
+	 * Show them their cards
+	 * @param p The player whom we should show their cards
+	 */
+	public void showCards(Player p);
 }

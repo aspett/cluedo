@@ -18,15 +18,16 @@ public class Cluedo {
 	private UserInterface ui;
 	private State state;
 	private Dice dice;
-	
+
 	private List<Card> freeCards = new ArrayList<Card>();
-	
+
 	private List<CharacterCard> allCharacterCards = new ArrayList<CharacterCard>();
 	private List<RoomCard> allRoomCards = new ArrayList<RoomCard>();
 	private List<WeaponCard> allWeaponCards = new ArrayList<WeaponCard>();
 
 	private static enum State {
 		PLAYER_NEW_TURN,
+		PLAYER_MOVING,
 		GAME_END
 	}
 
@@ -34,13 +35,13 @@ public class Cluedo {
 		ui = new TextBasedInterface(b);
 		dice = new Dice();
 		List<Card> deck = initializeCardsSolution();
-		
+
 		//List<Player> players = b.getPlayers();
 
 		//Get players
 		List<Player> players = ui.initPlayers();
 		b.setPlayers(players);
-		
+
 		//Deal cards to players
 		int cardsEach = deck.size() / players.size();
 		for(Player p : players) {
@@ -48,14 +49,14 @@ public class Cluedo {
 				p.addCard(deck.remove(0));
 			}
 		}
-		
+
 		//Add leftover cards to a set of cards open to anyone.
 		int left = deck.size();
 		for(int i = 0; i < left; i++) {
 			freeCards.add(deck.remove(0));
 		}
-		
-		
+
+
 		//Give players their start positions
 		System.out.println(b.getBoardTiles().length);
 		System.out.println(b.getBoardTiles()[0].length);
@@ -81,7 +82,7 @@ public class Cluedo {
 		Player.setCurrentPlayer(currentPlayer);
 		state = State.PLAYER_NEW_TURN;
 		while(state != State.GAME_END) {
-			if(state == State.PLAYER_NEW_TURN) {
+			if(state == State.PLAYER_NEW_TURN || state == State.PLAYER_MOVING) {
 				if(currentPlayer.getTile() instanceof RoomTile) {
 					currentPlayer.setMustMove(true);
 					Room currentRoom = ((RoomTile) currentPlayer.getTile()).getRoom();
@@ -94,20 +95,39 @@ public class Cluedo {
 					//keep getting moves
 					ui.draw();
 					ui.alertPlayerTurn(currentPlayer);
-					ui.alertNumMoves(moves);
-					Tile move = ui.promptMove(currentPlayer);
-					
-					if(move == null) { //Stay where you are
-						moves = 0;
-						break;
+
+					int choice = 0;
+					if(state == State.PLAYER_NEW_TURN) {
+						List<String> choices = offerChoices(currentPlayer);
+						choice = ui.offerChoices(choices);
 					}
-					
-					currentPlayer.setTile(move);
-					
-					moves--;
-					if(move instanceof RoomTile) {
-						moves = 0;
-						break;
+
+					if(choice == 1) { //Look at cards
+						ui.showCards(currentPlayer);
+						List<String> waitChoice = new ArrayList<String>();
+						waitChoice.add("Continue");
+						ui.offerChoices(waitChoice);
+						continue;
+					}
+					else if(choice == 2) {} //Take passage le les la duquelle francais.
+					else if(choice == 0 || state == State.PLAYER_MOVING) { //Move
+						state = State.PLAYER_MOVING;
+						ui.alertNumMoves(moves);
+
+						Tile move = ui.promptMove(currentPlayer);
+
+						if(move == null) { //Stay where you are
+							moves = 0;
+							break;
+						}
+
+						currentPlayer.setTile(move);
+
+						moves--;
+						if(move instanceof RoomTile) {
+							moves = 0;
+							break;
+						}
 					}
 				}
 				ui.draw();
@@ -122,11 +142,11 @@ public class Cluedo {
 						for(Player p : b.getPlayers()) {
 							//TODO debug remove below
 							System.out.printf("%s has cards: %s\n", p.getName(), p.getCards());
-							if(!p.equals(currentPlayer) && (p.hasCard(accusation.getPlayer()) 
+							if(!p.equals(currentPlayer) && (p.hasCard(accusation.getPlayer())
 									|| p.hasCard(accusation.getRoom())
-									|| p.hasCard(accusation.getWeapon()))) { 
-								refutePlayer = p; 
-								break; 
+									|| p.hasCard(accusation.getWeapon()))) {
+								refutePlayer = p;
+								break;
 							}
 						}
 						ui.playerCanRefute(refutePlayer);
@@ -144,6 +164,7 @@ public class Cluedo {
 							if(b.getPlayers().size() < 2) { //Game is over.
 								state = State.GAME_END;
 								ui.printWinner(b.getPlayers().get(0));
+								break;
 							}
 						}
 					}
@@ -152,10 +173,11 @@ public class Cluedo {
 				currentPlayerID = (currentPlayerID + 1) % b.getPlayers().size();
 				currentPlayer = b.getPlayers().get(currentPlayerID);
 				Player.setCurrentPlayer(currentPlayer);
+				state = State.PLAYER_NEW_TURN;
 			}
 		}
 
-		
+
 
 		System.out.println(deck);
 		System.out.println(deck.size());
@@ -173,7 +195,7 @@ public class Cluedo {
 		List<Room> rooms = b.getRooms();
 
 		this.generateCards(players, weapons, rooms);
-		
+
 		List<CharacterCard> cc = new ArrayList<CharacterCard>(allCharacterCards);
 		List<RoomCard> rc = new ArrayList<RoomCard>(allRoomCards);
 		List<WeaponCard> wc = new ArrayList<WeaponCard>(allWeaponCards);
@@ -182,7 +204,7 @@ public class Cluedo {
 		WeaponCard weaponSolution = wc.remove(rand);
 
 		rand = Cluedo.rand(0, rc.size());
-		
+
 		//can't be murdered in the pool room so we need to check if the card is not the pool room before removing it
 		RoomCard roomSolution = rc.get(rand);
 		while(roomSolution.toString().equals("Pool Room")){
@@ -200,7 +222,7 @@ public class Cluedo {
 		deck.addAll(cc);
 		deck.addAll(rc);
 		deck.addAll(wc);
-		
+
 		Collections.shuffle(deck);
 		return deck;
 	}
@@ -219,7 +241,7 @@ public class Cluedo {
 		}
 	}
 	/**
-	 * A method for checking an accusation against the predetermined solution 
+	 * A method for checking an accusation against the predetermined solution
 	 * @param accusation the proposed accusation
 	 * @return True if the accusation is correct, false otherwise
 	 */
@@ -235,5 +257,22 @@ public class Cluedo {
 	public static int rand(int min, int max) {
 		int diff = max-min;
 		return (int)((Math.random()*diff)+min);
+	}
+
+	private List<String> offerChoices(Player p) {
+		List<String> choices = new ArrayList<String>();
+		choices.add("Move");
+		choices.add("Look at cards");
+		if(p.getTile() instanceof RoomTile) {
+			Room r = ((RoomTile)p.getTile()).getRoom();
+			if(r instanceof CornerRoom) {
+				choices.add("Take le secret le passage. Les le.");
+			}
+		}
+		return choices;
+	}
+
+	private void offerMoves(Player p) {
+
 	}
 }

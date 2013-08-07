@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import main.CluedoException;
 
+import cards.Card;
 import cards.CardTuple;
 import cards.CharacterCard;
 import cards.RoomCard;
@@ -143,7 +144,7 @@ public class TextBasedInterface implements UserInterface {
 			boolean isGuessOrAccusation, List<CharacterCard> characterCards, List<RoomCard> roomCards, List<WeaponCard> weaponCards) {
 
 		System.out.printf("You are in the %s\nDo you wish to make %s %s?\n", currentRoom.getName(), isGuessOrAccusation?"a":"an", isGuessOrAccusation?"guess":"accusation");
-		System.out.printf("0) Yes\n1) No\n> ");
+		System.out.printf("0) No\n1) Yes\n> ");
 		int answer;
 		while(true) {
 			answer = scan.nextInt();
@@ -151,7 +152,7 @@ public class TextBasedInterface implements UserInterface {
 			break;
 		}
 		//TODO move the player and possibly weapon(not even needed I guess) to the room being used for guess
-		if(answer == 0) { //They want to make a guess/accusation
+		if(answer == 1) { //They want to make a guess/accusation
 			//TODO move the player and possibly weapon(not even needed I guess) to the room being used for guess
 			if(isGuessOrAccusation) { // Make a guess.
 				//TODO Give them their options
@@ -304,11 +305,24 @@ public class TextBasedInterface implements UserInterface {
 			int choice;
 			try {
 				choice = Integer.parseInt(reply);
+				if(choice < 0 || choice >= choices.size()) {
+					throw new NumberFormatException();
+					/*System.out.println("Please choose a valid option");
+					continue;*/
+				}
 			} catch(NumberFormatException e) {
 				System.out.println("Please choose a valid option");
 				continue;
 			}
 			return choice;
+		}
+	}
+
+	@Override
+	public void showCards(Player p) {
+		System.out.printf("Your cards:\n");
+		for(Card c : p.getCards()) {
+			System.out.printf("- %s\n", c.toString());
 		}
 	}
 }
