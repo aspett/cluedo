@@ -27,6 +27,7 @@ public class TextBasedInterface implements UserInterface {
 		scan = new Scanner(System.in);
 	}
 
+	@Override
 	public void draw(){
 		System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n");
 		for(Tile[] tArray:b.getBoardTiles()){
@@ -59,6 +60,7 @@ public class TextBasedInterface implements UserInterface {
 		}
 	}
 
+	@Override
 	public List<Player> initPlayers(){
 		//Scanner scan = new Scanner(System.in);
 		System.out.println("How many players?");
@@ -78,6 +80,7 @@ public class TextBasedInterface implements UserInterface {
 		return actualPlayers;
 	}
 
+	@Override
 	public Tile promptMove(Player p){
 
 		//TODO move some of this logic to the board.
@@ -289,5 +292,23 @@ public class TextBasedInterface implements UserInterface {
 	@Override
 	public void printWinner(Player player) {
 		System.out.printf("Game over! The winner is:\n%s\n", player.getName());
+	}
+
+	@Override
+	public int offerChoices(List<String> choices) {
+		for(int i = 0; i < choices.size(); i++) {
+			System.out.printf("%d) %s\n", i, choices.get(i));
+		}
+		while(true) {
+			String reply = scan.next();
+			int choice;
+			try {
+				choice = Integer.parseInt(reply);
+			} catch(NumberFormatException e) {
+				System.out.println("Please choose a valid option");
+				continue;
+			}
+			return choice;
+		}
 	}
 }

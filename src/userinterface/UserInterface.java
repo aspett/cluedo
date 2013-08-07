@@ -40,28 +40,35 @@ public interface UserInterface {
 	 * @param refutePlayer
 	 */
 	public void playerCanRefute(Player refutePlayer);
-	
+
 	/**
 	 * Tell the next player that it's their turn, and how many moves they can make.
 	 * @param currentPlayer The player
 	 */
 	public void alertPlayerTurn(Player currentPlayer);
-	
+
 	/**
 	 * Alert the player of the number of moves they have left.
 	 * @param moves Number of moves left.
 	 */
 	public void alertNumMoves(int moves) ;
-	
+
 	/**
 	 * return null;
 	 * @param correct true for correct accusation, false otherwise
 	 */
 	public void resolveAccusation(boolean correct);
-	
+
 	/**
 	 * Say who won the game
 	 * @param player the player who won
 	 */
 	public void printWinner(Player player);
+
+	/**
+	 * Offer a number of choices to the player.
+	 * @param choices Choices available
+	 * @return Those choice that was chosen.
+	 */
+	public int offerChoices(List<String> choices);
 }
