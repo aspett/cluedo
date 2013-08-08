@@ -123,7 +123,7 @@ public class TextBasedInterface implements UserInterface {
 		}
 
 
-		if(p.canStayInTile(tile)) System.out.printf("(%d) Stay Put?\n",availableTiles.size());
+		if(p.canStayInTile(tile) || availableTiles.size() == 0) System.out.printf("(%d) Stay Put\n",availableTiles.size());
 		if(tile instanceof RoomTile){
 			Room room = ((RoomTile)tile).getRoom();
 			if(room instanceof CornerRoom)
