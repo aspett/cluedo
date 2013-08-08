@@ -1,5 +1,5 @@
 package userinterface;
-
+//TODO ************************* MAKE IT SO THAT IF YOU GET BLOCKED IN TO A ROOM, YOU CAN STAY PUT LEGALLY.
 import java.util.List;
 import cards.CardTuple;
 import cards.CharacterCard;
