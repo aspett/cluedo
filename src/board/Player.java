@@ -11,7 +11,11 @@ import main.CluedoException;
 import cards.Card;
 
 import board.tiles.*;
-
+/**
+ * A class that represents a real player.
+ * @author Andrew Pett & Matthew Mortimer
+ *
+ */
 public class Player {
 	private String character;
 	private int playerNumber;
@@ -48,7 +52,12 @@ public class Player {
 		setTile(tile, false);
 	}
 
-	//TODO javadoc from here onwards
+	/**
+	 * Set the current tile occupied by the player to the given tile.
+	 * Ignore invariant checks if bypassDisallowed is true.
+	 * @param tile Tile to be occupied
+	 * @param bypassDisallowed True if wishing to bypass invariant checks.
+	 */
 	public void setTile(Tile tile, boolean bypassDisallowed) {
 		if(!tile.isPassable() || (disallowed.contains(tile) && !bypassDisallowed)) throw new CluedoException("Player can not be on an impassable tile, or moved in to a disallowed tile");
 		this.currentTile = tile;
@@ -65,45 +74,94 @@ public class Player {
 		return currentPlayer;
 	}
 
+	/**
+	 * Give the player a card
+	 * @param c The card to give to the player
+	 */
 	public void addCard(Card c) {
 		if(c == null) throw new CluedoException("Can not give a player a null card");
 		this.cards.add(c);
 		Collections.sort(this.cards);
 	}
 
+	/**
+	 * Check whether a user has a card
+	 * @param c The card
+	 * @return true if have the card, else false.
+	 */
 	public boolean hasCard(Card c) {
 		return this.cards.contains(c);
 	}
 
+	/**
+	 * Gets all the cards the player has
+	 * @return UNMODIFIABLE list of cards the player has.
+	 */
 	public List<Card> getCards() {
 		return Collections.unmodifiableList(cards);
 	}
 
+	/**
+	 * Sets the tiles that a player is not allowed to move in to.
+	 * Used for invariant checks in {@link #setTile(Tile, boolean) setTile} method.
+	 * @param tiles Disallowed tiles
+	 */
 	public void setDisallowedTiles(Set<Tile> tiles) {
 		if(tiles == null) this.disallowed = new HashSet<Tile>();
 		else
 			this.disallowed = tiles;
 	}
+	
+	/**
+	 * Gets the tiles that a player is not allowed to move in to.
+	 * Used for invariant checks in {@link #setTile(Tile, boolean) setTile} method.
+	 * @return tiles Disallowed tiles
+	 */
 	public Set<Tile> getDisallowedTiles() {
 		return this.disallowed;
 	}
 
+	/**
+	 * Adds a disallowed tile.
+	 * Used for invariant checks in {@link #setTile(Tile, boolean) setTile} method.
+	 * @param t Tile to add
+	 */
 	public void addDisallowedTile(Tile t) {
 		this.disallowed.add(t);
 	}
 
+	/**
+	 * Checks if a tile is disallowed for a player
+	 * Used for invariant checks in {@link #setTile(Tile, boolean) setTile} method/movement
+	 * @param t Tile
+	 * @return True if tile is disallowed
+	 */
 	public boolean isTileDisallowed(Tile t) {
 		return this.disallowed.contains(t);
 	}
-
+	
+	/**
+	 * Used to indicate whether the player was in a room at the start of their turn,
+	 * and therefore must move. (Option of 'staying put' not available)
+	 * @return True if the player must move
+	 */
 	public boolean mustMove() {
 		return this.mustmove;
 	}
 
+	/**
+	 * Sets whether the player must move. See {@link #mustMove() mustMove} doc
+	 * @param m True if player must move
+	 */
 	public void setMustMove(boolean m) {
 		this.mustmove = m;
 	}
 
+	/**
+	 * Returns whether a player is allowed to stay in a specific tile.
+	 * @param t Tile
+	 * @return True if the player may stay in the specific tile.
+	 */
 	public boolean canStayInTile(Tile t) {
 		return !(mustmove && disallowed.contains(t));
 	}
