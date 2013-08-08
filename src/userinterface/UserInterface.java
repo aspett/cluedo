@@ -11,6 +11,11 @@ import board.Player;
 import board.tiles.Tile;
 import board.tiles.Room;
 
+/**
+ * Interface for displaying the game state/prompting user interaction for the game.
+ * @author Andrew Pett & Matthew Mortimer
+ *
+ */
 public interface UserInterface {
 	/**
 	 * Sets up players.

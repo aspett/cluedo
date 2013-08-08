@@ -19,6 +19,11 @@ import board.Player;
 import board.Weapon;
 import board.tiles.*;
 //TODO Players entering the pool room need an option to enter the pool room to view left over cards from dealing. And also show them, unless we assume the players have looked IRL
+/**
+ * A text based interface for interacting with the Cluedo game.
+ * @author Andrew Pett & Matthew Mortimer
+ *
+ */
 public class TextBasedInterface implements UserInterface {
 
 	private Board b;
