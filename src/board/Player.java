@@ -41,7 +41,11 @@ public class Player {
 	}
 
 	public void setTile(Tile tile) {
-		if(!tile.isPassable()) throw new CluedoException("Player can not be on an impassable tile.");
+		setTile(tile, false);
+	}
+
+	public void setTile(Tile tile, boolean bypassDisallowed) {
+		if(!tile.isPassable() || (disallowed.contains(tile) && !bypassDisallowed)) throw new CluedoException("Player can not be on an impassable tile, or moved in to a disallowed tile");
 		this.currentTile = tile;
 	}
 

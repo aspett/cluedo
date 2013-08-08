@@ -33,6 +33,7 @@ public class Board {
 	private void createBoard() {
 		Scanner scan;
 		try {
+			//String boardString = "30 26\n##########################\n#0    #P.#   #.#    #P.#3#\n#     #..#   #?#    #..# #\n#     #..#   1.#    #..# #\n#     #..#   #.#    #..# #\n#     #.?#   #.#    #..# #\n#     0..#   #.2    #..# #\n#    #...#   #.#    #.?# #\n######...##1##.## ###..# #\n#...?...........#2#....3##\n#P..........?............#\n#####............?.......#\n#   ##4##..####9###.###5##\n#       4..#      #.#    #\n#       #?.#      #.5    #n#       #..#      #.5    #\n#       4..9######9.#    #\n#   ##4##......?....######\n#####....................#\n#P.........##7###........#\n#..........#    #....6####\n#######....#    7....#   #\n#      8...#    #....#   #\n#      #..##    ##...#   #\n#      #..#      #...#   #\n#      #..#      #...#   #\n#      #..#      #...#   #\n#      #..#      #...#   #\n#8     #P.#      #.P.#  6#\n##########################";
 			scan = new Scanner(new File("boardinput"));
 			int rows=scan.nextInt();
 			int cols=scan.nextInt();
@@ -113,6 +114,7 @@ public class Board {
 			initializePassages();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			System.exit(0);
 		}
 
 
@@ -203,12 +205,12 @@ public class Board {
 		return adjacentTiles;
 	}
 
-	public List<Tile> getAvailableTiles(Tile tile) {
+	public List<Tile> getAvailableTiles(Tile tile, Player p) {
 		List<Tile> availableTiles = new ArrayList<Tile>();
 		for(Tile t : getAdjacentTiles(tile)){
 			if(t.isPassable()){
 				if(t.currentOccupants(this) < t.maxOccupants()) {
-					if(!Player.getCurrentPlayer().getDisallowedTiles().contains(t))
+					if(!p.getDisallowedTiles().contains(t))
 						availableTiles.add(t);
 				}
 			}
@@ -250,7 +252,7 @@ public class Board {
 	 */
 	public Room getRoom(String str) {
 		for(Room r : getRooms()) {
-			if(r.toString().equalsIgnoreCase(str)) return r;
+			if(r.getName().equalsIgnoreCase(str)) return r;
 		}
 		return null;
 	}

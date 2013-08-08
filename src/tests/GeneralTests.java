@@ -8,6 +8,10 @@ import main.Cluedo;
 import main.Dice;
 
 import org.junit.Test;
+
+import userinterface.TextBasedInterface;
+import userinterface.UserInterface;
+
 import java.util.*;
 public class GeneralTests {
 
@@ -25,6 +29,19 @@ public class GeneralTests {
 			int roll = d.roll();
 			assertTrue(roll > 0 && roll < 7);
 		}
+	}
+
+	@Test public void showBoard() {
+		Board b= new Board();
+		UserInterface ui = new TextBasedInterface(b);
+		/*List<Room> rooms = b.getRooms();
+		for(Room r : rooms) {
+			System.out.println(r.toString());
+			r.get
+		}*/
+		Room kitchen = b.getRoom("kitchen");
+		List<Tile> tiles = new ArrayList<Tile>(kitchen.getTiles());
+		ui.draw(tiles);
 	}
 
 }

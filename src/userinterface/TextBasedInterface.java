@@ -30,10 +30,11 @@ public class TextBasedInterface implements UserInterface {
 
 	@Override
 	public void draw(List<Tile> numberedTiles){
-		System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n");
+		System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		for(Tile[] tArray:b.getBoardTiles()){
 			for(Tile t:tArray){
 				boolean drawTile = true;
+				if(numberedTiles != null && numberedTiles.contains(t)) { System.out.printf("%d ", numberedTiles.indexOf(t)); continue; }
 				for(Player p : b.getPlayers()) {
 					if(p.getTile().equals(t)) {
 						drawTile = false;
@@ -44,8 +45,7 @@ public class TextBasedInterface implements UserInterface {
 					}
 				}
 				if(!drawTile) continue;
-				if(numberedTiles != null && numberedTiles.contains(t)) System.out.printf("%d ", numberedTiles.indexOf(t));
-				else if(t instanceof IntrigueTile)System.out.print("? ");
+				if(t instanceof IntrigueTile)System.out.print("? ");
 				else if(t instanceof RoomTile)System.out.print("E ");
 				//TODO *** Discuss whether we want to draw start tiles
 				//else if(t instanceof StartTile)System.out.print("S ");
@@ -89,7 +89,7 @@ public class TextBasedInterface implements UserInterface {
 		Tile tile = p.getTile();
 
 		//All tiles that are free from the current tile.
-		List<Tile> availableTiles = b.getAvailableTiles(tile);
+		List<Tile> availableTiles = b.getAvailableTiles(tile, p);
 
 		System.out.println("Where would you like to move?");
 		for(int i=0;i<availableTiles.size();i++){
