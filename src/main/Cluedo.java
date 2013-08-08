@@ -83,17 +83,10 @@ public class Cluedo {
 		state = State.PLAYER_NEW_TURN;
 		while(state != State.GAME_END) {
 			if(state == State.PLAYER_NEW_TURN || state == State.PLAYER_MOVING) {
-				if(currentPlayer.getTile() instanceof RoomTile) {
-					currentPlayer.setMustMove(true);
-					Room currentRoom = ((RoomTile) currentPlayer.getTile()).getRoom();
-					currentPlayer.setDisallowedTiles(currentRoom.getTiles());
-				}
-				else
-					currentPlayer.setDisallowedTiles(null);
 				int moves = dice.roll();
 				while(moves>0){
 					//keep getting moves
-					ui.draw();
+					ui.draw(null);
 					ui.alertPlayerTurn(currentPlayer);
 
 					int choice = 0;
@@ -109,8 +102,18 @@ public class Cluedo {
 						ui.offerChoices(waitChoice);
 						continue;
 					}
-					else if(choice == 2) {} //Take passage le les la duquelle francais.
 					else if(choice == 0 || state == State.PLAYER_MOVING) { //Move
+						if(currentPlayer.getTile() instanceof RoomTile) {
+							currentPlayer.setMustMove(true);
+							Room currentRoom = ((RoomTile) currentPlayer.getTile()).getRoom();
+							currentPlayer.setDisallowedTiles(currentRoom.getTiles());
+							//Prompt which exit to leave from
+							if(currentRoom.getTiles().size() > 1) {
+								chooseExitAndDraw(currentPlayer, currentRoom);
+							}
+						}
+						else
+							currentPlayer.setDisallowedTiles(null);
 						state = State.PLAYER_MOVING;
 						ui.alertNumMoves(moves);
 
@@ -130,7 +133,7 @@ public class Cluedo {
 						}
 					}
 				}
-				ui.draw();
+				ui.draw(null);
 				Tile currentTile = currentPlayer.getTile();
 				if(currentTile instanceof RoomTile) {
 					RoomTile room = (RoomTile)currentTile;
@@ -183,6 +186,30 @@ public class Cluedo {
 		System.out.println(deck.size());
 		Collections.shuffle(deck);
 	}
+
+
+
+
+	private void chooseExitAndDraw(Player currentPlayer, Room currentRoom) {
+		List<String> choices = new ArrayList<String>();
+		List<Tile> exitTiles = new ArrayList<Tile>();
+		ui.draw(exitTiles);
+		for(Tile t : currentRoom.getTiles()) {
+			if(t.isSecretTile()) {
+				choices.add("Take secret passage");
+			}
+			else {
+				choices.add(String.format("Take exit %d", choices.size()));
+				exitTiles.add(t);
+			}
+		}
+		int exitChoice = ui.offerChoices(choices);
+		Tile exitTile = exitTiles.get(exitChoice);
+		currentPlayer.setTile(exitTile);
+		ui.draw(null);
+	}
+
+
 
 
 	/**
@@ -263,12 +290,6 @@ public class Cluedo {
 		List<String> choices = new ArrayList<String>();
 		choices.add("Move");
 		choices.add("Look at cards");
-		if(p.getTile() instanceof RoomTile) {
-			Room r = ((RoomTile)p.getTile()).getRoom();
-			if(r instanceof CornerRoom) {
-				choices.add("Take le secret le passage. Les le.");
-			}
-		}
 		return choices;
 	}
 

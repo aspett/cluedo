@@ -16,7 +16,9 @@ public interface UserInterface {
 	 * Sets up players.
 	 */
 	public List<Player> initPlayers();
-	public void draw();
+
+
+	public void draw(List<Tile> numberedTiles);
 	/**
 	 * Tell the interface to prompt the user whether they want to make a guess.
 	 * @param currentPlayer Current player

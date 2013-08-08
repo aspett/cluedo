@@ -29,7 +29,7 @@ public class TextBasedInterface implements UserInterface {
 	}
 
 	@Override
-	public void draw(){
+	public void draw(List<Tile> numberedTiles){
 		System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n");
 		for(Tile[] tArray:b.getBoardTiles()){
 			for(Tile t:tArray){
@@ -44,7 +44,8 @@ public class TextBasedInterface implements UserInterface {
 					}
 				}
 				if(!drawTile) continue;
-				if(t instanceof IntrigueTile)System.out.print("? ");
+				if(numberedTiles != null && numberedTiles.contains(t)) System.out.printf("%d ", numberedTiles.indexOf(t));
+				else if(t instanceof IntrigueTile)System.out.print("? ");
 				else if(t instanceof RoomTile)System.out.print("E ");
 				//TODO *** Discuss whether we want to draw start tiles
 				//else if(t instanceof StartTile)System.out.print("S ");
