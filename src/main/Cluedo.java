@@ -103,9 +103,10 @@ public class Cluedo {
 						List<String> waitChoice = new ArrayList<String>();
 						waitChoice.add("Continue");
 						ui.offerChoices(waitChoice);
-						continue;
+						choice = 0;
 					}
-					else if(choice == 0 || state == State.PLAYER_MOVING) { //Move
+					if(choice == 0 || state == State.PLAYER_MOVING) { //Move
+						//ui.draw(null);
 						if(currentPlayer.getTile() instanceof RoomTile) {
 							Room currentRoom = ((RoomTile) currentPlayer.getTile()).getRoom();
 							if(currentRoom.getTiles().size() > 1) {
@@ -294,7 +295,7 @@ public class Cluedo {
 		choices.add("Look at cards");
 		return choices;
 	}
-	
+
 	public Player findRefutePlayer(CardTuple accusation, Player currentPlayer){
 		System.out.println(accusation);
 		for(Player p : b.getPlayers()) {
@@ -304,7 +305,7 @@ public class Cluedo {
 					|| p.hasCard(accusation.getRoom())
 					|| p.hasCard(accusation.getWeapon()))) {
 				return p;
-				
+
 			}
 		}
 		return null;

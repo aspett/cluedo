@@ -30,7 +30,7 @@ public class TextBasedInterface implements UserInterface {
 
 	@Override
 	public void draw(List<Tile> numberedTiles){
-		System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n");
+		System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		for(Tile[] tArray:b.getBoardTiles()){
 			for(Tile t:tArray){
 				boolean drawTile = true;
