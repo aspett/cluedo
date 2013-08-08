@@ -9,6 +9,12 @@ import main.CluedoException;
 import userinterface.TextBasedInterface;
 
 import board.tiles.*;
+/**
+ * The board holds lists of all rooms, weapons, players and controlled players.
+ * The board uses a 2D array of Tiles to represent it. 
+ * @author Matt Mortimer and Andrew Pett
+ *
+ */
 
 public class Board {
 	private Tile[][] boardTiles;
@@ -250,63 +256,7 @@ public class Board {
 		}
 		return availableTiles;
 	}
-
-	/**
-	 * Get the list of all the player controlled players
-	 * @return the list of player controlled players
-	 */
-	public List<Player> getAvailablePlayers() {
-		return availablePlayers;
-	}
 	
-	/**
-	 * Get the list of all the players(including the players not used in play) 
-	 * @return the list of all players
-	 */
-	public List<Player> getPlayers() {
-		return players;
-	}
-	
-	/**
-	 * Set the players to a given set
-	 * @param players The set containing all the players for the game
-	 */
-	public void setPlayers(List<Player> players) {
-		this.players = players;
-	}
-	
-	/**
-	 * Get the list of all the weapons in the game
-	 * @return The list containing all weapons
-	 */
-	public List<Weapon> getWeapons() {
-		return weapons;
-	}
-	
-	/**
-	 * Get the list of all the rooms in the game
-	 * @return the list of all rooms
-	 */
-	public List<Room> getRooms() {
-		return rooms;
-	}
-	
-	/**
-	 * Set the count of human controlled players in the game
-	 * @param c The count of players
-	 */
-	public void setPlayerCount(int c){
-		playerCount=c;
-	}
-
-	/**
-	 * Get the 2-Dimensional array containing the Tile layout for the board
-	 * @return The 2d array of all tiles
-	 */
-	public Tile[][] getBoardTiles() {
-		return boardTiles;
-	}	
-
 	/**
 	 * Get a room by it's name
 	 * @param str Name of the room
@@ -318,4 +268,38 @@ public class Board {
 		}
 		return null;
 	}
+
+	public List<Player> getAvailablePlayers() {
+		return availablePlayers;
+	}
+	
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(List<Player> players) {
+		this.players = players;
+	}
+	
+	public List<Weapon> getWeapons() {
+		return weapons;
+	}
+	
+	public List<Room> getRooms() {
+		return rooms;
+	}
+	
+	/**
+	 * Set the count of human controlled players in the game
+	 * @param c The count of players
+	 */
+	public void setPlayerCount(int c){
+		playerCount=c;
+	}
+	
+	public Tile[][] getBoardTiles() {
+		return boardTiles;
+	}	
+
+	
 }
