@@ -328,7 +328,6 @@ public class Cluedo {
 
 	public void moveWeaponAndPlayer(CardTuple guess){
 		//Move the player to the currentPlayers roomTile if they correspond to the character card being accused
-		System.out.println("called");
 		Player player = guess.getPlayer().getPlayer();
 		if(b.getPlayers().contains(player)){
 			player.setTile(currentPlayer.getTile());
@@ -339,6 +338,7 @@ public class Cluedo {
 		Room currentWeaponRoom = weapon.getRoom();
 		currentPlayerRoom.addWeapon(weapon);
 		currentWeaponRoom.removeWeapon(weapon);
+		weapon.setRoom(currentPlayerRoom);
 
 
 	}
