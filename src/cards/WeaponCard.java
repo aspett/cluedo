@@ -3,9 +3,9 @@ package cards;
 import board.Weapon;
 
 public class WeaponCard extends Card{
-	
+
 	private Weapon weapon;
-	
+
 	public WeaponCard(Weapon w){
 		this.weapon=w;
 	}
@@ -38,6 +38,16 @@ public class WeaponCard extends Card{
 			return false;
 		return true;
 	}
-	
-	
+
+	@Override
+	public String getName() {
+		return weapon.getName();
+	}
+
+
+	public Weapon getWeapon(){
+		return weapon;
+	}
+
+
 }

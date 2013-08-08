@@ -9,6 +9,12 @@ import main.CluedoException;
 import userinterface.TextBasedInterface;
 
 import board.tiles.*;
+/**
+ * The board holds lists of all rooms, weapons, players and controlled players.
+ * The board uses a 2D array of Tiles to represent it. 
+ * @author Matt Mortimer and Andrew Pett
+ *
+ */
 
 public class Board {
 	private Tile[][] boardTiles;
@@ -30,14 +36,20 @@ public class Board {
 
 	}
 
+	/**
+	 * Create the board from the boardinput file by reading each character and constructing the corresponding tile for it, and 
+	 * adding the tile to the correct place in the boardTiles array. If the tile is a roomTile add it to the corresponding rooms set of exits/entrances
+	 * 
+	 */
 	private void createBoard() {
 		Scanner scan;
 		try {
+			//String boardString = "30 26\n##########################\n#0    #P.#   #.#    #P.#3#\n#     #..#   #?#    #..# #\n#     #..#   1.#    #..# #\n#     #..#   #.#    #..# #\n#     #.?#   #.#    #..# #\n#     0..#   #.2    #..# #\n#    #...#   #.#    #.?# #\n######...##1##.## ###..# #\n#...?...........#2#....3##\n#P..........?............#\n#####............?.......#\n#   ##4##..####9###.###5##\n#       4..#      #.#    #\n#       #?.#      #.5    #n#       #..#      #.5    #\n#       4..9######9.#    #\n#   ##4##......?....######\n#####....................#\n#P.........##7###........#\n#..........#    #....6####\n#######....#    7....#   #\n#      8...#    #....#   #\n#      #..##    ##...#   #\n#      #..#      #...#   #\n#      #..#      #...#   #\n#      #..#      #...#   #\n#      #..#      #...#   #\n#8     #P.#      #.P.#  6#\n##########################";
 			scan = new Scanner(new File("boardinput"));
 			int rows=scan.nextInt();
 			int cols=scan.nextInt();
 			scan.nextLine();
-			setBoardTiles(new Tile[rows][cols]);
+			boardTiles = new Tile[rows][cols];
 			for(int i=0;i<rows;i++){
 				String line=scan.nextLine();
 				for(int j=0;j<cols;j++){
@@ -73,7 +85,7 @@ public class Board {
 					RoomTile roomTile = new RoomTile();
 					roomTile.setX(j);
 					roomTile.setY(i);
-					getBoardTiles()[i][j] = roomTile; 
+					getBoardTiles()[i][j] = roomTile;
 					switch(roomNum){
 					case 0:roomTile.setRoom(rooms.get(0));
 					rooms.get(0).addTile(roomTile);
@@ -113,46 +125,59 @@ public class Board {
 			initializePassages();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			System.exit(0);
 		}
 
 
 	}
 
+	/**
+	 * Initialize and connect the secret passages for each of the corner rooms 
+	 */
 	private void initializePassages() {
 		//Set spa's secret passage to guest house
 		if(!(rooms.get(0) instanceof CornerRoom))throw new CluedoException("The room at index 0 should be a corner room");
 		else{
 			CornerRoom spa=(CornerRoom) rooms.get(0);
 			spa.setSecretPassage((RoomTile)boardTiles[28][24]);
+			boardTiles[28][24].setSecretTile(true);
 		}
 		//Set kitchen's secret passage to observatory
 		if(!(rooms.get(8) instanceof CornerRoom))throw new CluedoException("The room at index 8 should be a corner room");
 		else{
-			CornerRoom observatory=(CornerRoom) rooms.get(8);
-			observatory.setSecretPassage((RoomTile)boardTiles[1][24]);
+			CornerRoom kitchen=(CornerRoom) rooms.get(8);
+			kitchen.setSecretPassage((RoomTile)boardTiles[1][24]);
+			boardTiles[1][24].setSecretTile(true);
 		}
 		//Set observatory's secret passage to kitchen
-		if(!(rooms.get(8) instanceof CornerRoom))throw new CluedoException("The room at index 8 should be a corner room");
+		if(!(rooms.get(3) instanceof CornerRoom))throw new CluedoException("The room at index 3 should be a corner room");
 		else{
-			CornerRoom observatory=(CornerRoom) rooms.get(8);
+			CornerRoom observatory=(CornerRoom) rooms.get(3);
 			observatory.setSecretPassage((RoomTile)boardTiles[28][1]);
+			boardTiles[28][1].setSecretTile(true);
 		}
 		//Set guest house's secret passage to spa
 		if(!(rooms.get(6) instanceof CornerRoom))throw new CluedoException("The room at index 6 should be a corner room");
 		else{
 			CornerRoom guestHouse=(CornerRoom) rooms.get(6);
 			guestHouse.setSecretPassage((RoomTile)boardTiles[1][1]);
+			boardTiles[1][1].setSecretTile(true);
 		}
 
 
 	}
 
+	
+	/**
+	 * Create a list that contains all of the rooms in the game. Create the Room objects for each room as we go.
+	 * For each Room object (Other than the pool room) place a randomly selected weapon in its weapon set so each room has one weapon at the beginning of the game.
+	 */
 	public void initializeRooms() {
 		rooms.add(new CornerRoom("Spa"));
 		rooms.add(new Room("Theatre"));
 		rooms.add(new Room("Living Room"));
 		rooms.add(new CornerRoom("Observatory"));
-		rooms.add(new Room("Patio"));		
+		rooms.add(new Room("Patio"));
 		rooms.add(new Room("Hall"));
 		rooms.add(new CornerRoom("Guest House"));
 		rooms.add(new Room("Dining Room"));
@@ -162,11 +187,16 @@ public class Board {
 		Collections.shuffle(weapons);
 		for(int i=0; i<rooms.size();i++){
 			rooms.get(i).addWeapon(weapons.get(i));
+			weapons.get(i).setRoom(rooms.get(i));
 		}
 
 		rooms.add(new Room("Pool Room"));//Pool Room added last as it can not hold a weapon
 
 	}
+	
+	/**
+	 * Create a list of all the characters/players in the game regardless of whether they are a player controlled character or not.
+	 */
 	public void initializePlayers() {
 		availablePlayers.add(new Player("Kasandra Scarlett"));
 		availablePlayers.add(new Player("Jack Mustard"));
@@ -175,6 +205,10 @@ public class Board {
 		availablePlayers.add(new Player("Eleanor Peacock"));
 		availablePlayers.add(new Player("Victor Plum"));
 	}
+	
+	/**
+	 * Create a list of all the weapons used in the game.
+	 */
 	public void initializeWeapons() {
 		weapons.add(new Weapon("Rope"));
 		weapons.add(new Weapon("Candle Stick"));
@@ -187,6 +221,11 @@ public class Board {
 		weapons.add(new Weapon("Axe"));
 	}
 
+	/**
+	 * Given aTile find all of the adjacent tiles. The tile North, South, East, and West of it.
+	 * @param tile The tile in question
+	 * @return A list of all the adjacent tiles.
+	 */
 	public List<Tile> getAdjacentTiles(Tile tile){
 		int x = tile.getX();
 		int y = tile.getY();
@@ -199,46 +238,25 @@ public class Board {
 		return adjacentTiles;
 	}
 
-	public List<Tile> getAvailableTiles(Tile tile) {
+	/**
+	 * Given a tile and a player find all of the tiles that the player is allowed to move to from the tile.
+	 * @param tile The tile occupied by the player.
+	 * @param p The player wanting to move.
+	 * @return A List of all the tiles the player is allowed to move to
+	 */
+	public List<Tile> getAvailableTiles(Tile tile, Player p) {
 		List<Tile> availableTiles = new ArrayList<Tile>();
 		for(Tile t : getAdjacentTiles(tile)){
 			if(t.isPassable()){
 				if(t.currentOccupants(this) < t.maxOccupants()) {
-					if(!Player.getCurrentPlayer().getDisallowedTiles().contains(t))
+					if(!p.getDisallowedTiles().contains(t))
 						availableTiles.add(t);
 				}
 			}
 		}
 		return availableTiles;
 	}
-
-	public List<Player> getAvailablePlayers() {
-		return availablePlayers;
-	}
-	public List<Player> getPlayers() {
-		return players;
-	}
-	public void setPlayers(List<Player> players) {
-		this.players = players;
-	}
-	public List<Weapon> getWeapons() {
-		return weapons;
-	}
-	public List<Room> getRooms() {
-		return rooms;
-	}
-	public void setPlayerCount(int c){
-		playerCount=c;
-	}
-
-	public Tile[][] getBoardTiles() {
-		return boardTiles;
-	}
-
-	public void setBoardTiles(Tile[][] boardTiles) {
-		this.boardTiles = boardTiles;
-	}
-
+	
 	/**
 	 * Get a room by it's name
 	 * @param str Name of the room
@@ -246,8 +264,42 @@ public class Board {
 	 */
 	public Room getRoom(String str) {
 		for(Room r : getRooms()) {
-			if(r.toString().equalsIgnoreCase(str)) return r;
+			if(r.getName().equalsIgnoreCase(str)) return r;
 		}
 		return null;
 	}
+
+	public List<Player> getAvailablePlayers() {
+		return availablePlayers;
+	}
+	
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(List<Player> players) {
+		this.players = players;
+	}
+	
+	public List<Weapon> getWeapons() {
+		return weapons;
+	}
+	
+	public List<Room> getRooms() {
+		return rooms;
+	}
+	
+	/**
+	 * Set the count of human controlled players in the game
+	 * @param c The count of players
+	 */
+	public void setPlayerCount(int c){
+		playerCount=c;
+	}
+	
+	public Tile[][] getBoardTiles() {
+		return boardTiles;
+	}	
+
+	
 }

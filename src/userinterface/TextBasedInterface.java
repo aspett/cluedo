@@ -8,6 +8,7 @@ import java.util.Set;
 
 import main.CluedoException;
 
+import cards.Card;
 import cards.CardTuple;
 import cards.CharacterCard;
 import cards.RoomCard;
@@ -15,8 +16,8 @@ import cards.WeaponCard;
 
 import board.Board;
 import board.Player;
+import board.Weapon;
 import board.tiles.*;
-//TODO Update class diagram for the interface to hold the board
 //TODO Players entering the pool room need an option to enter the pool room to view left over cards from dealing. And also show them, unless we assume the players have looked IRL
 public class TextBasedInterface implements UserInterface {
 
@@ -28,17 +29,19 @@ public class TextBasedInterface implements UserInterface {
 		scan = new Scanner(System.in);
 	}
 
-	public void draw(){
-		System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n");
+	@Override
+	public void draw(List<Tile> numberedTiles){
+		System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		for(Tile[] tArray:b.getBoardTiles()){
 			for(Tile t:tArray){
 				boolean drawTile = true;
+				if(numberedTiles != null && numberedTiles.contains(t)) { System.out.printf("%d ", numberedTiles.indexOf(t)); continue; }
 				for(Player p : b.getPlayers()) {
 					if(p.getTile().equals(t)) {
 						drawTile = false;
 						if(Player.getCurrentPlayer().equals(p))
 							System.out.print("P ");
-						else System.out.print("p ");
+						else System.out.print("C ");
 						break;
 					}
 				}
@@ -58,8 +61,10 @@ public class TextBasedInterface implements UserInterface {
 			}
 			System.out.println();
 		}
+
 	}
 
+	@Override
 	public List<Player> initPlayers(){
 		//Scanner scan = new Scanner(System.in);
 		System.out.println("How many players?");
@@ -79,21 +84,14 @@ public class TextBasedInterface implements UserInterface {
 		return actualPlayers;
 	}
 
+	@Override
 	public Tile promptMove(Player p){
-		//TODO work on logic for exiting rooms
-		/*if(p.getTile() instanceof RoomTile && !p.canStayInTile(p.getTile())) {
-			Room inRoom = ((RoomTile) p.getTile()).getRoom();
-			Set<Tile> exits = inRoom.getTiles();
-			if(exits.size() > 1) {
-				
-			}
-		}*/
-		
+
 		//TODO move some of this logic to the board.
 		Tile tile = p.getTile();
-		
+
 		//All tiles that are free from the current tile.
-		List<Tile> availableTiles = b.getAvailableTiles(tile);
+		List<Tile> availableTiles = b.getAvailableTiles(tile, p);
 
 		System.out.println("Where would you like to move?");
 		for(int i=0;i<availableTiles.size();i++){
@@ -109,8 +107,8 @@ public class TextBasedInterface implements UserInterface {
 			//TODO remove: debug message: System.out.printf(" (%d occupants)\n", availableTiles.get(i).currentOccupants(b));
 			System.out.print("\n");
 		}
-		
-		
+
+
 		if(p.canStayInTile(tile)) System.out.printf("(%d) Stay Put?\n",availableTiles.size());
 		if(tile instanceof RoomTile){
 			Room room = ((RoomTile)tile).getRoom();
@@ -120,7 +118,7 @@ public class TextBasedInterface implements UserInterface {
 
 		//Scanner scan = new Scanner(System.in);
 		scan.nextLine();
-		//TODO fix for error checking		
+		//TODO fix for error checking
 		int choice = scan.nextInt();
 		//TODO test and/or refine the last part of the while operand
 		while((choice<0 || choice>availableTiles.size()) && (!p.canStayInTile(tile) || !(((RoomTile)p.getTile()).getRoom() instanceof CornerRoom))){
@@ -130,44 +128,40 @@ public class TextBasedInterface implements UserInterface {
 		if(choice < availableTiles.size()){//they want to move
 			return availableTiles.get(choice);
 		}
-		//TODO not sure if a player should be able to make a guess straight after using passage
 		if(choice == availableTiles.size() && p.getTile() instanceof RoomTile){//they want to take a passage
 			Room room = ((RoomTile)tile).getRoom();
 			return ((CornerRoom)room).getSecretPassage();
 		}
-			
-		
-		
-			
+
+
+
+
 		//They don't want to move
 		return null;
 
 	}
-	
+
 	@Override
 	public CardTuple promptGuess(Player currentPlayer, Room currentRoom,
 			boolean isGuessOrAccusation, List<CharacterCard> characterCards, List<RoomCard> roomCards, List<WeaponCard> weaponCards) {
-		
+
 		System.out.printf("You are in the %s\nDo you wish to make %s %s?\n", currentRoom.getName(), isGuessOrAccusation?"a":"an", isGuessOrAccusation?"guess":"accusation");
-		System.out.printf("0) Yes\n1) No\n> ");
+		System.out.printf("0) No\n1) Yes\n> ");
 		int answer;
 		while(true) {
 			answer = scan.nextInt();
 			if(answer != 0 && answer != 1) continue;
 			break;
 		}
-		//TODO move the player and possibly weapon(not even needed I guess) to the room being used for guess
-		if(answer == 0) { //They want to make a guess/accusation
-			//TODO move the player and possibly weapon(not even needed I guess) to the room being used for guess
+		if(answer == 1) { //They want to make a guess/accusation
 			if(isGuessOrAccusation) { // Make a guess.
-				//TODO Give them their options
 				RoomCard roomCard = null;
 				CharacterCard characterCard = null;
 				WeaponCard weaponCard = null;
 				for(RoomCard rc : roomCards) {
-					if(rc.toString().equals(currentRoom.getName())) roomCard = rc; 
+					if(rc.toString().equals(currentRoom.getName())) roomCard = rc;
 				}
-				
+
 				System.out.printf("Please choose a character to guess:\n");
 				for(int i = 0; i < characterCards.size(); i++) {
 					System.out.printf("%d) %s\n", i, characterCards.get(i).toString());
@@ -177,32 +171,26 @@ public class TextBasedInterface implements UserInterface {
 					System.out.printf("> ");
 					choice = scan.nextInt();
 				}
-				
+
 				characterCard = characterCards.get(choice);
-				
+
 				System.out.printf("Please choose a weapon to guess:\n");
 				for(int i = 0; i < weaponCards.size(); i++) {
 					System.out.printf("%d) %s\n", i, weaponCards.get(i).toString());
 				}
-				
+
 				choice = -1;
 				while(choice < 0 || choice >= weaponCards.size()) {
 					System.out.printf("> ");
 					choice = scan.nextInt();
 				}
-				
+
 				weaponCard = weaponCards.get(choice);
-				
+
 				if(roomCard == null) throw new CluedoException("Couldn't find player's current room");
 				if(characterCard == null) throw new CluedoException("Error getting character card from accusation/guess");
 				if(weaponCard == null) throw new CluedoException("Error getting weapon card from accusation/guess");
-				
-				//Move the player to the currentPlayers roomTile if they correspond to the character card being accused
-				Player player = characterCard.getPlayer();
-				if(b.getPlayers().contains(player)){
-					player.setTile(currentPlayer.getTile());
-				}
-				
+
 				return new CardTuple(characterCard, roomCard, weaponCard);
 			}
 			else { //Make an ACCUSATION
@@ -213,15 +201,15 @@ public class TextBasedInterface implements UserInterface {
 				for(int i = 0;i < roomCards.size(); i++){
 					System.out.printf("(%d) %s\n", i, roomCards.get(i).toString());
 				}
-				
+
 				int choice = -1;
 				while(choice < 0 || choice >= roomCards.size()) {
 					System.out.printf("> ");
 					choice = scan.nextInt();
 				}
-				
+
 				roomCard=roomCards.get(choice);
-				
+
 				System.out.printf("Please choose a character for your accusation:\n");
 				for(int i = 0; i < characterCards.size(); i++) {
 					System.out.printf("%d) %s\n", i, characterCards.get(i).toString());
@@ -231,38 +219,39 @@ public class TextBasedInterface implements UserInterface {
 					System.out.printf("> ");
 					choice = scan.nextInt();
 				}
-				
+
 				characterCard = characterCards.get(choice);
-				
+
 				System.out.printf("Please choose a weapon for your accusation:\n");
 				for(int i = 0; i < weaponCards.size(); i++) {
 					System.out.printf("%d) %s\n", i, weaponCards.get(i).toString());
 				}
-				
+
 				choice = -1;
 				while(choice < 0 || choice >= weaponCards.size()) {
 					System.out.printf("> ");
 					choice = scan.nextInt();
 				}
-				
+
 				weaponCard = weaponCards.get(choice);
-				
+
 				if(roomCard == null) throw new CluedoException("Couldn't find player's current room");
 				if(characterCard == null) throw new CluedoException("Error getting character card from accusation/guess");
 				if(weaponCard == null) throw new CluedoException("Error getting weapon card from accusation/guess");
-				
+
 				return new CardTuple(characterCard, roomCard, weaponCard);
-				
-				
-				
+
+
+
 			}
 		}
 		else { return null; }
-		
+
 	}
 
 	@Override
 	public void playerCanRefute(Player refutePlayer) {
+		if(refutePlayer == null) { System.out.println("No one can refute the claim"); return; }
 		System.out.printf("%s can refute the claim.\nPress any key, and hit ENTER to continue.\n", refutePlayer.getName());
 		scan.next();
 
@@ -271,31 +260,62 @@ public class TextBasedInterface implements UserInterface {
 	@Override
 	public void alertPlayerTurn(Player currentPlayer) {
 		System.out.printf("%s, it's your turn!\n", currentPlayer.getName());
-		
+
 	}
 
 	@Override
 	public void alertNumMoves(int moves) {
-		System.out.printf("You have %d moves left\n", moves);		
+		System.out.printf("You have %d moves left\n", moves);
 	}
 
 	@Override
 	public void resolveAccusation(boolean correct) {
 		if(correct){
-			System.out.printf("Your accusation is correct!");
+			System.out.printf("Your accusation is correct!\n");
 		}else{
-			//TODO test accusation resolution text
 			System.out.printf("Your accusation was incorrect. You have been eliminated from the game\nRemaining players:\n");
 			for(int i = 0; i < b.getPlayers().size(); i++) {
 				System.out.print(b.getPlayers().get(i));
 				if(i < b.getPlayers().size()-1) System.out.print(", ");
 			}
+			System.out.print("\n");
 		}
-		
+
 	}
 
 	@Override
 	public void printWinner(Player player) {
 		System.out.printf("Game over! The winner is:\n%s\n", player.getName());
+	}
+
+	@Override
+	public int offerChoices(List<String> choices) {
+		for(int i = 0; i < choices.size(); i++) {
+			System.out.printf("%d) %s\n", i, choices.get(i));
+		}
+		while(true) {
+			String reply = scan.next();
+			int choice;
+			try {
+				choice = Integer.parseInt(reply);
+				if(choice < 0 || choice >= choices.size()) {
+					throw new NumberFormatException();
+					/*System.out.println("Please choose a valid option");
+					continue;*/
+				}
+			} catch(NumberFormatException e) {
+				System.out.println("Please choose a valid option");
+				continue;
+			}
+			return choice;
+		}
+	}
+
+	@Override
+	public void showCards(Player p) {
+		System.out.printf("Your cards:\n");
+		for(Card c : p.getCards()) {
+			System.out.printf("- %s\n", c.toString());
+		}
 	}
 }

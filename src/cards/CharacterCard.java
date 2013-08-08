@@ -4,17 +4,17 @@ import board.Player;
 
 public class CharacterCard extends Card{
 	private Player character;
-	
+
 	public CharacterCard(Player c){
 		character=c;
 		this.setName(c.getName());
-		
+
 	}
-	
+
 	public String toString(){
 		return character.getName();
 	}
-	
+
 	public Player getPlayer(){
 		return character;
 	}
@@ -44,7 +44,12 @@ public class CharacterCard extends Card{
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String getName() {
+		return character.getName();
+	}
+
 }
 
 

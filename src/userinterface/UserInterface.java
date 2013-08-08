@@ -1,5 +1,5 @@
 package userinterface;
-
+//TODO ************************* MAKE IT SO THAT IF YOU GET BLOCKED IN TO A ROOM, YOU CAN STAY PUT LEGALLY.
 import java.util.List;
 import cards.CardTuple;
 import cards.CharacterCard;
@@ -16,7 +16,9 @@ public interface UserInterface {
 	 * Sets up players.
 	 */
 	public List<Player> initPlayers();
-	public void draw();
+
+
+	public void draw(List<Tile> numberedTiles);
 	/**
 	 * Tell the interface to prompt the user whether they want to make a guess.
 	 * @param currentPlayer Current player
@@ -40,28 +42,41 @@ public interface UserInterface {
 	 * @param refutePlayer
 	 */
 	public void playerCanRefute(Player refutePlayer);
-	
+
 	/**
 	 * Tell the next player that it's their turn, and how many moves they can make.
 	 * @param currentPlayer The player
 	 */
 	public void alertPlayerTurn(Player currentPlayer);
-	
+
 	/**
 	 * Alert the player of the number of moves they have left.
 	 * @param moves Number of moves left.
 	 */
 	public void alertNumMoves(int moves) ;
-	
+
 	/**
 	 * return null;
 	 * @param correct true for correct accusation, false otherwise
 	 */
 	public void resolveAccusation(boolean correct);
-	
+
 	/**
 	 * Say who won the game
 	 * @param player the player who won
 	 */
 	public void printWinner(Player player);
+
+	/**
+	 * Offer a number of choices to the player.
+	 * @param choices Choices available
+	 * @return Those choice that was chosen.
+	 */
+	public int offerChoices(List<String> choices);
+
+	/**
+	 * Show them their cards
+	 * @param p The player whom we should show their cards
+	 */
+	public void showCards(Player p);
 }

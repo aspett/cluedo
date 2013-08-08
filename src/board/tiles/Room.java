@@ -10,7 +10,7 @@ import main.CluedoException;
 
 import board.Weapon;
 
-//TODO update class diagram to incorporate new Room - RoomTile relationship
+
 public class Room {
 	private final String name;
 	private List<Weapon> weapons;
@@ -25,30 +25,21 @@ public class Room {
 	public String getName() {
 		return name;
 	}
-	
 
-	public static enum RoomEnum {
-		SPA,
-		THEATRE,
-		LIVING_ROOM,
-		OBSERVATORY,
-		HALL,
-		GUEST_HOUSE,
-		DINING_ROOM,
-		KITCHEN,
-		PATIO,
-		POOL_ROOM
-	}
 
 	public void addWeapon(Weapon weapon) {
 		if(weapon==null)throw new IllegalArgumentException("Weapon can not be null");
 		weapons.add(weapon);
-		
 	}
+
+	public void removeWeapon(Weapon weapon){
+		weapons.remove(weapon);
+	}
+
 	public List<Weapon> getWeapons(){
 		return this.weapons;
 	}
-	
+
 	public void onEnter() {
 		// TODO write onEnter method
 	}
@@ -83,7 +74,7 @@ public class Room {
 			return false;
 		return true;
 	}
-	
+
 	public void addTile(RoomTile r) {
 		if(r == null) throw new CluedoException("A room can't have a null exit/entry");
 		this.tiles.add(r);
@@ -92,15 +83,15 @@ public class Room {
 	public boolean hasTile(RoomTile r) {
 		return (this.tiles.contains(r));
 	}
-	
+
 	public Set<Tile> getTiles() {
 		return this.tiles;
 	}
 
-	
-	
 
-	
-	
+
+
+
+
 
 }

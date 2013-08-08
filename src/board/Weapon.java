@@ -1,25 +1,28 @@
 package board;
 
+import board.tiles.Room;
+
 public class Weapon {
-	private String weapon;
-	
-	
+
+	private Room room;
+	private String name;
+
 	public Weapon(String w){
-		weapon=w;
+		name=w;
 	}
-	
+
 	public String getName(){
-		return this.weapon;
+		return this.name;
 	}
 	public String toString(){
-		return String.format("%s", weapon);
+		return String.format("%s", name);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((weapon == null) ? 0 : weapon.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -32,14 +35,22 @@ public class Weapon {
 		if (getClass() != obj.getClass())
 			return false;
 		Weapon other = (Weapon) obj;
-		if (weapon == null) {
-			if (other.weapon != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!weapon.equals(other.weapon))
+		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
-	
-	
-	
+
+	public void setRoom(Room r){
+		this.room=r;
+	}
+
+	public Room getRoom(){
+		return room;
+	}
+
+
+
 }
