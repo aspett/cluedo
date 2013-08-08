@@ -84,6 +84,9 @@ public class Cluedo {
 		while(state != State.GAME_END) {
 			if(state == State.PLAYER_NEW_TURN || state == State.PLAYER_MOVING) {
 				int moves = dice.roll();
+
+				generatePlayerDisallowedTiles(currentPlayer);
+
 				while(moves>0){
 					//keep getting moves
 					ui.draw(null);
@@ -104,16 +107,11 @@ public class Cluedo {
 					}
 					else if(choice == 0 || state == State.PLAYER_MOVING) { //Move
 						if(currentPlayer.getTile() instanceof RoomTile) {
-							currentPlayer.setMustMove(true);
 							Room currentRoom = ((RoomTile) currentPlayer.getTile()).getRoom();
-							currentPlayer.setDisallowedTiles(currentRoom.getTiles());
-							//Prompt which exit to leave from
 							if(currentRoom.getTiles().size() > 1) {
 								chooseExitAndDraw(currentPlayer, currentRoom);
 							}
 						}
-						else
-							currentPlayer.setDisallowedTiles(null);
 						state = State.PLAYER_MOVING;
 						ui.alertNumMoves(moves);
 
@@ -190,22 +188,37 @@ public class Cluedo {
 
 
 
+	private void generatePlayerDisallowedTiles(Player currentPlayer) {
+		if(currentPlayer.getTile() instanceof RoomTile) {
+			currentPlayer.setMustMove(true);
+			Room currentRoom = ((RoomTile) currentPlayer.getTile()).getRoom();
+			currentPlayer.setDisallowedTiles(currentRoom.getTiles());
+		}
+		else
+			currentPlayer.setDisallowedTiles(null);
+	}
+
+
+
+
 	private void chooseExitAndDraw(Player currentPlayer, Room currentRoom) {
 		List<String> choices = new ArrayList<String>();
 		List<Tile> exitTiles = new ArrayList<Tile>();
-		ui.draw(exitTiles);
+
 		for(Tile t : currentRoom.getTiles()) {
 			if(t.isSecretTile()) {
 				choices.add("Take secret passage");
 			}
 			else {
 				choices.add(String.format("Take exit %d", choices.size()));
-				exitTiles.add(t);
+
 			}
+			exitTiles.add(t);
 		}
+		ui.draw(exitTiles);
 		int exitChoice = ui.offerChoices(choices);
 		Tile exitTile = exitTiles.get(exitChoice);
-		currentPlayer.setTile(exitTile);
+		currentPlayer.setTile(exitTile, true);
 		ui.draw(null);
 	}
 

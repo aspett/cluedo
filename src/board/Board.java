@@ -203,12 +203,12 @@ public class Board {
 		return adjacentTiles;
 	}
 
-	public List<Tile> getAvailableTiles(Tile tile) {
+	public List<Tile> getAvailableTiles(Tile tile, Player p) {
 		List<Tile> availableTiles = new ArrayList<Tile>();
 		for(Tile t : getAdjacentTiles(tile)){
 			if(t.isPassable()){
 				if(t.currentOccupants(this) < t.maxOccupants()) {
-					if(!Player.getCurrentPlayer().getDisallowedTiles().contains(t))
+					if(!p.getDisallowedTiles().contains(t))
 						availableTiles.add(t);
 				}
 			}
@@ -250,7 +250,7 @@ public class Board {
 	 */
 	public Room getRoom(String str) {
 		for(Room r : getRooms()) {
-			if(r.toString().equalsIgnoreCase(str)) return r;
+			if(r.getName().equalsIgnoreCase(str)) return r;
 		}
 		return null;
 	}
