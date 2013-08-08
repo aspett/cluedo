@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import cards.Card;
+
 import main.CluedoException;
 
 import userinterface.TextBasedInterface;
@@ -30,6 +32,7 @@ public class Board {
 	private List<Player> players = new ArrayList<Player>();//list of ACTUAL players in the game
 	private List<Weapon> weapons = new ArrayList<Weapon>();
 	private int playerCount;
+	private List<Card> freeCards;
 
 	public Board() {
 
@@ -305,6 +308,15 @@ public class Board {
 	
 	public Tile[][] getBoardTiles() {
 		return boardTiles;
+	}
+
+	public List<Card> getFreeCards() {
+		return freeCards;
+	}
+
+	public void setFreeCards(List<Card> freeCards2) {
+		this.freeCards=freeCards2;
+		
 	}	
 
 	

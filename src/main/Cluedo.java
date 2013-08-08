@@ -35,7 +35,6 @@ public class Cluedo {
 	private Dice dice;
 	Player currentPlayer;
 
-	private List<Card> freeCards = new ArrayList<Card>();
 
 	private List<CharacterCard> allCharacterCards = new ArrayList<CharacterCard>();
 	private List<RoomCard> allRoomCards = new ArrayList<RoomCard>();
@@ -57,7 +56,8 @@ public class Cluedo {
 		ui = new TextBasedInterface(b);
 		dice = new Dice();
 		List<Card> deck = initializeCardsSolution();
-
+		System.out.println("deck" +deck.size());
+		
 		//List<Player> players = b.getPlayers();
 
 		//Get players
@@ -73,10 +73,12 @@ public class Cluedo {
 		}
 
 		//Add leftover cards to a set of cards open to anyone.
+		List<Card> freeCards = new ArrayList<Card>();
 		int left = deck.size();
 		for(int i = 0; i < left; i++) {
 			freeCards.add(deck.remove(0));
 		}
+		b.setFreeCards(freeCards);
 
 
 		//Give players their start positions
@@ -393,7 +395,8 @@ public class Cluedo {
 		}
 		else {//accusation is wrong. the player is eliminated from the game
 			b.getPlayers().remove(currentPlayer);
-			//TODO add removed player's cards to the boards list of unowned cards
+			b.getFreeCards().addAll(currentPlayer.getCards());
+			currentPlayer.getCards().clear();
 			ui.resolveAccusation(correct);
 			if(b.getPlayers().size() < 2) { //Game is over.
 				state = State.GAME_END;

@@ -45,8 +45,8 @@ public class TextBasedInterface implements UserInterface {
 					if(p.getTile().equals(t)) {
 						drawTile = false;
 						if(Player.getCurrentPlayer().equals(p))
-							System.out.print("P ");
-						else System.out.print("C ");
+							System.out.print("C ");
+						else System.out.print("p ");
 						break;
 					}
 				}
@@ -135,7 +135,7 @@ public class TextBasedInterface implements UserInterface {
 		//TODO fix for error checking
 		int choice = scan.nextInt();
 		//TODO test and/or refine the last part of the while operand
-		while((choice<0 || choice>availableTiles.size()) && (!p.canStayInTile(tile) || !(((RoomTile)p.getTile()).getRoom() instanceof CornerRoom))){
+		while((choice<0 || choice>availableTiles.size())){ // TODO REFIND THE USE FOR THIS   && (!p.canStayInTile(tile) || !(((RoomTile)p.getTile()).getRoom() instanceof CornerRoom))){
 			System.out.println("Please make a valid choice..\n");
 			choice = scan.nextInt();
 		}
@@ -159,6 +159,28 @@ public class TextBasedInterface implements UserInterface {
 	public CardTuple promptGuess(Player currentPlayer, Room currentRoom,
 			boolean isGuessOrAccusation, List<CharacterCard> characterCards, List<RoomCard> roomCards, List<WeaponCard> weaponCards) {
 
+		System.out.println(b.getFreeCards().size());
+		if(currentRoom.getName().equalsIgnoreCase("pool room") && !b.getFreeCards().isEmpty()){
+			System.out.printf("You are in the %s\nDo you wish to look at the free cards instead of making an accusation?\n", currentRoom.getName());
+			System.out.printf("0) No\n1) Yes\n> ");
+			int answer;
+			while(true){
+				answer = scan.nextInt();
+				if(answer !=0 && answer != 1) continue;
+				break;
+			}
+			if(answer == 1){
+				System.out.printf("Free cards:\n");
+				for(Card c : b.getFreeCards()) {
+					System.out.printf("- %s\n", c.toString());
+				}
+				List<String> waitChoice = new ArrayList<String>();
+				waitChoice.add("Continue");
+				offerChoices(waitChoice);
+				return null;				
+			}
+			
+		}
 		System.out.printf("You are in the %s\nDo you wish to make %s %s?\n", currentRoom.getName(), isGuessOrAccusation?"a":"an", isGuessOrAccusation?"guess":"accusation");
 		System.out.printf("0) No\n1) Yes\n> ");
 		int answer;
