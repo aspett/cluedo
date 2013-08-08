@@ -40,7 +40,7 @@ public class TextBasedInterface implements UserInterface {
 						drawTile = false;
 						if(Player.getCurrentPlayer().equals(p))
 							System.out.print("P ");
-						else System.out.print("p ");
+						else System.out.print("C ");
 						break;
 					}
 				}

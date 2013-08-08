@@ -40,10 +40,15 @@ public class Player {
 		return String.format("%s", character);
 	}
 
+	/**
+	 * Set the current tile occupied by the player to the given tile
+	 * @param tile The tile to be occupied
+	 */
 	public void setTile(Tile tile) {
 		setTile(tile, false);
 	}
 
+	//TODO javadoc from here onwards
 	public void setTile(Tile tile, boolean bypassDisallowed) {
 		if(!tile.isPassable() || (disallowed.contains(tile) && !bypassDisallowed)) throw new CluedoException("Player can not be on an impassable tile, or moved in to a disallowed tile");
 		this.currentTile = tile;

@@ -149,7 +149,7 @@ public class Cluedo {
 					}
 					else if(!isGuessOrAccusation && accusation != null) { //Making an accusation!
 						boolean correct = checkAccusation(accusation);
-						boolean gameEnd = checkGameContinue(correct, currentPlayer);
+						boolean gameEnd = checkGameEnd(correct, currentPlayer);
 						if(gameEnd)break;
 
 					}
@@ -277,7 +277,7 @@ public class Cluedo {
 		int diff = max-min;
 		return (int)((Math.random()*diff)+min);
 	}
-
+	//TODO doc from here up
 	private List<String> offerChoices(Player p) {
 		List<String> choices = new ArrayList<String>();
 		choices.add("Move");
@@ -285,14 +285,22 @@ public class Cluedo {
 		return choices;
 	}
 
-	public Player findRefutePlayer(CardTuple accusation, Player currentPlayer){
-		System.out.println(accusation);
+	/**
+	 * Given a rumor CardTuple, check through all of the players other than the current player 
+	 * and find the first player (if there is one) that has one or more of the cards in the rumor and can therefore refute it.
+	 * @param rumor The rumor in question
+	 * @param currentPlayer The player that made the rumor
+	 * @return
+	 */
+	public Player findRefutePlayer(CardTuple rumor, Player currentPlayer){
+		System.out.println(rumor);
+		//TODO we need to 
 		for(Player p : b.getPlayers()) {
 			//TODO debug remove below
 			System.out.printf("%s has cards: %s\n", p.getName(), p.getCards());
-			if(!p.equals(currentPlayer) && (p.hasCard(accusation.getPlayer())
-					|| p.hasCard(accusation.getRoom())
-					|| p.hasCard(accusation.getWeapon()))) {
+			if(!p.equals(currentPlayer) && (p.hasCard(rumor.getPlayer())
+					|| p.hasCard(rumor.getRoom())
+					|| p.hasCard(rumor.getWeapon()))) {
 				return p;
 
 			}
@@ -300,11 +308,21 @@ public class Cluedo {
 		return null;
 	}
 
+	//TODO what's this?
 	private void offerMoves(Player p) {
 
 	}
 
-	public boolean checkGameContinue (boolean correct, Player currentPlayer){
+	/**
+	 * Check whether the game should continue play or not, depending on the value of the 'correct' boolean.
+	 * If correct is true then there was an accusation that was correct and the current player wins
+	 * If correct was false then there was an incorrect accusation and the current player must be removed from the game.
+	 * If after being removed from the game there is a lone player left that player wins.
+	 * @param correct A boolean who's value depends on whether the last accusation was correct or not
+	 * @param currentPlayer The player who made the accusation 
+	 * @return True if the game should end. False if the game should continue
+	 */
+	public boolean checkGameEnd (boolean correct, Player currentPlayer){
 		if(correct) {
 			state = State.GAME_END;
 			ui.resolveAccusation(correct);
@@ -313,6 +331,7 @@ public class Cluedo {
 		}
 		else {//accusation is wrong. the player is eliminated from the game
 			b.getPlayers().remove(currentPlayer);
+			//TODO add removed player's cards to the boards list of unowned cards
 			ui.resolveAccusation(correct);
 			if(b.getPlayers().size() < 2) { //Game is over.
 				state = State.GAME_END;
@@ -323,6 +342,11 @@ public class Cluedo {
 		}
 	}
 
+	/**
+	 * When a player makes a rumor, the weapons and the player in question need to be moved to the room in question.
+	 * This method moves the weapon to the room and moves the player to the room if they are human controlled.
+	 * @param guess The rumor made by the current player
+	 */
 	public void moveWeaponAndPlayer(CardTuple guess){
 		//Move the player to the currentPlayers roomTile if they correspond to the character card being accused
 		Player player = guess.getPlayer().getPlayer();
