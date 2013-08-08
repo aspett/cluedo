@@ -81,6 +81,10 @@ public class Cluedo {
 		Player.setCurrentPlayer(currentPlayer);
 		state = State.PLAYER_NEW_TURN;
 		while(state != State.GAME_END) {
+			if(b.getPlayers().size() < 2) {
+				state = State.GAME_END;
+				break;
+			}
 			if(state == State.PLAYER_NEW_TURN || state == State.PLAYER_MOVING) {
 				int moves = Dice.roll();
 
