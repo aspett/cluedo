@@ -1,6 +1,8 @@
 package userinterface;
 //TODO ************************* MAKE IT SO THAT IF YOU GET BLOCKED IN TO A ROOM, YOU CAN STAY PUT LEGALLY.
 import java.util.List;
+
+import cards.Card;
 import cards.CardTuple;
 import cards.CharacterCard;
 import cards.RoomCard;
@@ -45,8 +47,9 @@ public interface UserInterface {
 	 * Tell the current player that refutePlayer can refute the accusation that they made.
 	 * If refutePlayer is null, no one can refute the claim.
 	 * @param refutePlayer
+	 * @param refutableCards
 	 */
-	public void playerCanRefute(Player refutePlayer);
+	public void playerCanRefute(Player refutePlayer, List<Card> refutableCards);
 
 	/**
 	 * Tell the next player that it's their turn, and how many moves they can make.

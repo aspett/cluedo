@@ -36,7 +36,7 @@ public class TextBasedInterface implements UserInterface {
 
 	@Override
 	public void draw(List<Tile> numberedTiles){
-		System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		clearScreen();
 		for(Tile[] tArray:b.getBoardTiles()){
 			for(Tile t:tArray){
 				boolean drawTile = true;
@@ -67,6 +67,15 @@ public class TextBasedInterface implements UserInterface {
 			System.out.println();
 		}
 
+	}
+
+	private void clearScreen() {
+		//System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		StringBuilder str = new StringBuilder("");
+		for(int i = 0; i < 100; i++) {
+			str.append("\n");
+		}
+		System.out.printf("%s", str.toString());
 	}
 
 	@Override
@@ -255,10 +264,22 @@ public class TextBasedInterface implements UserInterface {
 	}
 
 	@Override
-	public void playerCanRefute(Player refutePlayer) {
+	public void playerCanRefute(Player refutePlayer, List<Card> refutableCards) {
 		if(refutePlayer == null) { System.out.println("No one can refute the claim"); return; }
-		System.out.printf("%s can refute the claim.\nPress any key, and hit ENTER to continue.\n", refutePlayer.getName());
-		scan.next();
+		List<String> continueChoices = new ArrayList<String>();
+		continueChoices.add(String.format("See the cards you (%s) may refute the rumour with", refutePlayer.getName()));
+		System.out.printf("%s can refute the claim.\nEnter 0 to continue\n", refutePlayer.getName());
+		offerChoices(continueChoices);
+		List<String> refuteChoices = new ArrayList<String>();
+		for(Card c : refutableCards) {
+			refuteChoices.add(c.getName());
+		}
+		System.out.printf("Choose a card to refute with:\n");
+		int refuteCardIndex = offerChoices(refuteChoices);
+		clearScreen();
+		System.out.printf("%s has refuted the rumour with the '%s' card!\nEnter 0 to continue.\n", refutePlayer.getName(), refuteChoices.get(refuteCardIndex));
+		continueChoices.set(0, "Continue");
+		offerChoices(continueChoices);
 
 	}
 
