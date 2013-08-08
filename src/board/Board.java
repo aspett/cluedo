@@ -30,6 +30,11 @@ public class Board {
 
 	}
 
+	/**
+	 * Create the board from the boardinput file by reading each character and constructing the corresponding tile for it, and 
+	 * adding the tile to the correct place in the boardTiles array. If the tile is a roomTile add it to the corresponding rooms set of exits/entrances
+	 * 
+	 */
 	private void createBoard() {
 		Scanner scan;
 		try {
@@ -38,7 +43,7 @@ public class Board {
 			int rows=scan.nextInt();
 			int cols=scan.nextInt();
 			scan.nextLine();
-			setBoardTiles(new Tile[rows][cols]);
+			boardTiles = new Tile[rows][cols];
 			for(int i=0;i<rows;i++){
 				String line=scan.nextLine();
 				for(int j=0;j<cols;j++){
@@ -120,6 +125,9 @@ public class Board {
 
 	}
 
+	/**
+	 * Initialize and connect the secret passages for each of the corner rooms 
+	 */
 	private void initializePassages() {
 		//Set spa's secret passage to guest house
 		if(!(rooms.get(0) instanceof CornerRoom))throw new CluedoException("The room at index 0 should be a corner room");
@@ -153,6 +161,11 @@ public class Board {
 
 	}
 
+	
+	/**
+	 * Create a list that contains all of the rooms in the game. Create the Room objects for each room as we go.
+	 * For each Room object (Other than the pool room) place a randomly selected weapon in its weapon set so each room has one weapon at the beginning of the game.
+	 */
 	public void initializeRooms() {
 		rooms.add(new CornerRoom("Spa"));
 		rooms.add(new Room("Theatre"));
@@ -174,6 +187,10 @@ public class Board {
 		rooms.add(new Room("Pool Room"));//Pool Room added last as it can not hold a weapon
 
 	}
+	
+	/**
+	 * Create a list of all the characters/players in the game regardless of whether they are a player controlled character or not.
+	 */
 	public void initializePlayers() {
 		availablePlayers.add(new Player("Kasandra Scarlett"));
 		availablePlayers.add(new Player("Jack Mustard"));
@@ -182,6 +199,10 @@ public class Board {
 		availablePlayers.add(new Player("Eleanor Peacock"));
 		availablePlayers.add(new Player("Victor Plum"));
 	}
+	
+	/**
+	 * Create a list of all the weapons used in the game.
+	 */
 	public void initializeWeapons() {
 		weapons.add(new Weapon("Rope"));
 		weapons.add(new Weapon("Candle Stick"));
@@ -194,6 +215,11 @@ public class Board {
 		weapons.add(new Weapon("Axe"));
 	}
 
+	/**
+	 * Given aTile find all of the adjacent tiles. The tile North, South, East, and West of it.
+	 * @param tile The tile in question
+	 * @return A list of all the adjacent tiles.
+	 */
 	public List<Tile> getAdjacentTiles(Tile tile){
 		int x = tile.getX();
 		int y = tile.getY();
@@ -206,6 +232,12 @@ public class Board {
 		return adjacentTiles;
 	}
 
+	/**
+	 * Given a tile and a player find all of the tiles that the player is allowed to move to from the tile.
+	 * @param tile The tile occupied by the player.
+	 * @param p The player wanting to move.
+	 * @return A List of all the tiles the player is allowed to move to
+	 */
 	public List<Tile> getAvailableTiles(Tile tile, Player p) {
 		List<Tile> availableTiles = new ArrayList<Tile>();
 		for(Tile t : getAdjacentTiles(tile)){
@@ -219,32 +251,61 @@ public class Board {
 		return availableTiles;
 	}
 
+	/**
+	 * Get the list of all the player controlled players
+	 * @return the list of player controlled players
+	 */
 	public List<Player> getAvailablePlayers() {
 		return availablePlayers;
 	}
+	
+	/**
+	 * Get the list of all the players(including the players not used in play) 
+	 * @return the list of all players
+	 */
 	public List<Player> getPlayers() {
 		return players;
 	}
+	
+	/**
+	 * Set the players to a given set
+	 * @param players The set containing all the players for the game
+	 */
 	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
+	
+	/**
+	 * Get the list of all the weapons in the game
+	 * @return The list containing all weapons
+	 */
 	public List<Weapon> getWeapons() {
 		return weapons;
 	}
+	
+	/**
+	 * Get the list of all the rooms in the game
+	 * @return the list of all rooms
+	 */
 	public List<Room> getRooms() {
 		return rooms;
 	}
+	
+	/**
+	 * Set the count of human controlled players in the game
+	 * @param c The count of players
+	 */
 	public void setPlayerCount(int c){
 		playerCount=c;
 	}
 
+	/**
+	 * Get the 2-Dimensional array containing the Tile layout for the board
+	 * @return The 2d array of all tiles
+	 */
 	public Tile[][] getBoardTiles() {
 		return boardTiles;
-	}
-
-	public void setBoardTiles(Tile[][] boardTiles) {
-		this.boardTiles = boardTiles;
-	}
+	}	
 
 	/**
 	 * Get a room by it's name

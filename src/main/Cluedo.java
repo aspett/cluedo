@@ -255,6 +255,7 @@ public class Cluedo {
 			allWeaponCards.add(new WeaponCard(w));
 		}
 		for(Room r : rooms) {
+			if(r.getName().equalsIgnoreCase("pool room"))continue; //We dont want a pool room card. Dont make one
 			allRoomCards.add(new RoomCard(r));
 		}
 	}
