@@ -2,6 +2,11 @@ package cards;
 
 import board.Player;
 
+/**
+ * A card representing a character in the game.
+ * @author Andrew Pett & Matthew Mortimer
+ *
+ */
 public class CharacterCard extends Card{
 	private Player character;
 
@@ -15,6 +20,10 @@ public class CharacterCard extends Card{
 		return character.getName();
 	}
 
+	/**
+	 * Get the player that the card represents
+	 * @return
+	 */
 	public Player getPlayer(){
 		return character;
 	}

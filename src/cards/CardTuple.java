@@ -1,5 +1,10 @@
 package cards;
 
+/**
+ * Represents a combination of a {@link CharacterCard character card}, {@link RoomCard room card}, {@link WeaponCard weapon card}
+ * @author Andrew Pett & Matthew Mortimer
+ *
+ */
 public final class CardTuple {
 	private CharacterCard player;
 	private RoomCard room;

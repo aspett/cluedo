@@ -12,7 +12,7 @@ import cards.Card;
 
 import board.tiles.*;
 /**
- * A class that represents a real player.
+ * A class that represents a character in the game, and also a real player of the game.
  * @author Andrew Pett & Matthew Mortimer
  *
  */
@@ -67,9 +67,18 @@ public class Player {
 		return this.currentTile;
 	}
 
+	/**
+	 * @deprecated Shouldn't use this anymore
+	 * @param p
+	 */
 	public static void setCurrentPlayer(Player p ) {
 		currentPlayer = p;
 	}
+	
+	/**
+	 * @deprecated Shouldn't use this anymore
+	 * @return
+	 */
 	public static Player getCurrentPlayer() {
 		return currentPlayer;
 	}

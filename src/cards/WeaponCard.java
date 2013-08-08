@@ -2,6 +2,11 @@ package cards;
 
 import board.Weapon;
 
+/**
+ * A card which represents a weapon in the game of Cluedo.
+ * @author Andrew
+ *
+ */
 public class WeaponCard extends Card{
 
 	private Weapon weapon;
@@ -44,7 +49,9 @@ public class WeaponCard extends Card{
 		return weapon.getName();
 	}
 
-
+	/**
+	 * @return the {@link Weapon weapon} object that the card represents.
+	 */
 	public Weapon getWeapon(){
 		return weapon;
 	}

@@ -2,6 +2,11 @@ package cards;
 
 import board.tiles.Room;
 
+/**
+ * A card which represents a room in the game of Cluedo.
+ * @author Andrew Pett & Matthew Mortimer
+ *
+ */
 public class RoomCard extends Card {
 
 	private Room room;

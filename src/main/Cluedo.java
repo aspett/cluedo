@@ -10,10 +10,25 @@ import java.math.*;
 import userinterface.TextBasedInterface;
 import userinterface.UserInterface;
 
+/**
+ * The main class of the game.
+ * Dictates all game logic, and displays the state of the game via a {@link UserInterface user interface}
+ * @author Andrew
+ *
+ */
 public class Cluedo {
+	/**
+	 * A tuple of the randomly chosen solution
+	 */
 	private CardTuple solution;
 	private Board b = new Board();
+	/**
+	 * The userinterface which the game will use to display the state of the game.
+	 */
 	private UserInterface ui;
+	/**
+	 * The {@link State state} of the game
+	 */
 	private State state;
 	private Dice dice;
 	Player currentPlayer;
@@ -24,6 +39,12 @@ public class Cluedo {
 	private List<RoomCard> allRoomCards = new ArrayList<RoomCard>();
 	private List<WeaponCard> allWeaponCards = new ArrayList<WeaponCard>();
 
+	/**
+	 * An enum representing a small number of useful states that the game can be in.
+	 * Used to direct game logic.
+	 * @author Andrew Pett & Matthew Mortimer
+	 *
+	 */
 	private static enum State {
 		PLAYER_NEW_TURN,
 		PLAYER_MOVING,
@@ -97,7 +118,7 @@ public class Cluedo {
 
 					int choice = 0;
 					if(state == State.PLAYER_NEW_TURN) {
-						List<String> choices = offerChoices(currentPlayer);
+						List<String> choices = generateNewTurnChoices();
 						choice = ui.offerChoices(choices);
 					}
 
@@ -165,7 +186,11 @@ public class Cluedo {
 
 
 
-
+	/**
+	 * Generate for the {@link currentPlayer} the tiles which (s)he may not enter
+	 * due to their current position
+	 * @param currentPlayer
+	 */
 	private void generatePlayerDisallowedTiles(Player currentPlayer) {
 		if(currentPlayer.getTile() instanceof RoomTile) {
 			currentPlayer.setMustMove(true);
@@ -178,8 +203,13 @@ public class Cluedo {
 
 
 
-
-	private void chooseExitAndDraw(Player currentPlayer, Room currentRoom) {
+	/**
+	 * Prompt the user with their choice of exits and redraw the board
+	 * @param player The player whom we should prompt
+	 * @param currentRoom The room that the player is in
+	 */
+	private void chooseExitAndDraw(Player player, Room currentRoom) {
+		if(!currentRoom.getTiles().contains(player.getTile())) throw new CluedoException("Room given to prompt exits for is inconsistent with the tile that the player is currently in");
 		List<String> choices = new ArrayList<String>();
 		List<Tile> exitTiles = new ArrayList<Tile>();
 
@@ -196,7 +226,7 @@ public class Cluedo {
 		ui.draw(exitTiles);
 		int exitChoice = ui.offerChoices(choices);
 		Tile exitTile = exitTiles.get(exitChoice);
-		currentPlayer.setTile(exitTile, true);
+		player.setTile(exitTile, true);
 		ui.draw(null);
 	}
 
@@ -245,7 +275,12 @@ public class Cluedo {
 		return deck;
 	}
 
-
+	/**
+	 * Generates the cards used in the game from a list of {@link Player players}, {@link Weapon weapons}, and {@link Room rooms}
+	 * @param players List of players
+	 * @param weapons List of weapons
+	 * @param rooms List of rooms
+	 */
 	private void generateCards(List<Player> players, List<Weapon> weapons,
 			List<Room> rooms) {
 		for(Player p : players) {
@@ -268,17 +303,29 @@ public class Cluedo {
 		return accusation.equals(solution);
 	}
 
-
+	/**
+	 * Run the game.
+	 * @param args Not required
+	 */
 	public static void main (String[] args) {
 		Cluedo game = new Cluedo();
 	}
-
+	/**
+	 * Generate a random number between min and max inclusive.
+	 * @param min Minimum number
+	 * @param max Maximum number
+	 * @return A random number between {@link min} and {@link max}
+	 */
 	public static int rand(int min, int max) {
 		int diff = max-min;
 		return (int)((Math.random()*diff)+min);
 	}
-	//TODO doc from here up
-	private List<String> offerChoices(Player p) {
+	
+	/**
+	 * Generate the standard choices to offer at the start of a player's turn
+	 * @return the choices
+	 */
+	private List<String> generateNewTurnChoices() {
 		List<String> choices = new ArrayList<String>();
 		choices.add("Move");
 		choices.add("Look at cards");

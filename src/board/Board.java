@@ -20,7 +20,13 @@ public class Board {
 	private Tile[][] boardTiles;
 
 	private List<Room> rooms = new ArrayList<Room>();
+	/**
+	 * A list of all available characters
+	 */
 	private List<Player> availablePlayers = new ArrayList<Player>();// list of all characters
+	/**
+	 * A list of REAL players who are playing
+	 */
 	private List<Player> players = new ArrayList<Player>();//list of ACTUAL players in the game
 	private List<Weapon> weapons = new ArrayList<Weapon>();
 	private int playerCount;
