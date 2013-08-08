@@ -17,7 +17,6 @@ import board.Board;
 import board.Player;
 import board.Weapon;
 import board.tiles.*;
-//TODO Update class diagram for the interface to hold the board
 //TODO Players entering the pool room need an option to enter the pool room to view left over cards from dealing. And also show them, unless we assume the players have looked IRL
 public class TextBasedInterface implements UserInterface {
 

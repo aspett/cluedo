@@ -3,7 +3,6 @@ package board.tiles;
 import board.Board;
 import board.Player;
 
-//TODO change CD for interface to abstract
 public abstract class Tile {
 	private int x;
 	private int y;

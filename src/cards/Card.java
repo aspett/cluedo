@@ -1,6 +1,5 @@
 package cards;
 
-//TODO change class diagram to have abstract type not interface
 public abstract class Card implements Comparable<Card>{
 	private String name;
 

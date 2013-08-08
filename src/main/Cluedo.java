@@ -84,7 +84,7 @@ public class Cluedo {
 		state = State.PLAYER_NEW_TURN;
 		while(state != State.GAME_END) {
 			if(state == State.PLAYER_NEW_TURN || state == State.PLAYER_MOVING) {
-				int moves = dice.roll();
+				int moves = Dice.roll();
 
 				generatePlayerDisallowedTiles(currentPlayer);
 
