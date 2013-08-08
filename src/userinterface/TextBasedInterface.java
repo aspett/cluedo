@@ -60,9 +60,7 @@ public class TextBasedInterface implements UserInterface {
 			}
 			System.out.println();
 		}
-		for(Weapon w : b.getWeapons()){
-			System.out.printf("%s,  %s\n", w.getName(), w.getRoom().getName());
-		}
+
 	}
 
 	@Override
