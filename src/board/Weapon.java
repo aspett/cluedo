@@ -1,13 +1,15 @@
 package board;
 
+import board.tiles.Room;
+
 public class Weapon {
 	private String weapon;
-	
-	
+	private Room room;
+
 	public Weapon(String w){
 		weapon=w;
 	}
-	
+
 	public String getName(){
 		return this.weapon;
 	}
@@ -39,7 +41,15 @@ public class Weapon {
 			return false;
 		return true;
 	}
-	
-	
-	
+
+	public void setRoom(Room r){
+		this.room=r;
+	}
+
+	public Room getRoom(){
+		return room;
+	}
+
+
+
 }

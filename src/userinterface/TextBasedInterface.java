@@ -15,6 +15,7 @@ import cards.WeaponCard;
 
 import board.Board;
 import board.Player;
+import board.Weapon;
 import board.tiles.*;
 //TODO Update class diagram for the interface to hold the board
 //TODO Players entering the pool room need an option to enter the pool room to view left over cards from dealing. And also show them, unless we assume the players have looked IRL
@@ -59,6 +60,9 @@ public class TextBasedInterface implements UserInterface {
 				}
 			}
 			System.out.println();
+		}
+		for(Weapon w : b.getWeapons()){
+			System.out.printf("%s,  %s\n", w.getName(), w.getRoom().getName());
 		}
 	}
 
@@ -192,12 +196,6 @@ public class TextBasedInterface implements UserInterface {
 				if(roomCard == null) throw new CluedoException("Couldn't find player's current room");
 				if(characterCard == null) throw new CluedoException("Error getting character card from accusation/guess");
 				if(weaponCard == null) throw new CluedoException("Error getting weapon card from accusation/guess");
-
-				//Move the player to the currentPlayers roomTile if they correspond to the character card being accused
-				Player player = characterCard.getPlayer();
-				if(b.getPlayers().contains(player)){
-					player.setTile(currentPlayer.getTile());
-				}
 
 				return new CardTuple(characterCard, roomCard, weaponCard);
 			}

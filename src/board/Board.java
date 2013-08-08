@@ -168,6 +168,7 @@ public class Board {
 		Collections.shuffle(weapons);
 		for(int i=0; i<rooms.size();i++){
 			rooms.get(i).addWeapon(weapons.get(i));
+			weapons.get(i).setRoom(rooms.get(i));
 		}
 
 		rooms.add(new Room("Pool Room"));//Pool Room added last as it can not hold a weapon

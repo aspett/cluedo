@@ -45,4 +45,9 @@ public class WeaponCard extends Card{
 	}
 
 
+	public Weapon getWeapon(){
+		return weapon;
+	}
+
+
 }

@@ -25,7 +25,7 @@ public class Room {
 	public String getName() {
 		return name;
 	}
-	
+
 
 	public static enum RoomEnum {
 		SPA,
@@ -43,12 +43,16 @@ public class Room {
 	public void addWeapon(Weapon weapon) {
 		if(weapon==null)throw new IllegalArgumentException("Weapon can not be null");
 		weapons.add(weapon);
-		
 	}
+
+	public void removeWeapon(Weapon weapon){
+		weapons.remove(weapon);
+	}
+
 	public List<Weapon> getWeapons(){
 		return this.weapons;
 	}
-	
+
 	public void onEnter() {
 		// TODO write onEnter method
 	}
@@ -83,7 +87,7 @@ public class Room {
 			return false;
 		return true;
 	}
-	
+
 	public void addTile(RoomTile r) {
 		if(r == null) throw new CluedoException("A room can't have a null exit/entry");
 		this.tiles.add(r);
@@ -92,15 +96,15 @@ public class Room {
 	public boolean hasTile(RoomTile r) {
 		return (this.tiles.contains(r));
 	}
-	
+
 	public Set<Tile> getTiles() {
 		return this.tiles;
 	}
 
-	
-	
 
-	
-	
+
+
+
+
 
 }

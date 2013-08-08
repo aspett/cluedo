@@ -18,6 +18,7 @@ public class Cluedo {
 	private UserInterface ui;
 	private State state;
 	private Dice dice;
+	Player currentPlayer;
 
 	private List<Card> freeCards = new ArrayList<Card>();
 
@@ -78,7 +79,7 @@ public class Cluedo {
 		//Testing the board drawing
 		//		ui.draw();
 		int currentPlayerID = randPlayer;
-		Player currentPlayer = startingPlayer;
+		currentPlayer = startingPlayer;
 		Player.setCurrentPlayer(currentPlayer);
 		state = State.PLAYER_NEW_TURN;
 		while(state != State.GAME_END) {
@@ -139,6 +140,8 @@ public class Cluedo {
 					boolean isGuessOrAccusation = !room.getRoom().getName().equalsIgnoreCase("Pool room"); //True for guess. False for accusation
 					CardTuple accusation = ui.promptGuess(currentPlayer, room.getRoom(), isGuessOrAccusation, allCharacterCards, allRoomCards, allWeaponCards);
 					if(isGuessOrAccusation && accusation != null) { //Making a guess
+						//TODO add to sequence the fololowing line
+						moveWeaponAndPlayer(accusation);
 						Player refutePlayer = findRefutePlayer(accusation, currentPlayer);
 						ui.playerCanRefute(refutePlayer);
 					}
@@ -321,5 +324,22 @@ public class Cluedo {
 			}
 			return false;
 		}
+	}
+
+	public void moveWeaponAndPlayer(CardTuple guess){
+		//Move the player to the currentPlayers roomTile if they correspond to the character card being accused
+		System.out.println("called");
+		Player player = guess.getPlayer().getPlayer();
+		if(b.getPlayers().contains(player)){
+			player.setTile(currentPlayer.getTile());
+		}
+
+		Room currentPlayerRoom = ((RoomTile)player.getTile()).getRoom();
+		Weapon weapon = guess.getWeapon().getWeapon();
+		Room currentWeaponRoom = weapon.getRoom();
+		currentPlayerRoom.addWeapon(weapon);
+		currentWeaponRoom.removeWeapon(weapon);
+
+
 	}
 }
