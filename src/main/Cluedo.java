@@ -138,18 +138,7 @@ public class Cluedo {
 					boolean isGuessOrAccusation = !room.getRoom().getName().equalsIgnoreCase("Pool room"); //True for guess. False for accusation
 					CardTuple accusation = ui.promptGuess(currentPlayer, room.getRoom(), isGuessOrAccusation, allCharacterCards, allRoomCards, allWeaponCards);
 					if(isGuessOrAccusation && accusation != null) { //Making a guess
-						Player refutePlayer = null;
-						System.out.println(accusation);
-						for(Player p : b.getPlayers()) {
-							//TODO debug remove below
-							System.out.printf("%s has cards: %s\n", p.getName(), p.getCards());
-							if(!p.equals(currentPlayer) && (p.hasCard(accusation.getPlayer())
-									|| p.hasCard(accusation.getRoom())
-									|| p.hasCard(accusation.getWeapon()))) {
-								refutePlayer = p;
-								break;
-							}
-						}
+						Player refutePlayer = findRefutePlayer(accusation, currentPlayer);
 						ui.playerCanRefute(refutePlayer);
 					}
 					else if(!isGuessOrAccusation && accusation != null) { //Making an accusation!
@@ -304,6 +293,21 @@ public class Cluedo {
 		choices.add("Move");
 		choices.add("Look at cards");
 		return choices;
+	}
+	
+	public Player findRefutePlayer(CardTuple accusation, Player currentPlayer){
+		System.out.println(accusation);
+		for(Player p : b.getPlayers()) {
+			//TODO debug remove below
+			System.out.printf("%s has cards: %s\n", p.getName(), p.getCards());
+			if(!p.equals(currentPlayer) && (p.hasCard(accusation.getPlayer())
+					|| p.hasCard(accusation.getRoom())
+					|| p.hasCard(accusation.getWeapon()))) {
+				return p;
+				
+			}
+		}
+		return null;
 	}
 
 	private void offerMoves(Player p) {
