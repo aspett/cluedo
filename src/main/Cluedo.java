@@ -144,20 +144,9 @@ public class Cluedo {
 					}
 					else if(!isGuessOrAccusation && accusation != null) { //Making an accusation!
 						boolean correct = checkAccusation(accusation);
-						if(correct) {
-							state = State.GAME_END;
-							ui.resolveAccusation(correct);
-							ui.printWinner(currentPlayer);
-						}
-						else {//accusation is wrong. the player is eliminated from the game
-							b.getPlayers().remove(currentPlayer);
-							ui.resolveAccusation(correct);
-							if(b.getPlayers().size() < 2) { //Game is over.
-								state = State.GAME_END;
-								ui.printWinner(b.getPlayers().get(0));
-								break;
-							}
-						}
+						boolean gameEnd = checkGameContinue(correct, currentPlayer);
+						if(gameEnd)break;
+
 					}
 				}
 				//Set new player
@@ -313,5 +302,24 @@ public class Cluedo {
 
 	private void offerMoves(Player p) {
 
+	}
+
+	public boolean checkGameContinue (boolean correct, Player currentPlayer){
+		if(correct) {
+			state = State.GAME_END;
+			ui.resolveAccusation(correct);
+			ui.printWinner(currentPlayer);
+			return true;
+		}
+		else {//accusation is wrong. the player is eliminated from the game
+			b.getPlayers().remove(currentPlayer);
+			ui.resolveAccusation(correct);
+			if(b.getPlayers().size() < 2) { //Game is over.
+				state = State.GAME_END;
+				ui.printWinner(b.getPlayers().get(0));
+				return true;
+			}
+			return false;
+		}
 	}
 }
