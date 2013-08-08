@@ -1,7 +1,9 @@
 package main;
 
 import cards.*;
+
 import java.util.*;
+
 import board.*;
 import board.tiles.*;
 import cards.*;
@@ -10,10 +12,25 @@ import java.math.*;
 import userinterface.TextBasedInterface;
 import userinterface.UserInterface;
 
+/**
+ * The main class of the game.
+ * Dictates all game logic, and displays the state of the game via a {@link UserInterface user interface}
+ * @author Andrew
+ *
+ */
 public class Cluedo {
+	/**
+	 * A tuple of the randomly chosen solution
+	 */
 	private CardTuple solution;
 	private Board b = new Board();
+	/**
+	 * The userinterface which the game will use to display the state of the game.
+	 */
 	private UserInterface ui;
+	/**
+	 * The {@link State state} of the game
+	 */
 	private State state;
 	private Dice dice;
 	Player currentPlayer;
@@ -23,6 +40,12 @@ public class Cluedo {
 	private List<RoomCard> allRoomCards = new ArrayList<RoomCard>();
 	private List<WeaponCard> allWeaponCards = new ArrayList<WeaponCard>();
 
+	/**
+	 * An enum representing a small number of useful states that the game can be in.
+	 * Used to direct game logic.
+	 * @author Andrew Pett & Matthew Mortimer
+	 *
+	 */
 	private static enum State {
 		PLAYER_NEW_TURN,
 		PLAYER_MOVING,
@@ -99,7 +122,7 @@ public class Cluedo {
 
 					int choice = 0;
 					if(state == State.PLAYER_NEW_TURN) {
-						List<String> choices = offerChoices(currentPlayer);
+						List<String> choices = generateNewTurnChoices();
 						choice = ui.offerChoices(choices);
 					}
 
@@ -147,12 +170,12 @@ public class Cluedo {
 						//TODO add to sequence the fololowing line
 						moveWeaponAndPlayer(accusation);
 						Player refutePlayer = findRefutePlayer(accusation, currentPlayer);
-						ui.playerCanRefute(refutePlayer);
+						ui.playerCanRefute(refutePlayer, refutePlayer == null ? null : getRefutableCardsForPlayer(accusation, refutePlayer));
 					}
 					else if(!isGuessOrAccusation && accusation != null) { //Making an accusation!
 						boolean correct = checkAccusation(accusation);
 						boolean gameEnd = checkGameEnd(correct, currentPlayer);
-						if(gameEnd)break;
+						if(gameEnd) break;
 
 					}
 				}
@@ -167,7 +190,11 @@ public class Cluedo {
 
 
 
-
+	/**
+	 * Generate for the {@link currentPlayer} the tiles which (s)he may not enter
+	 * due to their current position
+	 * @param currentPlayer
+	 */
 	private void generatePlayerDisallowedTiles(Player currentPlayer) {
 		if(currentPlayer.getTile() instanceof RoomTile) {
 			currentPlayer.setMustMove(true);
@@ -180,8 +207,13 @@ public class Cluedo {
 
 
 
-
-	private void chooseExitAndDraw(Player currentPlayer, Room currentRoom) {
+	/**
+	 * Prompt the user with their choice of exits and redraw the board
+	 * @param player The player whom we should prompt
+	 * @param currentRoom The room that the player is in
+	 */
+	private void chooseExitAndDraw(Player player, Room currentRoom) {
+		if(!currentRoom.getTiles().contains(player.getTile())) throw new CluedoException("Room given to prompt exits for is inconsistent with the tile that the player is currently in");
 		List<String> choices = new ArrayList<String>();
 		List<Tile> exitTiles = new ArrayList<Tile>();
 
@@ -198,7 +230,7 @@ public class Cluedo {
 		ui.draw(exitTiles);
 		int exitChoice = ui.offerChoices(choices);
 		Tile exitTile = exitTiles.get(exitChoice);
-		currentPlayer.setTile(exitTile, true);
+		player.setTile(exitTile, true);
 		ui.draw(null);
 	}
 
@@ -247,7 +279,12 @@ public class Cluedo {
 		return deck;
 	}
 
-
+	/**
+	 * Generates the cards used in the game from a list of {@link Player players}, {@link Weapon weapons}, and {@link Room rooms}
+	 * @param players List of players
+	 * @param weapons List of weapons
+	 * @param rooms List of rooms
+	 */
 	private void generateCards(List<Player> players, List<Weapon> weapons,
 			List<Room> rooms) {
 		for(Player p : players) {
@@ -270,17 +307,29 @@ public class Cluedo {
 		return accusation.equals(solution);
 	}
 
-
+	/**
+	 * Run the game.
+	 * @param args Not required
+	 */
 	public static void main (String[] args) {
 		Cluedo game = new Cluedo();
 	}
-
+	/**
+	 * Generate a random number between min and max inclusive.
+	 * @param min Minimum number
+	 * @param max Maximum number
+	 * @return A random number between {@link min} and {@link max}
+	 */
 	public static int rand(int min, int max) {
 		int diff = max-min;
 		return (int)((Math.random()*diff)+min);
 	}
-	//TODO doc from here up
-	private List<String> offerChoices(Player p) {
+
+	/**
+	 * Generate the standard choices to offer at the start of a player's turn
+	 * @return the choices
+	 */
+	private List<String> generateNewTurnChoices() {
 		List<String> choices = new ArrayList<String>();
 		choices.add("Move");
 		choices.add("Look at cards");
@@ -288,7 +337,7 @@ public class Cluedo {
 	}
 
 	/**
-	 * Given a rumor CardTuple, check through all of the players other than the current player 
+	 * Given a rumor CardTuple, check through all of the players other than the current player
 	 * and find the first player (if there is one) that has one or more of the cards in the rumor and can therefore refute it.
 	 * @param rumor The rumor in question
 	 * @param currentPlayer The player that made the rumor
@@ -296,18 +345,31 @@ public class Cluedo {
 	 */
 	public Player findRefutePlayer(CardTuple rumor, Player currentPlayer){
 		System.out.println(rumor);
-		//TODO we need to 
-		for(Player p : b.getPlayers()) {
-			//TODO debug remove below
-			System.out.printf("%s has cards: %s\n", p.getName(), p.getCards());
-			if(!p.equals(currentPlayer) && (p.hasCard(rumor.getPlayer())
-					|| p.hasCard(rumor.getRoom())
-					|| p.hasCard(rumor.getWeapon()))) {
+		//TODO we need to
+		Player p = b.getPlayers().get((b.getPlayers().indexOf(currentPlayer) + 1)%b.getPlayers().size());
+		while(p != currentPlayer) {
+			List<Card> refutableCards = getRefutableCardsForPlayer(rumor, p);
+			if(refutableCards.size() > 0) {
 				return p;
-
 			}
+			p = b.getPlayers().get((b.getPlayers().indexOf(p) + 1) % b.getPlayers().size());
 		}
 		return null;
+	}
+
+
+
+	private List<Card> getRefutableCardsForPlayer(CardTuple rumour,
+			Player p) {
+		List<Card> refutableCards = new ArrayList<Card>();
+		if(p.hasCard(rumour.getPlayer()))
+			refutableCards.add(rumour.getPlayer());
+		if(p.hasCard(rumour.getRoom()))
+			refutableCards.add(rumour.getRoom());
+		if(p.hasCard(rumour.getWeapon()))
+			refutableCards.add(rumour.getWeapon());
+
+		return refutableCards;
 	}
 
 	//TODO what's this?
@@ -321,7 +383,7 @@ public class Cluedo {
 	 * If correct was false then there was an incorrect accusation and the current player must be removed from the game.
 	 * If after being removed from the game there is a lone player left that player wins.
 	 * @param correct A boolean who's value depends on whether the last accusation was correct or not
-	 * @param currentPlayer The player who made the accusation 
+	 * @param currentPlayer The player who made the accusation
 	 * @return True if the game should end. False if the game should continue
 	 */
 	public boolean checkGameEnd (boolean correct, Player currentPlayer){
@@ -352,12 +414,13 @@ public class Cluedo {
 	 */
 	public void moveWeaponAndPlayer(CardTuple guess){
 		//Move the player to the currentPlayers roomTile if they correspond to the character card being accused
-		Player player = guess.getPlayer().getPlayer();
-		if(b.getPlayers().contains(player)){
-			player.setTile(currentPlayer.getTile());
+
+		Player player = guess.getPlayer().getPlayer(); //The player who is PART OF THE RUMOUR
+		if(b.getPlayers().contains(player)){ //IF THAT PLAYER IS A REAL PLAYER
+			player.setTile(currentPlayer.getTile()); //Move them to the current player's tile/room.
 		}
 
-		Room currentPlayerRoom = ((RoomTile)player.getTile()).getRoom();
+		Room currentPlayerRoom = ((RoomTile)currentPlayer.getTile()).getRoom();
 		Weapon weapon = guess.getWeapon().getWeapon();
 		Room currentWeaponRoom = weapon.getRoom();
 		currentPlayerRoom.addWeapon(weapon);

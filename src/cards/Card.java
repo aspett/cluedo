@@ -1,5 +1,10 @@
 package cards;
 
+/**
+ * Represents a card in the Cluedo game.
+ * @author Andrew Pett & Matthew Mortimer
+ *
+ */
 public abstract class Card implements Comparable<Card>{
 	private String name;
 

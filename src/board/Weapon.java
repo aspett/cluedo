@@ -1,7 +1,11 @@
 package board;
 
 import board.tiles.Room;
-
+/**
+ * Class used to represent a weapon in the game of Cluedo
+ * @author Andrew Pett & Matthew Mortimer
+ *
+ */
 public class Weapon {
 
 	private Room room;
@@ -43,10 +47,18 @@ public class Weapon {
 		return true;
 	}
 
+	/**
+	 * Set the room that the weapon is in
+	 * @param r Room
+	 */
 	public void setRoom(Room r){
 		this.room=r;
 	}
 
+	/**
+	 * Get the room that the weapon is currently contained in.
+	 * @return
+	 */
 	public Room getRoom(){
 		return room;
 	}

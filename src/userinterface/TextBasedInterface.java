@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import main.CluedoException;
 
@@ -18,6 +19,11 @@ import board.Player;
 import board.Weapon;
 import board.tiles.*;
 //TODO Players entering the pool room need an option to enter the pool room to view left over cards from dealing. And also show them, unless we assume the players have looked IRL
+/**
+ * A text based interface for interacting with the Cluedo game.
+ * @author Andrew Pett & Matthew Mortimer
+ *
+ */
 public class TextBasedInterface implements UserInterface {
 
 	private Board b;
@@ -30,7 +36,7 @@ public class TextBasedInterface implements UserInterface {
 
 	@Override
 	public void draw(List<Tile> numberedTiles){
-		System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		clearScreen();
 		for(Tile[] tArray:b.getBoardTiles()){
 			for(Tile t:tArray){
 				boolean drawTile = true;
@@ -61,6 +67,15 @@ public class TextBasedInterface implements UserInterface {
 			System.out.println();
 		}
 
+	}
+
+	private void clearScreen() {
+		//System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		StringBuilder str = new StringBuilder("");
+		for(int i = 0; i < 100; i++) {
+			str.append("\n");
+		}
+		System.out.printf("%s", str.toString());
 	}
 
 	@Override
@@ -271,10 +286,22 @@ public class TextBasedInterface implements UserInterface {
 	}
 
 	@Override
-	public void playerCanRefute(Player refutePlayer) {
+	public void playerCanRefute(Player refutePlayer, List<Card> refutableCards) {
 		if(refutePlayer == null) { System.out.println("No one can refute the claim"); return; }
-		System.out.printf("%s can refute the claim.\nPress any key, and hit ENTER to continue.\n", refutePlayer.getName());
-		scan.next();
+		List<String> continueChoices = new ArrayList<String>();
+		continueChoices.add(String.format("See the cards you (%s) may refute the rumour with", refutePlayer.getName()));
+		System.out.printf("%s can refute the claim.\nEnter 0 to continue\n", refutePlayer.getName());
+		offerChoices(continueChoices);
+		List<String> refuteChoices = new ArrayList<String>();
+		for(Card c : refutableCards) {
+			refuteChoices.add(c.getName());
+		}
+		System.out.printf("Choose a card to refute with:\n");
+		int refuteCardIndex = offerChoices(refuteChoices);
+		clearScreen();
+		System.out.printf("%s has refuted the rumour with the '%s' card!\nEnter 0 to continue.\n", refutePlayer.getName(), refuteChoices.get(refuteCardIndex));
+		continueChoices.set(0, "Continue");
+		offerChoices(continueChoices);
 
 	}
 
