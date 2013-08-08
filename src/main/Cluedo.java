@@ -9,8 +9,6 @@ import java.math.*;
 
 import userinterface.TextBasedInterface;
 import userinterface.UserInterface;
-//TODO CORNER ROOMS HAVE SECRET PASSAGES ARRRGH lol. Must incorporate that and offer that option when moving from one
-//TODO when all players make wrong accusations and there are no players left we need to make sure the game ends
 
 public class Cluedo {
 	private CardTuple solution;
@@ -159,12 +157,6 @@ public class Cluedo {
 				state = State.PLAYER_NEW_TURN;
 			}
 		}
-
-
-
-		System.out.println(deck);
-		System.out.println(deck.size());
-		Collections.shuffle(deck);
 	}
 
 

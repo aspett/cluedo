@@ -127,7 +127,6 @@ public class TextBasedInterface implements UserInterface {
 		if(choice < availableTiles.size()){//they want to move
 			return availableTiles.get(choice);
 		}
-		//TODO not sure if a player should be able to make a guess straight after using passage
 		if(choice == availableTiles.size() && p.getTile() instanceof RoomTile){//they want to take a passage
 			Room room = ((RoomTile)tile).getRoom();
 			return ((CornerRoom)room).getSecretPassage();
@@ -153,11 +152,8 @@ public class TextBasedInterface implements UserInterface {
 			if(answer != 0 && answer != 1) continue;
 			break;
 		}
-		//TODO move the player and possibly weapon(not even needed I guess) to the room being used for guess
 		if(answer == 1) { //They want to make a guess/accusation
-			//TODO move the player and possibly weapon(not even needed I guess) to the room being used for guess
 			if(isGuessOrAccusation) { // Make a guess.
-				//TODO Give them their options
 				RoomCard roomCard = null;
 				CharacterCard characterCard = null;
 				WeaponCard weaponCard = null;
@@ -274,14 +270,14 @@ public class TextBasedInterface implements UserInterface {
 	@Override
 	public void resolveAccusation(boolean correct) {
 		if(correct){
-			System.out.printf("Your accusation is correct!");
+			System.out.printf("Your accusation is correct!\n");
 		}else{
-			//TODO test accusation resolution text
 			System.out.printf("Your accusation was incorrect. You have been eliminated from the game\nRemaining players:\n");
 			for(int i = 0; i < b.getPlayers().size(); i++) {
 				System.out.print(b.getPlayers().get(i));
 				if(i < b.getPlayers().size()-1) System.out.print(", ");
 			}
+			System.out.print("\n");
 		}
 
 	}

@@ -10,7 +10,7 @@ import main.CluedoException;
 
 import board.Weapon;
 
-//TODO update class diagram to incorporate new Room - RoomTile relationship
+
 public class Room {
 	private final String name;
 	private List<Weapon> weapons;
@@ -26,19 +26,6 @@ public class Room {
 		return name;
 	}
 
-
-	public static enum RoomEnum {
-		SPA,
-		THEATRE,
-		LIVING_ROOM,
-		OBSERVATORY,
-		HALL,
-		GUEST_HOUSE,
-		DINING_ROOM,
-		KITCHEN,
-		PATIO,
-		POOL_ROOM
-	}
 
 	public void addWeapon(Weapon weapon) {
 		if(weapon==null)throw new IllegalArgumentException("Weapon can not be null");
