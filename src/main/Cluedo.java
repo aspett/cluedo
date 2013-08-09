@@ -56,9 +56,6 @@ public class Cluedo {
 		ui = new TextBasedInterface(b);
 		dice = new Dice();
 		List<Card> deck = initializeCardsSolution();
-		System.out.println("deck" +deck.size());
-		
-		
 		//List<Player> players = b.getPlayers();
 
 		//Get players
@@ -83,8 +80,6 @@ public class Cluedo {
 
 
 		//Give players their start positions
-		System.out.println(b.getBoardTiles().length);
-		System.out.println(b.getBoardTiles()[0].length);
 		for(Player p : players) {
 			if(p.getName().equals("Eleanor Peacock")) p.setTile(b.getBoardTiles()[1][7]);
 			if(p.getName().equals("Kasandra Scarlett")) p.setTile(b.getBoardTiles()[28][19]);
@@ -95,10 +90,8 @@ public class Cluedo {
 		}
 
 		//Choose a random player to start!
-		//TODO rules say scarlett is to start. Not sure what happens if no one is her
 		int randPlayer = Cluedo.rand(0, players.size());
 		Player startingPlayer = b.getPlayers().get(randPlayer);
-		System.out.printf("Start player = %d/%s\n", randPlayer, startingPlayer);
 
 		//Testing the board drawing
 		//		ui.draw();
@@ -113,7 +106,7 @@ public class Cluedo {
 			}
 			if(state == State.PLAYER_NEW_TURN || state == State.PLAYER_MOVING) {
 				int moves = Dice.roll();
-
+				currentPlayer.setBlocked(false);
 				generatePlayerDisallowedTiles(currentPlayer);
 
 				while(moves>0){
@@ -142,6 +135,10 @@ public class Cluedo {
 								chooseExitAndDraw(currentPlayer, currentRoom);
 							}
 						}
+						if(currentPlayer.isBlocked()) {
+							ui.promptContinue();
+							break;
+						}
 						state = State.PLAYER_MOVING;
 						ui.alertNumMoves(moves);
 
@@ -152,7 +149,7 @@ public class Cluedo {
 							break;
 						}
 
-						currentPlayer.setTile(move);
+						if(!currentPlayer.isBlocked()) currentPlayer.setTile(move);
 
 						moves--;
 						if(move instanceof RoomTile) {
@@ -277,6 +274,7 @@ public class Cluedo {
 		deck.addAll(wc);
 
 		Collections.shuffle(deck);
+		System.out.println(solution);
 		return deck;
 	}
 
@@ -345,8 +343,6 @@ public class Cluedo {
 	 * @return
 	 */
 	public Player findRefutePlayer(CardTuple rumor, Player currentPlayer){
-		System.out.println(rumor);
-		//TODO we need to
 		Player p = b.getPlayers().get((b.getPlayers().indexOf(currentPlayer) + 1)%b.getPlayers().size());
 		while(p != currentPlayer) {
 			List<Card> refutableCards = getRefutableCardsForPlayer(rumor, p);
@@ -397,7 +393,6 @@ public class Cluedo {
 		else {//accusation is wrong. the player is eliminated from the game
 			b.getPlayers().remove(currentPlayer);
 			b.getFreeCards().addAll(currentPlayer.getCards());
-			currentPlayer.getCards().clear();
 			ui.resolveAccusation(correct);
 			if(b.getPlayers().size() < 2) { //Game is over.
 				state = State.GAME_END;
