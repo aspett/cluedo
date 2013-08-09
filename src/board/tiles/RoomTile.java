@@ -13,12 +13,6 @@ public class RoomTile extends Tile {
 		return true;
 	}
 
-	@Override
-	public void onEnter() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	/**
 	 * Sets the room to which this entrance/exit tile belongs to
 	 * @param room Room
@@ -27,7 +21,7 @@ public class RoomTile extends Tile {
 		if(room == null) throw new CluedoException("Can not give a room entry/exit a null room to belong to");
 		this.room = room;
 	}
-	
+
 	/**
 	 * Gets the room to which this entrance/exit tile belongs to
 	 * @return Room

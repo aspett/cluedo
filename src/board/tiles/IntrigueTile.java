@@ -12,12 +12,7 @@ public class IntrigueTile extends Tile {
 		return true;
 	}
 
-	@Override
-	public void onEnter() {
-		// // TODO write onEnter method
-		
-	}
 
-	
-	
+
+
 }

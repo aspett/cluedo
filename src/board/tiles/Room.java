@@ -17,12 +17,12 @@ import board.Weapon;
  */
 public class Room {
 	private final String name;
-	
+
 	/**
 	 * Weapons currently contained in the room
 	 */
 	private List<Weapon> weapons;
-	
+
 	/**
 	 * Entrances/Exits to the room
 	 */
@@ -61,10 +61,6 @@ public class Room {
 	 */
 	public List<Weapon> getWeapons(){
 		return this.weapons;
-	}
-
-	public void onEnter() {
-		// TODO write onEnter method
 	}
 
 	@Override

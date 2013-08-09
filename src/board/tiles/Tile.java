@@ -19,10 +19,6 @@ public abstract class Tile {
 	 */
 	public abstract boolean isPassable();
 
-	/**
-	 * Called whenever a player enters a tile.
-	 */
-	public abstract void onEnter();
 
 	/**
 	 * Set the X coordinate of the {@link Board#getBoardTiles() board tiles}
@@ -31,7 +27,7 @@ public abstract class Tile {
 	public void setX(int x){
 		this.x=x;
 	}
-	
+
 	/**
 	 * Set the Y coordinate of the {@link Board#getBoardTiles() board tiles}
 	 * @param y Y coordinate
@@ -60,7 +56,7 @@ public abstract class Tile {
 	public int maxOccupants() {
 		return 1;
 	}
-	
+
 	/**
 	 * Returns the number of current occupants in a tile on a specific board.
 	 * @param b Board

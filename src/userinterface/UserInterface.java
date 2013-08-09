@@ -1,5 +1,4 @@
 package userinterface;
-//TODO ************************* MAKE IT SO THAT IF YOU GET BLOCKED IN TO A ROOM, YOU CAN STAY PUT LEGALLY.
 import java.util.List;
 
 import cards.Card;
@@ -39,6 +38,7 @@ public interface UserInterface {
 	public CardTuple promptGuess(Player currentPlayer, Room currentRoom, boolean isGuessOrAccusation, List<CharacterCard> characterCards, List<RoomCard> roomCards, List<WeaponCard> weaponCards);
 	/**
 	 * Ask the interface to get the tile of the next move (1 movement)
+	 * @deprecated It would be better to use offerChoices
 	 * @param currentPlayer The player that is allowed to move
 	 * @return The tile the player moved to, or null if the player does not move.
 	 */
@@ -87,4 +87,16 @@ public interface UserInterface {
 	 * @param p The player whom we should show their cards
 	 */
 	public void showCards(Player p);
+
+	/**
+	 * Alert the player that they've been blocked in
+	 * @param currentPlayer
+	 */
+	public void alertBlocked(Player currentPlayer);
+
+	/**
+	 * Prompt the user to continue. Used when an important message has been outputted, and requires attention before continuing.
+	 */
+	public void promptContinue();
+
 }

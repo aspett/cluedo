@@ -56,8 +56,7 @@ public class Cluedo {
 		ui = new TextBasedInterface(b);
 		dice = new Dice();
 		List<Card> deck = initializeCardsSolution();
-		System.out.println("deck" +deck.size());
-		
+
 		//List<Player> players = b.getPlayers();
 
 		//Get players
@@ -82,8 +81,6 @@ public class Cluedo {
 
 
 		//Give players their start positions
-		System.out.println(b.getBoardTiles().length);
-		System.out.println(b.getBoardTiles()[0].length);
 		for(Player p : players) {
 			if(p.getName().equals("Eleanor Peacock")) p.setTile(b.getBoardTiles()[1][7]);
 			if(p.getName().equals("Kasandra Scarlett")) p.setTile(b.getBoardTiles()[28][19]);
@@ -94,10 +91,8 @@ public class Cluedo {
 		}
 
 		//Choose a random player to start!
-		//TODO rules say scarlett is to start. Not sure what happens if no one is her
 		int randPlayer = Cluedo.rand(0, players.size());
 		Player startingPlayer = b.getPlayers().get(randPlayer);
-		System.out.printf("Start player = %d/%s\n", randPlayer, startingPlayer);
 
 		//Testing the board drawing
 		//		ui.draw();
@@ -112,6 +107,7 @@ public class Cluedo {
 			}
 			if(state == State.PLAYER_NEW_TURN || state == State.PLAYER_MOVING) {
 				int moves = Dice.roll();
+				currentPlayer.setBlocked(false);
 
 				generatePlayerDisallowedTiles(currentPlayer);
 
@@ -141,6 +137,10 @@ public class Cluedo {
 								chooseExitAndDraw(currentPlayer, currentRoom);
 							}
 						}
+						if(currentPlayer.isBlocked()) {
+							ui.promptContinue();
+							break;
+						}
 						state = State.PLAYER_MOVING;
 						ui.alertNumMoves(moves);
 
@@ -151,7 +151,7 @@ public class Cluedo {
 							break;
 						}
 
-						currentPlayer.setTile(move);
+						if(!currentPlayer.isBlocked()) currentPlayer.setTile(move);
 
 						moves--;
 						if(move instanceof RoomTile) {
@@ -167,7 +167,6 @@ public class Cluedo {
 					boolean isGuessOrAccusation = !room.getRoom().getName().equalsIgnoreCase("Pool room"); //True for guess. False for accusation
 					CardTuple accusation = ui.promptGuess(currentPlayer, room.getRoom(), isGuessOrAccusation, allCharacterCards, allRoomCards, allWeaponCards);
 					if(isGuessOrAccusation && accusation != null) { //Making a guess
-						//TODO add to sequence the fololowing line
 						moveWeaponAndPlayer(accusation);
 						Player refutePlayer = findRefutePlayer(accusation, currentPlayer);
 						ui.playerCanRefute(refutePlayer, refutePlayer == null ? null : getRefutableCardsForPlayer(accusation, refutePlayer));
@@ -211,8 +210,9 @@ public class Cluedo {
 	 * Prompt the user with their choice of exits and redraw the board
 	 * @param player The player whom we should prompt
 	 * @param currentRoom The room that the player is in
+	 * @return true if we successfully selected an exit tile, false if we are blocked in
 	 */
-	private void chooseExitAndDraw(Player player, Room currentRoom) {
+	private boolean chooseExitAndDraw(Player player, Room currentRoom) {
 		if(!currentRoom.getTiles().contains(player.getTile())) throw new CluedoException("Room given to prompt exits for is inconsistent with the tile that the player is currently in");
 		List<String> choices = new ArrayList<String>();
 		List<Tile> exitTiles = new ArrayList<Tile>();
@@ -222,16 +222,25 @@ public class Cluedo {
 				choices.add("Take secret passage");
 			}
 			else {
-				choices.add(String.format("Take exit %d", choices.size()));
+				if(b.getAvailableTiles(t, player).size() > 0)
+					choices.add(String.format("Take exit %d", choices.size()));
 
 			}
-			exitTiles.add(t);
+			if(b.getAvailableTiles(t, player).size() > 0)
+				exitTiles.add(t);
 		}
-		ui.draw(exitTiles);
-		int exitChoice = ui.offerChoices(choices);
-		Tile exitTile = exitTiles.get(exitChoice);
-		player.setTile(exitTile, true);
+		if(choices.size() > 0) {
+			ui.draw(exitTiles);
+			int exitChoice = ui.offerChoices(choices);
+			Tile exitTile = exitTiles.get(exitChoice);
+			player.setTile(exitTile, true);
+			ui.draw(null);
+			return true;
+		}
+		player.setBlocked(true);
 		ui.draw(null);
+		ui.alertBlocked(player);
+		return false;
 	}
 
 
@@ -344,8 +353,6 @@ public class Cluedo {
 	 * @return
 	 */
 	public Player findRefutePlayer(CardTuple rumor, Player currentPlayer){
-		System.out.println(rumor);
-		//TODO we need to
 		Player p = b.getPlayers().get((b.getPlayers().indexOf(currentPlayer) + 1)%b.getPlayers().size());
 		while(p != currentPlayer) {
 			List<Card> refutableCards = getRefutableCardsForPlayer(rumor, p);
@@ -372,11 +379,6 @@ public class Cluedo {
 		return refutableCards;
 	}
 
-	//TODO what's this?
-	private void offerMoves(Player p) {
-
-	}
-
 	/**
 	 * Check whether the game should continue play or not, depending on the value of the 'correct' boolean.
 	 * If correct is true then there was an accusation that was correct and the current player wins
@@ -396,7 +398,6 @@ public class Cluedo {
 		else {//accusation is wrong. the player is eliminated from the game
 			b.getPlayers().remove(currentPlayer);
 			b.getFreeCards().addAll(currentPlayer.getCards());
-			currentPlayer.getCards().clear();
 			ui.resolveAccusation(correct);
 			if(b.getPlayers().size() < 2) { //Game is over.
 				state = State.GAME_END;

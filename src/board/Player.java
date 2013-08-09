@@ -25,6 +25,7 @@ public class Player {
 	private Set<Tile> disallowed;
 	private boolean mustmove;
 	private Room currentRoom;
+	private boolean blocked;
 
 
 	public Player(String c){
@@ -74,7 +75,7 @@ public class Player {
 	public static void setCurrentPlayer(Player p ) {
 		currentPlayer = p;
 	}
-	
+
 	/**
 	 * @deprecated Shouldn't use this anymore
 	 * @return
@@ -120,7 +121,7 @@ public class Player {
 		else
 			this.disallowed = tiles;
 	}
-	
+
 	/**
 	 * Gets the tiles that a player is not allowed to move in to.
 	 * Used for invariant checks in {@link #setTile(Tile, boolean) setTile} method.
@@ -148,7 +149,7 @@ public class Player {
 	public boolean isTileDisallowed(Tile t) {
 		return this.disallowed.contains(t);
 	}
-	
+
 	/**
 	 * Used to indicate whether the player was in a room at the start of their turn,
 	 * and therefore must move. (Option of 'staying put' not available)
@@ -173,6 +174,24 @@ public class Player {
 	 */
 	public boolean canStayInTile(Tile t) {
 		return !(mustmove && disallowed.contains(t));
+	}
+
+	/**
+	 * Set whether this player is blocked in by other players.
+	 * This is used to ensure that we can still use the invariants on setTile
+	 * @param blocked
+	 */
+	public void setBlocked(boolean blocked) {
+		this.blocked = blocked;
+	}
+
+	/**
+	 * Get whether this player is blocked
+	 * @see {@link #setBlocked setBlocked}
+	 * @return whether the player is blocked
+	 */
+	public boolean isBlocked() {
+		return this.blocked;
 	}
 
 
