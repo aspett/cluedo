@@ -150,6 +150,7 @@ public class TextBasedInterface implements UserInterface {
 		int choice = scan.nextInt();
 		while((choice<0 || choice>availableTiles.size())){
 			System.out.println("Please make a valid choice..\n");
+			//TODO error check
 			choice = scan.nextInt();
 		}
 		if(choice < availableTiles.size()){//they want to move
@@ -201,6 +202,7 @@ public class TextBasedInterface implements UserInterface {
 		System.out.printf("0) No\n1) Yes\n> ");
 		int answer;
 		while(true) {
+			//TODO error check
 			answer = scan.nextInt();
 			if(answer != 0 && answer != 1) continue;
 			break;
@@ -221,6 +223,7 @@ public class TextBasedInterface implements UserInterface {
 				int choice = -1;
 				while(choice < 0 || choice >= characterCards.size()) {
 					System.out.printf("> ");
+					//TODO ERROR CHECK
 					choice = scan.nextInt();
 				}
 
@@ -234,6 +237,7 @@ public class TextBasedInterface implements UserInterface {
 				choice = -1;
 				while(choice < 0 || choice >= weaponCards.size()) {
 					System.out.printf("> ");
+					//TODO ERROR CHECK
 					choice = scan.nextInt();
 				}
 
@@ -257,6 +261,7 @@ public class TextBasedInterface implements UserInterface {
 				int choice = -1;
 				while(choice < 0 || choice >= roomCards.size()) {
 					System.out.printf("> ");
+					//TODO ERROR CHECK
 					choice = scan.nextInt();
 				}
 
@@ -269,6 +274,7 @@ public class TextBasedInterface implements UserInterface {
 				choice = -1;
 				while(choice < 0 || choice >= characterCards.size()) {
 					System.out.printf("> ");
+					//ERROR CHECK
 					choice = scan.nextInt();
 				}
 
@@ -282,6 +288,7 @@ public class TextBasedInterface implements UserInterface {
 				choice = -1;
 				while(choice < 0 || choice >= weaponCards.size()) {
 					System.out.printf("> ");
+					//TODO ERROR CHECK
 					choice = scan.nextInt();
 				}
 
