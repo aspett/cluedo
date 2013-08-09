@@ -56,6 +56,7 @@ public class Cluedo {
 		ui = new TextBasedInterface(b);
 		dice = new Dice();
 		List<Card> deck = initializeCardsSolution();
+
 		//List<Player> players = b.getPlayers();
 
 		//Get players
@@ -107,6 +108,7 @@ public class Cluedo {
 			if(state == State.PLAYER_NEW_TURN || state == State.PLAYER_MOVING) {
 				int moves = Dice.roll();
 				currentPlayer.setBlocked(false);
+
 				generatePlayerDisallowedTiles(currentPlayer);
 
 				while(moves>0){
@@ -165,7 +167,6 @@ public class Cluedo {
 					boolean isGuessOrAccusation = !room.getRoom().getName().equalsIgnoreCase("Pool room"); //True for guess. False for accusation
 					CardTuple accusation = ui.promptGuess(currentPlayer, room.getRoom(), isGuessOrAccusation, allCharacterCards, allRoomCards, allWeaponCards);
 					if(isGuessOrAccusation && accusation != null) { //Making a guess
-						//TODO add to sequence the fololowing line
 						moveWeaponAndPlayer(accusation);
 						Player refutePlayer = findRefutePlayer(accusation, currentPlayer);
 						ui.playerCanRefute(refutePlayer, refutePlayer == null ? null : getRefutableCardsForPlayer(accusation, refutePlayer));
@@ -209,8 +210,9 @@ public class Cluedo {
 	 * Prompt the user with their choice of exits and redraw the board
 	 * @param player The player whom we should prompt
 	 * @param currentRoom The room that the player is in
+	 * @return true if we successfully selected an exit tile, false if we are blocked in
 	 */
-	private void chooseExitAndDraw(Player player, Room currentRoom) {
+	private boolean chooseExitAndDraw(Player player, Room currentRoom) {
 		if(!currentRoom.getTiles().contains(player.getTile())) throw new CluedoException("Room given to prompt exits for is inconsistent with the tile that the player is currently in");
 		List<String> choices = new ArrayList<String>();
 		List<Tile> exitTiles = new ArrayList<Tile>();
@@ -220,16 +222,25 @@ public class Cluedo {
 				choices.add("Take secret passage");
 			}
 			else {
-				choices.add(String.format("Take exit %d", choices.size()));
+				if(b.getAvailableTiles(t, player).size() > 0)
+					choices.add(String.format("Take exit %d", choices.size()));
 
 			}
-			exitTiles.add(t);
+			if(b.getAvailableTiles(t, player).size() > 0)
+				exitTiles.add(t);
 		}
-		ui.draw(exitTiles);
-		int exitChoice = ui.offerChoices(choices);
-		Tile exitTile = exitTiles.get(exitChoice);
-		player.setTile(exitTile, true);
+		if(choices.size() > 0) {
+			ui.draw(exitTiles);
+			int exitChoice = ui.offerChoices(choices);
+			Tile exitTile = exitTiles.get(exitChoice);
+			player.setTile(exitTile, true);
+			ui.draw(null);
+			return true;
+		}
+		player.setBlocked(true);
 		ui.draw(null);
+		ui.alertBlocked(player);
+		return false;
 	}
 
 
@@ -274,7 +285,6 @@ public class Cluedo {
 		deck.addAll(wc);
 
 		Collections.shuffle(deck);
-		System.out.println(solution);
 		return deck;
 	}
 
@@ -367,11 +377,6 @@ public class Cluedo {
 			refutableCards.add(rumour.getWeapon());
 
 		return refutableCards;
-	}
-
-	//TODO what's this?
-	private void offerMoves(Player p) {
-
 	}
 
 	/**
