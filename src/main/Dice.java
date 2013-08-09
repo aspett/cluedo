@@ -6,7 +6,7 @@ package main;
  *
  */
 public class Dice {
-	private static final int numDice = 1;
+	private static final int numDice = 100;
 	public static int roll() {
 		return (int)(Math.random()*(6*numDice)+1);
 	}

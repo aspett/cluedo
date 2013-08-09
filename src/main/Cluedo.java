@@ -174,6 +174,7 @@ public class Cluedo {
 					else if(!isGuessOrAccusation && accusation != null) { //Making an accusation!
 						boolean correct = checkAccusation(accusation);
 						boolean gameEnd = checkGameEnd(correct, currentPlayer);
+						ui.promptContinue();
 						if(gameEnd) break;
 
 					}
@@ -283,6 +284,8 @@ public class Cluedo {
 		deck.addAll(cc);
 		deck.addAll(rc);
 		deck.addAll(wc);
+
+		System.out.println(solution);
 
 		Collections.shuffle(deck);
 		return deck;
