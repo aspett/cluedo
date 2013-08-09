@@ -19,6 +19,9 @@ import userinterface.UserInterface;
  *
  */
 public class Cluedo {
+
+	public static final boolean DEBUG_MODE = false;
+
 	/**
 	 * A tuple of the randomly chosen solution
 	 */
@@ -221,14 +224,14 @@ public class Cluedo {
 		for(Tile t : currentRoom.getTiles()) {
 			if(t.isSecretTile()) {
 				choices.add("Take secret passage");
+				exitTiles.add(t);
 			}
 			else {
-				if(b.getAvailableTiles(t, player).size() > 0)
+				if(b.getAvailableTiles(t, player).size() > 0) {
 					choices.add(String.format("Take exit %d", choices.size()));
-
+					exitTiles.add(t);
+				}
 			}
-			if(b.getAvailableTiles(t, player).size() > 0)
-				exitTiles.add(t);
 		}
 		if(choices.size() > 0) {
 			ui.draw(exitTiles);
@@ -285,7 +288,7 @@ public class Cluedo {
 		deck.addAll(rc);
 		deck.addAll(wc);
 
-		System.out.println(solution);
+		if(DEBUG_MODE) System.out.println(solution);
 
 		Collections.shuffle(deck);
 		return deck;
@@ -427,10 +430,11 @@ public class Cluedo {
 		Room currentPlayerRoom = ((RoomTile)currentPlayer.getTile()).getRoom();
 		Weapon weapon = guess.getWeapon().getWeapon();
 		Room currentWeaponRoom = weapon.getRoom();
-		currentPlayerRoom.addWeapon(weapon);
-		currentWeaponRoom.removeWeapon(weapon);
-		weapon.setRoom(currentPlayerRoom);
-
+		if(currentPlayerRoom != currentWeaponRoom) {
+			currentPlayerRoom.addWeapon(weapon);
+			currentWeaponRoom.removeWeapon(weapon);
+			weapon.setRoom(currentPlayerRoom);
+		}
 
 	}
 }

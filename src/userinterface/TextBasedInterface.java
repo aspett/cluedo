@@ -50,7 +50,7 @@ public class TextBasedInterface implements UserInterface {
 					}
 				}
 				if(!drawTile) continue;
-				if(t instanceof IntrigueTile)System.out.print("  ");
+				if(t instanceof IntrigueTile)System.out.print(". ");
 				else if(t instanceof RoomTile)System.out.print("E ");
 				else if(t instanceof StartTile)System.out.print(". ");
 				else if(t instanceof RegularTile)System.out.print(". ");
@@ -233,6 +233,7 @@ public class TextBasedInterface implements UserInterface {
 				for(int i = 0; i < weaponCards.size(); i++) {
 					weaponChoices.add(weaponCards.get(i).toString());
 				}
+				choice = offerChoices(weaponChoices);
 				weaponCard = weaponCards.get(choice);
 
 				if(roomCard == null) throw new CluedoException("Couldn't find player's current room");

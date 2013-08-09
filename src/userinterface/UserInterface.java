@@ -43,11 +43,12 @@ public interface UserInterface {
 	 * @return The tile the player moved to, or null if the player does not move.
 	 */
 	public Tile promptMove(Player currentPlayer);
+
 	/**
 	 * Tell the current player that refutePlayer can refute the accusation that they made.
 	 * If refutePlayer is null, no one can refute the claim.
-	 * @param refutePlayer
-	 * @param refutableCards
+	 * @param refutePlayer The first player who can refute the claim (OR NULL FOR NO ONE)
+	 * @param refutableCards A list of cards the player can refute with (OR NULL IF NO PLAYER)
 	 */
 	public void playerCanRefute(Player refutePlayer, List<Card> refutableCards);
 
