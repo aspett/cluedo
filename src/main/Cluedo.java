@@ -417,7 +417,14 @@ public class Cluedo {
 			ui.resolveAccusation(correct);
 			if(b.getAlivePlayerCount() < 2) { //Game is over.
 				state = State.GAME_END;
-				ui.printWinner(b.getPlayers().get(0));
+				Player winner = null;
+				for(Player p : b.getPlayers()){
+					if(p.isAlive()){
+						winner = p;
+						break;
+					}
+				}
+				ui.printWinner(winner);
 				return true;
 			}
 			return false;
