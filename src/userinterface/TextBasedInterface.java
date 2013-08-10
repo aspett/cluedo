@@ -41,7 +41,7 @@ public class TextBasedInterface implements UserInterface {
 				boolean drawTile = true;
 				if(numberedTiles != null && numberedTiles.contains(t)) { System.out.printf("%d ", numberedTiles.indexOf(t)); continue; }
 				for(Player p : b.getPlayers()) {
-					if(p.getTile().equals(t)) {
+					if(p.getTile().equals(t) && p.isAlive()) {
 						drawTile = false;
 						if(Player.getCurrentPlayer().equals(p))
 							System.out.print("C ");
@@ -324,6 +324,7 @@ public class TextBasedInterface implements UserInterface {
 		}else{
 			System.out.printf("Your accusation was incorrect. You have been eliminated from the game\nRemaining players:\n");
 			for(int i = 0; i < b.getPlayers().size(); i++) {
+				if(!b.getPlayers().get(i).isAlive())continue;
 				System.out.print(b.getPlayers().get(i));
 				if(i < b.getPlayers().size()-1) System.out.print(", ");
 			}

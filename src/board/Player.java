@@ -26,6 +26,7 @@ public class Player {
 	private boolean mustmove;
 	private Room currentRoom;
 	private boolean blocked;
+	private boolean alive;
 
 
 	public Player(String c){
@@ -35,6 +36,7 @@ public class Player {
 		disallowed = new HashSet<Tile>();
 		mustmove = false;
 		currentRoom=null;
+		alive = false;
 	}
 
 	public String getName(){
@@ -192,6 +194,17 @@ public class Player {
 	 */
 	public boolean isBlocked() {
 		return this.blocked;
+	}
+	/**
+	 * Get whether this player is active and alowed to move about the board and be drawn
+	 * @return whether the player is active
+	 */
+	public boolean isAlive(){
+		return this.alive;
+	}
+	
+	public void setAlive(boolean alive){
+		this.alive = alive;
 	}
 
 

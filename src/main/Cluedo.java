@@ -65,6 +65,12 @@ public class Cluedo {
 		//Get players
 		List<Player> players = ui.initPlayers();
 		b.setPlayers(players);
+		b.setAlivePlayers(players.size());
+		
+		//Set each player to be alive
+		for(Player p : players){
+			p.setAlive(true);
+		}
 
 		//Deal cards to players
 		int cardsEach = deck.size() / players.size();
@@ -185,6 +191,10 @@ public class Cluedo {
 				//Set new player
 				currentPlayerID = (currentPlayerID + 1) % b.getPlayers().size();
 				currentPlayer = b.getPlayers().get(currentPlayerID);
+				while(!currentPlayer.isAlive()){
+					currentPlayerID = (currentPlayerID + 1) % b.getPlayers().size();
+					currentPlayer = b.getPlayers().get(currentPlayerID);
+				}
 				Player.setCurrentPlayer(currentPlayer);
 				state = State.PLAYER_NEW_TURN;
 			}
@@ -402,10 +412,10 @@ public class Cluedo {
 			return true;
 		}
 		else {//accusation is wrong. the player is eliminated from the game
-			b.getPlayers().remove(currentPlayer);
-			b.getFreeCards().addAll(currentPlayer.getCards());
+			currentPlayer.setAlive(false);
+			b.setAlivePlayers(b.getAlivePlayerCount()-1);
 			ui.resolveAccusation(correct);
-			if(b.getPlayers().size() < 2) { //Game is over.
+			if(b.getAlivePlayerCount() < 2) { //Game is over.
 				state = State.GAME_END;
 				ui.printWinner(b.getPlayers().get(0));
 				return true;

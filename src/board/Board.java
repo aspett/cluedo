@@ -20,6 +20,7 @@ import board.tiles.*;
 
 public class Board {
 	private Tile[][] boardTiles;
+	private int alivePlayers = 0;
 
 	private List<Room> rooms = new ArrayList<Room>();
 	/**
@@ -318,6 +319,14 @@ public class Board {
 		this.freeCards=freeCards2;
 		
 	}	
+	
+	public void setAlivePlayers(int count){
+		this.alivePlayers = count;
+	}
+	
+	public int getAlivePlayerCount(){
+		return this.alivePlayers;
+	}
 
 	
 }
