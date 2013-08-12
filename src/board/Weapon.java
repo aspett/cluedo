@@ -17,7 +17,7 @@ public class Weapon {
 
 	public String getName(){
 		return this.name;
-	}
+	}/*
 	public String toString(){
 		return String.format("%s", name);
 	}
@@ -37,7 +37,7 @@ public class Weapon {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
-	}
+	}*/
 
 	/**
 	 * Set the room that the weapon is in

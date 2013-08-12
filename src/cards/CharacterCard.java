@@ -15,10 +15,10 @@ public class CharacterCard extends Card{
 		this.setName(c.getName());
 
 	}
-
+/*
 	public String toString(){
 		return character.getName();
-	}
+	}*/
 
 	/**
 	 * Get the player that the card represents
@@ -27,7 +27,7 @@ public class CharacterCard extends Card{
 	public Player getPlayer(){
 		return character;
 	}
-
+/*
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -52,7 +52,7 @@ public class CharacterCard extends Card{
 		} else if (!character.equals(other.character))
 			return false;
 		return true;
-	}
+	}*/
 
 	@Override
 	public String getName() {

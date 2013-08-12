@@ -14,7 +14,7 @@ public class WeaponCard extends Card{
 	public WeaponCard(Weapon w){
 		this.weapon=w;
 	}
-
+/*
 	public String toString(){
 		return weapon.getName();
 	}
@@ -42,7 +42,7 @@ public class WeaponCard extends Card{
 		} else if (!weapon.equals(other.weapon))
 			return false;
 		return true;
-	}
+	}*/
 
 	@Override
 	public String getName() {

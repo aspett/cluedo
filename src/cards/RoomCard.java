@@ -14,7 +14,7 @@ public class RoomCard extends Card {
 	public RoomCard(Room r){
 		room=r;
 	}
-
+/*
 	public String toString(){
 		return room.getName();
 	}
@@ -42,7 +42,7 @@ public class RoomCard extends Card {
 		} else if (!room.equals(other.room))
 			return false;
 		return true;
-	}
+	}*/
 
 	@Override
 	public String getName() {

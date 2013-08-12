@@ -70,11 +70,11 @@ public abstract class Tile {
 		}
 		return r;
 	}
-
+/*
 	@Override
 	public boolean equals(Object o) {
 		return (this == o);
-	}
+	}*/
 
 	/**
 	 * Set whether the tile is a secret passage tile

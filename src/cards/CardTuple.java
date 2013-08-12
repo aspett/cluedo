@@ -27,7 +27,7 @@ public final class CardTuple {
 	public WeaponCard getWeapon() {
 		return weapon;
 	}
-
+/*
 	public String toString() {
 		return String.format("Character: %s, Weapon: %s, Room: %s", player, weapon, room);
 	}
@@ -67,6 +67,6 @@ public final class CardTuple {
 		} else if (!weapon.equals(other.weapon))
 			return false;
 		return true;
-	}
+	}*/
 
 }

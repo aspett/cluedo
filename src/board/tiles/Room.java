@@ -62,7 +62,7 @@ public class Room {
 	public List<Weapon> getWeapons(){
 		return this.weapons;
 	}
-
+/*
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -92,7 +92,7 @@ public class Room {
 		} else if (!weapons.equals(other.weapons))
 			return false;
 		return true;
-	}
+	}*/
 
 	/**
 	 * Add a tile to be used as an entrance/exit to the room.

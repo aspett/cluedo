@@ -336,9 +336,9 @@ public class Cluedo {
 	 * Run the game.
 	 * @param args Not required
 	 */
-	public static void main (String[] args) {
+	/*public static void main (String[] args) {
 		Cluedo game = new Cluedo();
-	}
+	}*/
 	/**
 	 * Generate a random number between min and max inclusive.
 	 * @param min Minimum number

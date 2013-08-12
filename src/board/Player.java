@@ -43,9 +43,9 @@ public class Player {
 		return this.character;
 	}
 
-	public String toString() {
+	/*public String toString() {
 		return String.format("%s", character);
-	}
+	}*/
 
 	/**
 	 * Set the current tile occupied by the player to the given tile
@@ -210,7 +210,7 @@ public class Player {
 	public void setAlive(boolean alive){
 		this.alive = alive;
 	}
-
+/*
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -242,7 +242,7 @@ public class Player {
 		Player other = (Player) obj;
 		return this.character.equalsIgnoreCase(other.character);
 	}
-
+*/
 
 
 

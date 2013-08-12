@@ -13,7 +13,7 @@ public abstract class Card implements Comparable<Card>{
 	}
 
 	public abstract String getName();
-
+/*
 	@Override
 	public int compareTo(Card other) {
 		if(other == null) return -1;
@@ -30,5 +30,5 @@ public abstract class Card implements Comparable<Card>{
 			if(other instanceof WeaponCard) return this.getName().compareTo(other.getName());
 			return 1;
 		}
-	}
+	}*/
 }
