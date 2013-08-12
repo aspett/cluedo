@@ -63,7 +63,11 @@ public class Player {
 	 */
 	public void setTile(Tile tile, boolean bypassDisallowed) {
 		if(!tile.isPassable() || (disallowed.contains(tile) && !bypassDisallowed)) throw new CluedoException("Player can not be on an impassable tile, or moved in to a disallowed tile");
+		if(currentTile != null)
+			this.currentTile.decrementOccupants();
+		if(tile.getOccupants() == tile.maxOccupants())throw new CluedoException("Players can not share the same tile.");
 		this.currentTile = tile;
+		this.currentTile.incrementOccupants(); 
 	}
 
 	public Tile getTile() {
@@ -202,7 +206,7 @@ public class Player {
 	public boolean isAlive(){
 		return this.alive;
 	}
-	
+
 	public void setAlive(boolean alive){
 		this.alive = alive;
 	}

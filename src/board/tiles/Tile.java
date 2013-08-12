@@ -12,6 +12,7 @@ public abstract class Tile {
 	private int x;
 	private int y;
 	private boolean secretTile = false;
+	private int occupants = 0;
 
 	/**
 	 * Can a person visit this tile?
@@ -88,6 +89,18 @@ public abstract class Tile {
 	 * @return whether the tile is a secret passage tile
 	 */
 	public boolean isSecretTile() { return this.secretTile; }
+	
+	public void decrementOccupants(){
+		this.occupants--;
+	}
+	
+	public void incrementOccupants(){
+		this.occupants++;
+	}
+	
+	public int getOccupants(){
+		return this.occupants;
+	}
 
 
 }
