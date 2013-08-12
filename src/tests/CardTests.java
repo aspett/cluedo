@@ -96,6 +96,46 @@ public class CardTests {
 		}
 	}
 
+	@Test
+	public void CardTupleEqualsTests(){
+		WeaponCard w1 = new WeaponCard(new Weapon("Rope"));
+		WeaponCard w2 = new WeaponCard(new Weapon("Pistol"));
+
+		RoomCard r1 = new RoomCard(new Room("Dining Room"));
+		RoomCard r2 = new RoomCard(new Room("Patio"));
+
+		CharacterCard c1 = new CharacterCard(new Player("Jack Mustard"));
+		CharacterCard c2 = new CharacterCard(new Player("Dianne White"));
+
+		CardTuple tuple1 = new CardTuple(c1,r1,w1);
+		CardTuple tuple2 = new CardTuple(c1,r1,w1);
+		CardTuple tuple3 = new CardTuple(c1,r1,w2);
+		CardTuple tuple4 = new CardTuple(c1,r2,w1);
+		CardTuple tuple5 = new CardTuple(c2,r1,w1);
+		CardTuple tuple6 = new CardTuple(c1,r2,w2);
+		CardTuple tuple7 = new CardTuple(c2,r2,w1);
+		CardTuple tuple8 = new CardTuple(c2,r2,w2);
+		CardTuple tuple9 = new CardTuple(null,r2,w2);
+		CardTuple tuple10 = new CardTuple(c2,null,w2);
+		CardTuple tuple11 = new CardTuple(c2,r2,null);
+
+		assertTrue(tuple1.equals(tuple1));
+		assertTrue(tuple1.equals(tuple2));
+		assertFalse(tuple1.equals(tuple3));
+		assertFalse(tuple1.equals(tuple4));
+		assertFalse(tuple1.equals(tuple5));
+		assertFalse(tuple1.equals(tuple6));
+		assertFalse(tuple1.equals(tuple7));
+		assertFalse(tuple1.equals(tuple8));
+		assertFalse(tuple1.equals(tuple9));
+		assertFalse(tuple1.equals(tuple10));
+		assertFalse(tuple1.equals(tuple11));
+		assertFalse(tuple1.equals(null));
+
+
+
+	}
+
 
 
 }

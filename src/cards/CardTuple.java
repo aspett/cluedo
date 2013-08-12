@@ -20,24 +20,12 @@ public final class CardTuple {
 		return player;
 	}
 
-	public void setPlayer(CharacterCard player) {
-		this.player = player;
-	}
-
 	public RoomCard getRoom() {
 		return room;
 	}
 
-	public void setRoom(RoomCard room) {
-		this.room = room;
-	}
-
 	public WeaponCard getWeapon() {
 		return weapon;
-	}
-
-	public void setWeapon(WeaponCard weapon) {
-		this.weapon = weapon;
 	}
 
 	public String toString() {
