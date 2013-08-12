@@ -5,7 +5,7 @@ package board.tiles;
  *
  */
 public class ImpassableTile extends Tile{
-	private boolean isWall;
+	//private boolean isWall;
 
 
 	public ImpassableTile(boolean wall){

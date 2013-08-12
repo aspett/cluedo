@@ -7,7 +7,7 @@ import main.CluedoException;
  *
  */
 public class RoomTile extends Tile {
-	private Room room;
+	//private Room room;
 	@Override
 	public boolean isPassable() {
 		return true;

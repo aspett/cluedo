@@ -16,17 +16,17 @@ import board.Weapon;
  *
  */
 public class Room {
-	private final String name;
+	//private final String name;
 
 	/**
 	 * Weapons currently contained in the room
 	 */
-	private List<Weapon> weapons;
+	//private List<Weapon> weapons;
 
 	/**
 	 * Entrances/Exits to the room
 	 */
-	private Set<Tile> tiles;
+	//private Set<Tile> tiles;
 
 	public Room(String name) {
 		this.name = name;

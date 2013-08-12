@@ -8,8 +8,8 @@ import board.tiles.Room;
  */
 public class Weapon {
 
-	private Room room;
-	private String name;
+	//private Room room;
+	//private String name;
 
 	public Weapon(String w){
 		name=w;

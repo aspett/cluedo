@@ -9,10 +9,10 @@ import board.Player;
  *
  */
 public abstract class Tile {
-	private int x;
-	private int y;
-	private boolean secretTile = false;
-	private int occupants = 0;
+	//private int x;
+	//private int y;
+	//private boolean secretTile = false;
+	//private int occupants = 0;
 
 	/**
 	 * Can a person visit this tile?

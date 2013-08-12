@@ -6,9 +6,9 @@ package cards;
  *
  */
 public final class CardTuple {
-	private CharacterCard player;
-	private RoomCard room;
-	private WeaponCard weapon;
+	//private CharacterCard player;
+	//private RoomCard room;
+	//private WeaponCard weapon;
 
 	public CardTuple(CharacterCard p, RoomCard r, WeaponCard w) {
 		player = p;

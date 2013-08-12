@@ -17,16 +17,16 @@ import board.tiles.*;
  *
  */
 public class Player {
-	private String character;
-	private int playerNumber;
-	private Tile currentTile;
-	private static Player currentPlayer;
-	private List<Card> cards;
-	private Set<Tile> disallowed;
-	private boolean mustmove;
+	//private String character;
+	//private int playerNumber;
+	//private Tile currentTile;
+	//private static Player currentPlayer;
+	//private List<Card> cards;
+	//private Set<Tile> disallowed;
+	//private boolean mustmove;
 	private Room currentRoom;
-	private boolean blocked;
-	private boolean alive;
+	//private boolean blocked;
+	//private boolean alive;
 
 
 	public Player(String c){

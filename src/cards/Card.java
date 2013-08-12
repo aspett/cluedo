@@ -6,7 +6,7 @@ package cards;
  *
  */
 public abstract class Card implements Comparable<Card>{
-	private String name;
+	//private String name;
 
 	public void setName(String n){
 		this.name=n;

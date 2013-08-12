@@ -283,7 +283,7 @@ public class Board {
 		return null;
 	}
 
-	public List<Player> getAvailablePlayers() {
+	/*public List<Player> getAvailablePlayers() {
 		return availablePlayers;
 	}
 
@@ -293,15 +293,15 @@ public class Board {
 
 	public void setPlayers(List<Player> players) {
 		this.players = players;
-	}
+	}*/
 
 	public List<Weapon> getWeapons() {
 		return weapons;
 	}
 
-	public List<Room> getRooms() {
+	/*public List<Room> getRooms() {
 		return rooms;
-	}
+	}*/
 
 	/**
 	 * Set the count of human controlled players in the game
@@ -315,22 +315,21 @@ public class Board {
 		return boardTiles;
 	}
 
-	public List<Card> getFreeCards() {
+	/*public List<Card> getFreeCards() {
 		return freeCards;
 	}
 
 	public void setFreeCards(List<Card> freeCards2) {
 		this.freeCards=freeCards2;
+	}*/
 
-	}
-
-	public void setAlivePlayers(int count){
+	/*public void setAlivePlayers(int count){
 		this.alivePlayers = count;
 	}
 
 	public int getAlivePlayerCount(){
 		return this.alivePlayers;
-	}
+	}*/
 
 
 }
