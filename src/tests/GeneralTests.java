@@ -27,21 +27,8 @@ public class GeneralTests {
 		Dice d = new Dice();
 		for(int i = 0; i < 1000; i++) {
 			int roll = d.roll();
-			assertTrue(roll > 0 && roll < 7);
+			assertTrue(roll > 1 && roll < 13);
 		}
-	}
-
-	@Test public void showBoard() {
-		Board b= new Board();
-		UserInterface ui = new TextBasedInterface(b);
-		/*List<Room> rooms = b.getRooms();
-		for(Room r : rooms) {
-			System.out.println(r.toString());
-			r.get
-		}*/
-		Room kitchen = b.getRoom("kitchen");
-		List<Tile> tiles = new ArrayList<Tile>(kitchen.getTiles());
-		ui.draw(tiles);
 	}
 
 }

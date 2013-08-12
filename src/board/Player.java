@@ -211,6 +211,40 @@ public class Player {
 		this.alive = alive;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (alive ? 1231 : 1237);
+		result = prime * result + (blocked ? 1231 : 1237);
+		result = prime * result + ((cards == null) ? 0 : cards.hashCode());
+		result = prime * result
+				+ ((character == null) ? 0 : character.hashCode());
+		result = prime * result
+				+ ((currentRoom == null) ? 0 : currentRoom.hashCode());
+		result = prime * result
+				+ ((currentTile == null) ? 0 : currentTile.hashCode());
+		result = prime * result
+				+ ((disallowed == null) ? 0 : disallowed.hashCode());
+		result = prime * result + (mustmove ? 1231 : 1237);
+		result = prime * result + playerNumber;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Player other = (Player) obj;
+		return this.character.equalsIgnoreCase(other.character);
+	}
+
+
+
 
 
 }
