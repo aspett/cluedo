@@ -96,6 +96,26 @@ public class CardTests {
 		}
 	}
 
+	@Test
+	public void comparisonTests() {
+		CharacterCard ca = new CharacterCard(new Player("Bob")), cb = new CharacterCard(new Player("Bobby"));
+		WeaponCard wa = new WeaponCard(new Weapon("Weapon A")), wb = new WeaponCard(new Weapon("Weapon B"));
+		RoomCard ra = new RoomCard(new Room("Room A")), rb = new RoomCard(new Room("Room B"));
+
+		assertTrue(ca.compareTo(cb) < 0);
+		assertTrue(ca.compareTo(wa) < 0);
+		assertTrue(ca.compareTo(ra) < 0);
+		assertTrue(wa.compareTo(wb) < 0);
+		assertTrue(wa.compareTo(ra) > 0);
+		assertTrue(ra.compareTo(rb) < 0);
+		assertTrue(ra.compareTo(ca) > 0);
+		assertTrue(ra.compareTo(wa) < 0);
+		assertTrue(ca.compareTo(ca) == 0);
+		assertTrue(wa.compareTo(wa) == 0);
+		assertTrue(ra.compareTo(ra) == 0);
+		assertTrue(ca.compareTo(null) < 0);
+	}
+
 
 
 }
