@@ -5,6 +5,7 @@ import board.*;
 import board.tiles.*;
 
 import main.Cluedo;
+import main.CluedoException;
 import main.Dice;
 
 import org.junit.Test;
@@ -23,11 +24,25 @@ public class GeneralTests {
 		}*/
 	}
 	@Test
-	public void runSomeDice() {
+	public void rollSomeDice() {
 		Dice d = new Dice();
 		for(int i = 0; i < 1000; i++) {
 			int roll = d.roll();
 			assertTrue(roll > 1 && roll < 13);
+		}
+	}
+
+	@Test public void cluedoExceptions() {
+		try {
+			throw new CluedoException();
+		} catch(CluedoException e) {
+			assertTrue(e.getMessage() == null);
+		}
+
+		try {
+			throw new CluedoException("hi");
+		} catch (CluedoException e) {
+			assertFalse(e.getMessage() == null);
 		}
 	}
 

@@ -73,8 +73,9 @@ public interface UserInterface {
 	/**
 	 * Say who won the game
 	 * @param player the player who won
+	 * @param solution TODO
 	 */
-	public void printWinner(Player player);
+	public void printWinner(Player player, CardTuple solution);
 
 	/**
 	 * Offer a number of choices to the player.

@@ -408,7 +408,7 @@ public class Cluedo {
 		if(correct) {
 			state = State.GAME_END;
 			ui.resolveAccusation(correct);
-			ui.printWinner(currentPlayer);
+			ui.printWinner(currentPlayer, null);
 			return true;
 		}
 		else {//accusation is wrong. the player is eliminated from the game
@@ -424,7 +424,7 @@ public class Cluedo {
 						break;
 					}
 				}
-				ui.printWinner(winner);
+				ui.printWinner(winner, solution);
 				return true;
 			}
 			return false;

@@ -8,12 +8,14 @@ import cards.Card;
 
 import main.CluedoException;
 
+import sun.security.util.Resources;
 import userinterface.TextBasedInterface;
 
 import board.tiles.*;
+
 /**
  * The board holds lists of all rooms, weapons, players and controlled players.
- * The board uses a 2D array of Tiles to represent it. 
+ * The board uses a 2D array of Tiles to represent it.
  * @author Matt Mortimer and Andrew Pett
  *
  */
@@ -47,15 +49,17 @@ public class Board {
 	}
 
 	/**
-	 * Create the board from the boardinput file by reading each character and constructing the corresponding tile for it, and 
+	 * Create the board from the boardinput file by reading each character and constructing the corresponding tile for it, and
 	 * adding the tile to the correct place in the boardTiles array. If the tile is a roomTile add it to the corresponding rooms set of exits/entrances
-	 * 
+	 *
 	 */
 	private void createBoard() {
 		Scanner scan;
 		try {
 			//String boardString = "30 26\n##########################\n#0    #P.#   #.#    #P.#3#\n#     #..#   #?#    #..# #\n#     #..#   1.#    #..# #\n#     #..#   #.#    #..# #\n#     #.?#   #.#    #..# #\n#     0..#   #.2    #..# #\n#    #...#   #.#    #.?# #\n######...##1##.## ###..# #\n#...?...........#2#....3##\n#P..........?............#\n#####............?.......#\n#   ##4##..####9###.###5##\n#       4..#      #.#    #\n#       #?.#      #.5    #n#       #..#      #.5    #\n#       4..9######9.#    #\n#   ##4##......?....######\n#####....................#\n#P.........##7###........#\n#..........#    #....6####\n#######....#    7....#   #\n#      8...#    #....#   #\n#      #..##    ##...#   #\n#      #..#      #...#   #\n#      #..#      #...#   #\n#      #..#      #...#   #\n#      #..#      #...#   #\n#8     #P.#      #.P.#  6#\n##########################";
-			scan = new Scanner(new File("boardinput"));
+			//scan = new Scanner(new File("boardinput"));
+
+			scan = new Scanner(this.getClass().getResourceAsStream("boardinput"));
 			int rows=scan.nextInt();
 			int cols=scan.nextInt();
 			scan.nextLine();
@@ -133,7 +137,7 @@ public class Board {
 				}
 			}
 			initializePassages();
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -142,7 +146,7 @@ public class Board {
 	}
 
 	/**
-	 * Initialize and connect the secret passages for each of the corner rooms 
+	 * Initialize and connect the secret passages for each of the corner rooms
 	 */
 	private void initializePassages() {
 		//Set spa's secret passage to guest house
@@ -177,7 +181,7 @@ public class Board {
 
 	}
 
-	
+
 	/**
 	 * Create a list that contains all of the rooms in the game. Create the Room objects for each room as we go.
 	 * For each Room object (Other than the pool room) place a randomly selected weapon in its weapon set so each room has one weapon at the beginning of the game.
@@ -203,7 +207,7 @@ public class Board {
 		rooms.add(new Room("Pool Room"));//Pool Room added last as it can not hold a weapon
 
 	}
-	
+
 	/**
 	 * Create a list of all the characters/players in the game regardless of whether they are a player controlled character or not.
 	 */
@@ -215,7 +219,7 @@ public class Board {
 		availablePlayers.add(new Player("Eleanor Peacock"));
 		availablePlayers.add(new Player("Victor Plum"));
 	}
-	
+
 	/**
 	 * Create a list of all the weapons used in the game.
 	 */
@@ -266,7 +270,7 @@ public class Board {
 		}
 		return availableTiles;
 	}
-	
+
 	/**
 	 * Get a room by it's name
 	 * @param str Name of the room
@@ -282,7 +286,7 @@ public class Board {
 	public List<Player> getAvailablePlayers() {
 		return availablePlayers;
 	}
-	
+
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -290,15 +294,15 @@ public class Board {
 	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
-	
+
 	public List<Weapon> getWeapons() {
 		return weapons;
 	}
-	
+
 	public List<Room> getRooms() {
 		return rooms;
 	}
-	
+
 	/**
 	 * Set the count of human controlled players in the game
 	 * @param c The count of players
@@ -306,7 +310,7 @@ public class Board {
 	public void setPlayerCount(int c){
 		playerCount=c;
 	}
-	
+
 	public Tile[][] getBoardTiles() {
 		return boardTiles;
 	}
@@ -317,16 +321,16 @@ public class Board {
 
 	public void setFreeCards(List<Card> freeCards2) {
 		this.freeCards=freeCards2;
-		
-	}	
-	
+
+	}
+
 	public void setAlivePlayers(int count){
 		this.alivePlayers = count;
 	}
-	
+
 	public int getAlivePlayerCount(){
 		return this.alivePlayers;
 	}
 
-	
+
 }
