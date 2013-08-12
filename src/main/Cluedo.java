@@ -66,7 +66,7 @@ public class Cluedo {
 		List<Player> players = ui.initPlayers();
 		b.setPlayers(players);
 		b.setAlivePlayers(players.size());
-		
+
 		//Set each player to be alive
 		for(Player p : players){
 			p.setAlive(true);
