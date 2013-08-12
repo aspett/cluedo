@@ -334,8 +334,8 @@ public class TextBasedInterface implements UserInterface {
 	}
 
 	@Override
-	public void printWinner(Player player) {
-		System.out.printf("Game over! The winner is:\n%s\n", player.getName());
+	public void printWinner(Player player, CardTuple solution) {
+		System.out.printf("Game over! The winner is:\n%s\nThe solution was %s!\n", player.getName(), solution.toString());
 	}
 
 	@Override
